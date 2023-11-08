@@ -1,6 +1,17 @@
 
+using FluentValidation.AspNetCore;
+using FluentValidation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using VTVApp.Api.Data;
+using VTVApp.Api.Repositories;
+using VTVApp.Api.Repositories.Interfaces;
+using NLog.Web;
+using VTVApp.Api.Filters;
+using VTVApp.Api.Services;
+using VTVApp.Api.Services.Interfaces;
 
 namespace VTVApp.Api
 {
@@ -15,12 +26,67 @@ namespace VTVApp.Api
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "VTVApp.API",
+                    Description = "VTV API para el TP de Tecnicas Avanzadas de Programacion",
+                    TermsOfService = new Uri("https://example.com/terms"),
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Support",
+                        Url = new Uri("https://example.com/contact")
+                    },
+                    License = new OpenApiLicense
+                    {
+                        Name = "Use under LICX",
+                        Url = new Uri("https://example.com/license")
+                    }
+                });
+                options.CustomSchemaIds(type => type.FullName);
+                options.OperationFilter<DateParameterOperationFilter>();
+            });
 
+            builder.Services.AddMediatR(config => config.RegisterServicesFromAssemblyContaining<Program>());
+            builder.Services.AddFluentValidationAutoValidation();
+            builder.Services.AddValidatorsFromAssemblyContaining<Program>();
+            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             builder.Services.AddDbContext<VTVDataContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
+
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
+                        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                        ValidAudience = builder.Configuration["Jwt:Audience"],
+                        ValidateIssuer = true,
+                        ValidateAudience = true
+                    };
+                });
+
+            //// Configure NLog
+            //builder.Logging.ClearProviders();
+            //builder.Host.UseNLog();  // This will apply NLog configuration
+
+            // Register Scoped dependencies
+            builder.Services.AddScoped<IAppointmentsRepository, AppointmentsRepository>();
+            builder.Services.AddScoped<ICheckpointRepository, CheckpointsRepository>();
+            builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
+            builder.Services.AddScoped<IProvinceRepository, ProvinceRepository>();
+            builder.Services.AddScoped<ICityRepository, CityRepository>();
+            builder.Services.AddScoped<IInspectionRepository, InspectionsRepository>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<ITokenService, TokenService>();
+            builder.Services.AddScoped<IPasswordHashingService, PasswordHashingService>();
+
 
             var app = builder.Build();
 
