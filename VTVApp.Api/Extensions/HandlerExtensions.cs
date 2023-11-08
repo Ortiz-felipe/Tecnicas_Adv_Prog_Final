@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using VTVApp.Api.Errors;
 
-namespace Sejmet.API.Extensions
+namespace VTVApp.Api.Extensions
 {
     public static class HandlerExtensions
     {
