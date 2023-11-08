@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VTVApp.Api.Data;
 
@@ -11,9 +12,11 @@ using VTVApp.Api.Data;
 namespace VTVApp.Api.Migrations
 {
     [DbContext(typeof(VTVDataContext))]
-    partial class VTVDataContextModelSnapshot : ModelSnapshot
+    [Migration("20231108212256_AddindPasswordHash_User")]
+    partial class AddindPasswordHash_User
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
