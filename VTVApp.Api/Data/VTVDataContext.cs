@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using VTVApp.Api.Models;
+using VTVApp.Api.Models.Entities;
+
 
 namespace VTVApp.Api.Data
 {
@@ -10,61 +12,80 @@ namespace VTVApp.Api.Data
         }
 
         public DbSet<User> Users { get; set; }
-        public DbSet<Province> Provinces { get; set; }
-        public DbSet<City> Cities { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
-        public DbSet<Check> Checks { get; set; }
+        public DbSet<Inspection> Inspections { get; set; }
         public DbSet<Checkpoint> Checkpoints { get; set; }
-        public DbSet<Status> Statuses { get; set; }
-
+        public DbSet<City> Cities { get; set; }
+        public DbSet<Province> Provinces { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // User to City relationship (with cascading delete)
+            base.OnModelCreating(modelBuilder);
+
+            // User to Vehicle relationship
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.Vehicles)
+                .WithOne(v => v.User)
+                .HasForeignKey(v => v.UserId);
+
+            // User to Appointment relationship
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.Appointments)
+                .WithOne(a => a.User)
+                .HasForeignKey(a => a.UserId);
+
+            // User to City relationship
             modelBuilder.Entity<User>()
                 .HasOne(u => u.City)
                 .WithMany()
                 .HasForeignKey(u => u.CityId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
-            // User to Province relationship (without cascading delete)
+            // User to Province relationship
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Province)
                 .WithMany()
                 .HasForeignKey(u => u.ProvinceId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // City to Province relationship (default behavior can be cascade)
+            // Vehicle to Appointment relationship
+            modelBuilder.Entity<Vehicle>()
+                .HasMany(v => v.Appointments)
+                .WithOne(a => a.Vehicle)
+                .HasForeignKey(a => a.VehicleId);
+
+            modelBuilder.Entity<Appointment>()
+                .HasOne(a => a.Vehicle)
+                .WithMany(v => v.Appointments)
+                .HasForeignKey(a => a.VehicleId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Appointment to Inspection relationship
+            modelBuilder.Entity<Appointment>()
+                .HasOne(a => a.Inspection)
+                .WithOne(i => i.Appointment)
+                .HasForeignKey<Inspection>(i => i.AppointmentId);
+
+            // Inspection to Checkpoint relationship
+            modelBuilder.Entity<Inspection>()
+                .HasMany(i => i.Checkpoints)
+                .WithOne(c => c.Inspection)
+                .HasForeignKey(c => c.InspectionId);
+
+            // City to Province relationship
             modelBuilder.Entity<City>()
                 .HasOne(c => c.Province)
                 .WithMany(p => p.Cities)
                 .HasForeignKey(c => c.ProvinceId);
 
-            // Relationship between Appointment and Status
-            modelBuilder.Entity<Appointment>()
-                .HasOne(a => a.Status)
-                .WithMany(s => s.Appointments)
-                .HasForeignKey(a => a.StatusID);
-
-            // Relationship between Check and Appointment
-            modelBuilder.Entity<Check>()
-                .HasOne(c => c.Appointment)
-                .WithMany(a => a.Checks)
-                .HasForeignKey(c => c.AppointmentID);
-
-            // Relationship between Check and Checkpoint
-            modelBuilder.Entity<Check>()
-                .HasOne(c => c.Checkpoint)
-                .WithMany(cp => cp.Checks)
-                .HasForeignKey(c => c.CheckpointID);
-
-            // Assuming that Vehicle's OwnerID relates to the User entity 
-            // (this isn't provided in your tables, but just as an example)
-            modelBuilder.Entity<Vehicle>()
-                .HasOne(v => v.User) // Assuming Owner is a navigation property of type User in the Vehicle class
-                .WithMany() // No collection navigation property provided for this relationship
-                .HasForeignKey(v => v.UserId);
+            // Configure User Role as enum string
+            modelBuilder
+                .Entity<User>()
+                .Property(e => e.Role)
+                .HasConversion(
+                    v => v.ToString(),
+                    v => (UserRole)Enum.Parse(typeof(UserRole), v));
         }
     }
 }
