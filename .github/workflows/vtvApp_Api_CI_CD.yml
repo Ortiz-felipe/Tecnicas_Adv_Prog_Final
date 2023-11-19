@@ -11,13 +11,14 @@ env:
   UNIT_TEST_PATH: VTVApp.UnitTests/VTVApp.UnitTests.csproj
   SPEC_TEST_PATH: VTVApp.SpecflowTests/VTVApp.SpecflowTests.csproj
   IMAGE_NAME_API: felwitcher/vtv-app-api
+  IMAGE_NAME_WEB: felwitcher/vtv-app-web
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v3
@@ -38,7 +39,7 @@ jobs:
     needs: build
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Run Unit Tests
         run: dotnet test ${{ env.UNIT_TEST_PATH }}
@@ -48,7 +49,7 @@ jobs:
     needs: unit-test
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Run Integration Tests
         run: dotnet test ${{ env.SPEC_TEST_PATH }}
@@ -58,7 +59,7 @@ jobs:
     needs: integration-test
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Docker Login
         uses: docker/login-action@v1
@@ -70,3 +71,21 @@ jobs:
         run: |
           docker build -t ${{ env.IMAGE_NAME_API }} -f VTVApp.Api/Dockerfile .
           docker push ${{ env.IMAGE_NAME_API }}
+  docker-web:
+    runs-on: ubuntu-latest
+    needs: integration-test
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Docker Login
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and Push Web Docker Image
+        run: |
+          cd VTVApp.Web
+          docker build -t ${{ env.IMAGE_NAME_WEB }} -f Dockerfile .
+          docker push ${{ env.IMAGE_NAME_WEB }}
