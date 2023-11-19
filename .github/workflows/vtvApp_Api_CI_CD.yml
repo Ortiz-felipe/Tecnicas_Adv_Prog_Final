@@ -81,5 +81,5 @@ jobs:
 
       - name: Build and Push Web Docker Image
         run: |
-          docker build -t ${{ env.IMAGE_NAME_WEB }} -f VTVApp.Web/Dockerfile .
+          docker build -t ${{ env.IMAGE_NAME_WEB }} -f VTVApp.Web/Dockerfile VTVApp.Web
           docker push ${{ env.IMAGE_NAME_WEB }}
