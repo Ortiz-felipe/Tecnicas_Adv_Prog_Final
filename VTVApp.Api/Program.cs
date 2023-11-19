@@ -58,6 +58,15 @@ namespace VTVApp.Api
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin",
+                    builder => builder.WithOrigins("http://localhost:5173") // Replace with the port your React app is running on
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials()); // Use this if your frontend sends credentials like cookies or basic auth
+            });
+
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -77,6 +86,7 @@ namespace VTVApp.Api
             //builder.Host.UseNLog();  // This will apply NLog configuration
 
             // Register Scoped dependencies
+            builder.Services.AddScoped<IVtvDataContext, VTVDataContext>();
             builder.Services.AddScoped<IAppointmentsRepository, AppointmentsRepository>();
             builder.Services.AddScoped<ICheckpointRepository, CheckpointsRepository>();
             builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
@@ -99,8 +109,10 @@ namespace VTVApp.Api
 
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+            app.UseCors("AllowSpecificOrigin"); // Add this line to use the CORS policy
 
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.MapControllers();
 

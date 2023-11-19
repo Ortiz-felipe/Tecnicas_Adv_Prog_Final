@@ -8,10 +8,12 @@ using VTVApp.Api.Commands.Appointments.CreateAppointment;
 using VTVApp.Api.Commands.Appointments.RescheduleAppointment;
 using VTVApp.Api.Errors;
 using VTVApp.Api.Models.DTOs.Appointments;
+using VTVApp.Api.Queries.Appointments.GetAll;
 using VTVApp.Api.Queries.Appointments.GetAvailableSlots;
 using VTVApp.Api.Queries.Appointments.GetById;
 using VTVApp.Api.Queries.Appointments.GetByRecheckRequired;
 using VTVApp.Api.Queries.Appointments.GetByUserId;
+using VTVApp.Api.Queries.Appointments.GetLatestAppointmentByUserID;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace VTVApp.Api.Controllers
@@ -27,19 +29,39 @@ namespace VTVApp.Api.Controllers
             _mediator = mediator;
         }
 
+        // Retrieves all appointments
+        [HttpGet(Name = "GetAllAppointmentsAsync")]
+        [ProducesResponseType(typeof(IEnumerable<AppointmentListDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ExtendedProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetAllAppointmentsAsync([FromQuery] GetAllQuery queryRequest)
+        {
+            return await _mediator.Send(queryRequest);
+        }
+
         // Retrieves a specific appointment by ID
-        [HttpGet("{appointmentId}", Name = "GetAppointmentByIdAsync")]
+        [HttpGet("{AppointmentId}", Name = "GetAppointmentByIdAsync")]
         [ProducesResponseType(typeof(AppointmentDetailsDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ExtendedProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetAppointmentByIdAsync(GetByIdQuery queryRequest)
+        public async Task<IActionResult> GetAppointmentByIdAsync([FromRoute] GetByIdQuery queryRequest)
+        {
+            return await _mediator.Send(queryRequest);
+        }
+
+        // Retrieves the latest appointment for a given user
+        [HttpGet("latest/{UserId}", Name = "GetLatestAppointmentByUserIdAsync")]
+        [ProducesResponseType(typeof(AppointmentDetailsDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ExtendedProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetLatestAppointmentByUserIdAsync([FromRoute] GetLatestAppointmentByUserIdQuery queryRequest)
         {
             return await _mediator.Send(queryRequest);
         }
 
         // Creates a new appointment
         [HttpPost(Name = "CreateAppointmentAsync")]
-        [ProducesResponseType(typeof(AppointmentDetailsDto), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(AppointmentOperationResultDto), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ExtendedProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> CreateAppointmentAsync([FromBody] CreateAppointmentCommand command)
@@ -49,7 +71,7 @@ namespace VTVApp.Api.Controllers
 
         // Retrieves available slots for a given day
         [HttpGet("availableSlots/{Date}", Name = "GetAvailableSlotsAsync")]
-        [ProducesResponseType(typeof(IEnumerable<AvailableAppointmentSlotsDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(AvailableAppointmentSlotsDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ExtendedProblemDetails), StatusCodes.Status500InternalServerError)]
         [SwaggerOperation(
             Summary = "Retrieves available slots for a given day",
@@ -57,20 +79,15 @@ namespace VTVApp.Api.Controllers
         //[SwaggerParameter("date", Required = true, Type = "string", Format = "date")]
         public async Task<IActionResult> GetAvailableSlotsAsync([FromRoute] GetAvailableSlotsQuery queryRequest)
         {
-            //if (!DateTime.TryParseExact(date, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var parsedDate))
-            //{
-            //    return BadRequest("Invalid date format. Please use the format 'yyyy-MM-dd'.");
-            //}
-
-            //var queryRequest = new GetAvailableSlotsQuery { Date = parsedDate.ToString(CultureInfo.InvariantCulture) };
             return await _mediator.Send(queryRequest);
         }
 
         // Retrieves all appointments for a user
-        [HttpGet("user/{userId}", Name = "GetAppointmentsByUserAsync")]
+        [HttpGet("user/{UserId}", Name = "GetAppointmentsByUserAsync")]
         [ProducesResponseType(typeof(IEnumerable<AppointmentListDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(ExtendedProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetAppointmentsByUserAsync(GetByUserIdQuery queryRequest)
+        public async Task<IActionResult> GetAppointmentsByUserAsync([FromRoute] GetByUserIdQuery queryRequest)
         {
             return await _mediator.Send(queryRequest);
         }
@@ -79,13 +96,13 @@ namespace VTVApp.Api.Controllers
         [HttpGet("recheckRequired", Name = "GetRecheckRequiredAppointmentsAsync")]
         [ProducesResponseType(typeof(IEnumerable<AppointmentListDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ExtendedProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetRecheckRequiredAppointmentsAsync(GetByRecheckRequiredQuery queryRequest)
+        public async Task<IActionResult> GetRecheckRequiredAppointmentsAsync([FromRoute] GetByRecheckRequiredQuery queryRequest)
         {
             return await _mediator.Send(queryRequest);
         }
 
         // Updates the appointment status to "Completed" after inspection
-        [HttpPost("{appointmentId}/complete", Name = "CompleteAppointmentAsync")]
+        [HttpPost("{AppointmentId}/complete", Name = "CompleteAppointmentAsync")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ExtendedProblemDetails), StatusCodes.Status500InternalServerError)]
@@ -95,7 +112,7 @@ namespace VTVApp.Api.Controllers
         }
 
         // Cancels an existing appointment
-        [HttpPost("{appointmentId}/cancel", Name = "CancelAppointmentAsync")]
+        [HttpPost("{AppointmentId}/cancel", Name = "CancelAppointmentAsync")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ExtendedProblemDetails), StatusCodes.Status500InternalServerError)]
@@ -105,7 +122,7 @@ namespace VTVApp.Api.Controllers
         }
 
         // Reschedules an existing appointment
-        [HttpPost("{appointmentId}/reschedule", Name = "RescheduleAppointmentAsync")]
+        [HttpPost("{AppointmentId}/reschedule", Name = "RescheduleAppointmentAsync")]
         [ProducesResponseType(typeof(AppointmentListDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ExtendedProblemDetails), StatusCodes.Status500InternalServerError)]

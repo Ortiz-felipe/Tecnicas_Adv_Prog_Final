@@ -17,6 +17,7 @@ namespace VTVApp.Api.Models.Entities
 
         public int TotalScore { get; set; }
 
+        public InspectionStatus Status { get; set; } = InspectionStatus.Scheduled;
         // Foreign Key
         [Required]
         public Guid AppointmentId { get; set; }

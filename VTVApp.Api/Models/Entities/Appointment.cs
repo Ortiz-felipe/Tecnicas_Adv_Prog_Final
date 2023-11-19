@@ -15,6 +15,9 @@ namespace VTVApp.Api.Models.Entities
         [Required]
         public TimeSpan Time { get; set; }
 
+        [Required]
+        public AppointmentStatus Status { get; set; } = AppointmentStatus.Pending;
+
         // Foreign Keys
         [Required]
         public Guid VehicleId { get; set; }

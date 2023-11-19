@@ -23,6 +23,7 @@ namespace VTVApp.Api.Repositories
         {
             var vehicle = await _context.Vehicles
                 .Include(v => v.Appointments)
+                .ThenInclude(a => a.Inspection)
                 .FirstOrDefaultAsync(v => v.Id == vehicleId, cancellationToken);
 
             return _mapper.Map<VehicleDto>(vehicle);
@@ -32,6 +33,7 @@ namespace VTVApp.Api.Repositories
         {
             var vehicles = await _context.Vehicles
                 .Include(v => v.Appointments)
+                .ThenInclude(a => a.Inspection)
                 .Include(v => v.User)
                 .ToListAsync(cancellationToken);
 
@@ -42,6 +44,7 @@ namespace VTVApp.Api.Repositories
         {
             var vehicles = await _context.Vehicles
                 .Include(v => v.Appointments)
+                .ThenInclude(a => a.Inspection)
                 .Include(v => v.User)
                 .Where(v => v.UserId == userId)
                 .ToListAsync(cancellationToken);
@@ -74,9 +77,11 @@ namespace VTVApp.Api.Repositories
             };
 
             vehicleToUpdate.LicensePlate = updateVehicleDto.LicensePlate;
-            vehicleToUpdate.Name = updateVehicleDto.Make;
+            vehicleToUpdate.Brand = updateVehicleDto.Brand;
             vehicleToUpdate.Model = updateVehicleDto.Model;
             vehicleToUpdate.Year = updateVehicleDto.Year;
+            vehicleToUpdate.Color = updateVehicleDto.Color;
+            vehicleToUpdate.IsFavorite = updateVehicleDto.IsFavorite;
 
             _context.Vehicles.Update(vehicleToUpdate);
             await _context.SaveChangesAsync(cancellationToken);
@@ -108,6 +113,16 @@ namespace VTVApp.Api.Repositories
                 .ToListAsync(cancellationToken);
 
             return _mapper.Map<IEnumerable<VehicleDto>>(vehicles);
+        }
+
+        public async Task<VehicleDto?> GetFavoriteVehicleByUserIdAsync(Guid userId, CancellationToken cancellationToken)
+        {
+            var vehicle = await _context.Vehicles
+                .Include(v => v.Appointments)
+                .Include(v => v.User)
+                .FirstOrDefaultAsync(v => v.UserId == userId && v.IsFavorite, cancellationToken);
+
+            return _mapper.Map<VehicleDto?>(vehicle);
         }
     }
 }

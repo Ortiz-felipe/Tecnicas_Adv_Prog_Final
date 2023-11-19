@@ -69,7 +69,7 @@ namespace VTVApp.Api.Controllers
         [HttpGet(Name = "GetAllUsersAsync")]
         [ProducesResponseType(typeof(IEnumerable<UserDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ExtendedProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetAllUsersAsync(GetAllQuery queryRequest)
+        public async Task<IActionResult> GetAllUsersAsync([FromQuery] GetAllQuery queryRequest)
         {
             return await _mediator.Send(queryRequest);
         }

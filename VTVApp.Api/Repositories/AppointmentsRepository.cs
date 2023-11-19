@@ -9,13 +9,32 @@ namespace VTVApp.Api.Repositories
 {
     public class AppointmentsRepository : IAppointmentsRepository
     {
-        private readonly VTVDataContext _dataContext;
+        private readonly IVtvDataContext _dataContext;
         private readonly IMapper _mapper;
 
-        public AppointmentsRepository(VTVDataContext dataContext, IMapper mapper)
+        public AppointmentsRepository(IVtvDataContext dataContext, IMapper mapper)
         {
             _dataContext = dataContext;
             _mapper = mapper;
+        }
+
+        public async Task<IEnumerable<AppointmentListDto>> GetAppointmentsAsync(CancellationToken cancellationToken)
+        {
+            var appointments = await _dataContext.Appointments
+                .Include(a => a.Vehicle)
+                .Include(a => a.User)
+                .Where(a => a.Date.Date == DateTime.UtcNow.Date && a.Status == AppointmentStatus.Pending)
+                .Select(a => new AppointmentListDto
+                {
+                    Id = a.Id,
+                    AppointmentDate = a.Date.Add(a.Time),
+                    VehicleLicensePlate = a.Vehicle.LicensePlate,
+                    UserFullName = a.User.FullName,
+                    AppointmentStatus = (int)a.Status
+                })
+                .ToListAsync(cancellationToken);
+
+            return appointments;
         }
 
         public async Task<AppointmentDetailsDto?> GetAppointmentByIdAsync(Guid appointmentId, CancellationToken cancellationToken)
@@ -30,7 +49,34 @@ namespace VTVApp.Api.Repositories
 
         public async Task<IEnumerable<AppointmentListDto>> GetAppointmentsByUserIdAsync(Guid userId, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var appointments = await _dataContext.Appointments
+                .Include(a => a.Vehicle)
+                .Include(a => a.User)
+                .Where(a => a.UserId == userId && a.Date <= DateTime.Now)
+                .Select(a => new AppointmentListDto
+                {
+                    Id = a.Id,
+                    AppointmentDate = a.Date.Add(a.Time),
+                    VehicleLicensePlate = a.Vehicle.LicensePlate,
+                    UserFullName = a.User.FullName,
+                    AppointmentStatus = (int) a.Status
+                })
+                .ToListAsync(cancellationToken);
+
+            return appointments;
+        }
+
+        public async Task<AppointmentDetailsDto?> GetLatestAppointmentByUserIdAsync(Guid userId, CancellationToken cancellationToken)
+        {
+            var appointment = await _dataContext.Appointments
+                .Include(a => a.Vehicle)
+                .Include(a => a.User)
+                .Include(a => a.Inspection)
+                .Where(a => a.UserId == userId && a.Date >= DateTime.UtcNow) // Assuming dates are stored in UTC
+                .OrderByDescending(a => a.Date)
+                .FirstOrDefaultAsync(cancellationToken);
+
+            return _mapper.Map<AppointmentDetailsDto?>(appointment);
         }
 
         public async Task<AppointmentOperationResultDto> CreateAppointmentAsync(CreateAppointmentDto appointmentCreateDto, CancellationToken cancellationToken)

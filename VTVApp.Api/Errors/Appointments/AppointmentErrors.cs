@@ -46,6 +46,13 @@
         public static ApiError GetRecheckRequiredAppointmentsError =>
             new(MajorErrorCodes.Appointments, 11, "Error occurred while retrieving appointments that require recheck.");
 
+        // Error when failing to get the latest appointment for a user.
+        public static ApiError GetLatestAppointmentError(Guid userId) =>
+            new(MajorErrorCodes.Appointments, 12, $"Error occurred while retrieving the latest appointment for user with ID {userId}.");
+
+        // Error when user has no latest appointment booked.
+        public static ApiError GetLatestAppointmentNotFoundError(Guid userId) =>
+            new(MajorErrorCodes.Appointments, 13, $"User with ID {userId} has no latest appointment booked.");
 
         // Error when an unexpected error occurs
         public static ApiError AppointmentUnexpectedError =>

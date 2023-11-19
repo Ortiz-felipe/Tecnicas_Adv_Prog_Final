@@ -25,20 +25,20 @@ namespace VTVApp.Api.Controllers
         }
 
         // Retrieves all checkpoints for a given appointment
-        [HttpGet("appointment/{appointmentId}", Name = "GetCheckpointsByAppointmentAsync")]
+        [HttpGet("appointment/{AppointmentId}", Name = "GetCheckpointsByAppointmentAsync")]
         [ProducesResponseType(typeof(IEnumerable<CheckpointListDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ExtendedProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetCheckpointsByAppointmentAsync(GetAllByAppointmentIdQuery queryRequest)
+        public async Task<IActionResult> GetCheckpointsByAppointmentAsync([FromRoute] GetAllByAppointmentIdQuery queryRequest)
         {
             return await _mediator.Send(queryRequest);
         }
 
         // Retrieves a specific checkpoint by ID
-        [HttpGet("{checkpointId}", Name = "GetCheckpointByIdAsync")]
+        [HttpGet("{CheckpointId}", Name = "GetCheckpointByIdAsync")]
         [ProducesResponseType(typeof(CheckpointDetailsDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ExtendedProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetCheckpointByIdAsync(GetByIdQuery queryRequest)
+        public async Task<IActionResult> GetCheckpointByIdAsync([FromRoute] GetByIdQuery queryRequest)
         {
             return await _mediator.Send(queryRequest);
         }
@@ -54,21 +54,21 @@ namespace VTVApp.Api.Controllers
         }
 
         // Retrieves checkpoints that need a recheck for a specific vehicle
-        [HttpGet("vehicle/{vehicleId}/recheckRequired", Name = "GetRecheckRequiredCheckpointsByVehicleAsync")]
+        [HttpGet("vehicle/{VehicleId}/recheckRequired", Name = "GetRecheckRequiredCheckpointsByVehicleAsync")]
         [ProducesResponseType(typeof(IEnumerable<CheckpointListDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ExtendedProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetRecheckRequiredCheckpointsByVehicleAsync(
-            GetAllRecheckRequiredByVehicleIdQuery queryRequest)
+            [FromRoute] GetAllRecheckRequiredByVehicleIdQuery queryRequest)
         {
             return await _mediator.Send(queryRequest);
         }
 
         // Retrieve the inspection results for a specific vehicle
-        [HttpGet("vehicle/{vehicleId}/inspectionResults", Name = "GetInspectionResultsByVehicleAsync")]
+        [HttpGet("vehicle/{VehicleId}/inspectionResults", Name = "GetInspectionResultsByVehicleAsync")]
         [ProducesResponseType(typeof(InspectionDetailsDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ExtendedProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetInspectionResultsByVehicleAsync(
-            GetInspectionResultsByVehicleIdQuery queryRequest)
+            [FromRoute] GetInspectionResultsByVehicleIdQuery queryRequest)
         {
             return await _mediator.Send(queryRequest);
         }

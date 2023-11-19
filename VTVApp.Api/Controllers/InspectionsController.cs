@@ -9,7 +9,9 @@ using VTVApp.Api.Errors;
 using VTVApp.Api.Models.DTOs.Inspections;
 using VTVApp.Api.Queries.Inspections.GetInspectionById;
 using VTVApp.Api.Queries.Inspections.GetInspectionsByRecheckRequired;
+using VTVApp.Api.Queries.Inspections.GetInspectionsByUserId;
 using VTVApp.Api.Queries.Inspections.GetInspectionsByVehicleId;
+using VTVApp.Api.Queries.Vehicles.GetLatestInspectionForVehicleId;
 
 namespace VTVApp.Api.Controllers
 {
@@ -25,8 +27,8 @@ namespace VTVApp.Api.Controllers
         }
 
         // Start a new inspection
-        [HttpPost("{inspectionId}", Name = "StartInspectionAsync")]
-        [ProducesResponseType(typeof(InspectionDetailsDto), StatusCodes.Status201Created)]
+        [HttpPost("{AppointmentId}", Name = "StartInspectionAsync")]
+        [ProducesResponseType(typeof(InspectionOperationResultDto), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ExtendedProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ExtendedProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> StartInspectionAsync([FromBody] StartInspectionCommand command)
@@ -35,8 +37,8 @@ namespace VTVApp.Api.Controllers
         }
 
         // Complete an inspection
-        [HttpPut("{inspectionId}/complete", Name = "CompleteInspectionAsync")]
-        [ProducesResponseType(typeof(InspectionDetailsDto), StatusCodes.Status200OK)]
+        [HttpPut("{InspectionId}/complete", Name = "CompleteInspectionAsync")]
+        [ProducesResponseType(typeof(InspectionOperationResultDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ExtendedProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ExtendedProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> CompleteInspectionAsync([FromBody] CompleteInspectionCommand command)
@@ -45,26 +47,37 @@ namespace VTVApp.Api.Controllers
         }
 
         // Get an inspection by ID
-        [HttpGet("{inspectionId}", Name = "GetInspectionByIdAsync")]
+        [HttpGet("{InspectionId}", Name = "GetInspectionByIdAsync")]
         [ProducesResponseType(typeof(InspectionDetailsDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ExtendedProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetInspectionByIdAsync(GetInspectionsByIdQuery queryRequest)
+        public async Task<IActionResult> GetInspectionByIdAsync([FromRoute] GetInspectionsByIdQuery queryRequest)
         {
             return await _mediator.Send(queryRequest);
         }
 
         // Get all inspections for a vehicle
-        [HttpGet("vehicle/{vehicleId}", Name = "GetInspectionsByVehicleIdAsync")]
+        [HttpGet("vehicle/{VehicleId}", Name = "GetInspectionsByVehicleIdAsync")]
         [ProducesResponseType(typeof(IEnumerable<InspectionListDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ExtendedProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetInspectionsByVehicleIdAsync(GetInspectionsByVehicleIdQuery queryRequest)
+        public async Task<IActionResult> GetInspectionsByVehicleIdAsync([FromRoute] GetInspectionsByVehicleIdQuery queryRequest)
         {
             return await _mediator.Send(queryRequest);
         }
 
+        // Get all inspections for a user
+        [HttpGet("user/{UserId}", Name = "GetInspectionsByUserIdAsync")]
+        [ProducesResponseType(typeof(IEnumerable<InspectionListDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ExtendedProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetInspectionsByUserIdAsync(
+            [FromRoute] GetInspectionsByUserIdQuery queryRequest)
+        {
+            return await _mediator.Send(queryRequest);
+        }
+
+
         // Update a specific checkpoint for an inspection
-        [HttpPut("{inspectionId}/checkpoints/{checkpointId}", Name = "UpdateInspectionCheckpointAsync")]
+        [HttpPut("{InspectionId}/checkpoints/{CheckpointId}", Name = "UpdateInspectionCheckpointAsync")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ExtendedProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ExtendedProblemDetails), StatusCodes.Status500InternalServerError)]
@@ -77,7 +90,18 @@ namespace VTVApp.Api.Controllers
         [HttpGet("rechecks", Name = "GetInspectionsRequiringRechecksAsync")]
         [ProducesResponseType(typeof(IEnumerable<InspectionListDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ExtendedProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetInspectionsRequiringRechecksAsync(GetInspectionsByRecheckRequiredQuery queryRequest)
+        public async Task<IActionResult> GetInspectionsRequiringRechecksAsync([FromRoute] GetInspectionsByRecheckRequiredQuery queryRequest)
+        {
+            return await _mediator.Send(queryRequest);
+        }
+
+        // Get latest inspection for a vehicle
+        [HttpGet("vehicle/{VehicleId}/latest", Name = "GetLatestInspectionForVehicleAsync")]
+        [ProducesResponseType(typeof(InspectionDetailsDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ExtendedProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetLatestInspectionForVehicleAsync(
+            [FromRoute] GetLatestInspectionForVehicleIdQuery queryRequest)
         {
             return await _mediator.Send(queryRequest);
         }

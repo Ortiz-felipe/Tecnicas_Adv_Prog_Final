@@ -26,7 +26,14 @@ namespace VTVApp.Api.Repositories
 
         public async Task<IEnumerable<UserDto>> GetAllUsersAsync(CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var users = await _context.Users
+                .Include(u => u.Vehicles)
+                .Include(u => u.City)
+                .Include(u => u.Province)
+                .Include(u => u.Appointments)
+                .ToListAsync(cancellationToken);
+
+            return _mapper.Map<IEnumerable<UserDto>>(users);
         }
 
         public async Task<UserDetailsDto?> GetUserByIdAsync(Guid userId, CancellationToken cancellationToken)
@@ -94,8 +101,9 @@ namespace VTVApp.Api.Repositories
         public async Task<UserAuthenticationResultDto> AuthenticateUserAsync(UserAuthenticationDto credentials, CancellationToken cancellationToken)
         {
             var user = await _context.Users
+                .Include(u => u.Province)
+                .Include(u => u.City)
                 .Where(u => u.Email == credentials.Email)
-                .Select(u => new { u.Id, u.Email, u.PasswordHash, u.FullName })
                 .FirstOrDefaultAsync(cancellationToken);
 
             if (user == null)
@@ -123,12 +131,7 @@ namespace VTVApp.Api.Repositories
             {
                 IsAuthenticated = true,
                 Token = token,
-                User = new UserDto
-                {
-                    Id = user.Id,
-                    FullName = user.FullName,
-                    Email = user.Email
-                }
+                User = _mapper.Map<UserDto>(user)
             };
         }
     }

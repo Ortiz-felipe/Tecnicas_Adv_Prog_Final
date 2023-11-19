@@ -50,6 +50,14 @@
         public static ApiError GetVehiclesForNonExistingUserError =>
             new(MajorErrorCodes.Vehicles, 12, "Error occurred while retrieving vehicles for a non-existing user.");
 
+        // Error when retrieving a favorite vehicle for a user fails
+        public static ApiError GetFavoriteVehicleByUserIdError =>
+            new(MajorErrorCodes.Vehicles, 13, "Error occurred while retrieving favorite vehicle by user ID.");
+
+        //Error when user has no favorite vehicle
+        public static ApiError UserHasNoFavoriteVehicleError =>
+            new(MajorErrorCodes.Vehicles, 14, "User has no favorite vehicle.");
+
         // Error for any unexpected issue during vehicle operations
         public static ApiError VehicleUnexpectedError =>
             new(MajorErrorCodes.Vehicles, 99, "An unexpected error occurred in vehicle operations.");

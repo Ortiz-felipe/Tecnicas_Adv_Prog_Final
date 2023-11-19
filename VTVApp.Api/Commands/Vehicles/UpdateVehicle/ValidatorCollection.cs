@@ -33,7 +33,7 @@ namespace VTVApp.Api.Commands.Vehicles.UpdateVehicle
             RuleFor(dto => dto.LicensePlate)
                 .NotEmpty().WithMessage("License plate is required.");
 
-            RuleFor(dto => dto.Make)
+            RuleFor(dto => dto.Brand)
                 .NotEmpty().WithMessage("Make is required.")
                 .MaximumLength(50).WithMessage("Make must not exceed 50 characters.");
 

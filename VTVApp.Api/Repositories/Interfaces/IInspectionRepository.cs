@@ -14,12 +14,29 @@ namespace VTVApp.Api.Repositories.Interfaces
         Task<IEnumerable<InspectionListDto>> GetAllInspectionsAsync(CancellationToken cancellationToken);
 
         /// <summary>
+        /// Retrieves all inspections associated with a specific user ID asynchronously.
+        /// </summary>
+        /// <param name="userId">The ID of the user</param>
+        /// <param name="cancellationToken">A token for canceling the operation if necessary.</param>
+        /// <returns>A collection of InspectionListDto.</returns>
+        Task<IEnumerable<InspectionListDto>> GetInspectionsByUserIdAsync(Guid userId,
+            CancellationToken cancellationToken);
+
+        /// <summary>
         /// Retrieves a specific inspection by its ID asynchronously.
         /// </summary>
         /// <param name="inspectionId">The ID of the inspection.</param>
         /// <param name="cancellationToken">A token for canceling the operation if necessary.</param>
         /// <returns>An InspectionDetailsDto containing the detailed information of the inspection.</returns>
         Task<InspectionDetailsDto?> GetInspectionByIdAsync(Guid inspectionId, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Retrieves the latest inspection associated with a specific vehicle ID asynchronously.
+        /// </summary>
+        /// <param name="vehicleId">The ID of the vehicle</param>
+        /// <param name="cancellationToken">A token for canceling the operation if necessary.</param>
+        /// <returns>An InspectionDetailsDto containing the detailed information of the inspection.</returns>
+        Task<InspectionDetailsDto?> GetLatestInspectionByVehicleIdAsync(Guid vehicleId, CancellationToken cancellationToken);
 
         /// <summary>
         /// Retrieves a list of inspections associated with a specific vehicle ID asynchronously.
@@ -42,7 +59,7 @@ namespace VTVApp.Api.Repositories.Interfaces
         /// <param name="inspection">The data transfer object containing the information needed to create a new inspection.</param>
         /// <param name="cancellationToken">A token for canceling the operation if necessary.</param>
         /// <returns>An InspectionOperationResultDto indicating the result of the create operation.</returns>
-        Task<InspectionOperationResultDto> AddInspectionAsync(CreateInspectionDto inspection, CancellationToken cancellationToken);
+        Task<InspectionOperationResultDto?> AddInspectionAsync(CreateInspectionDto inspection, CancellationToken cancellationToken);
 
         /// <summary>
         /// Updates an existing inspection asynchronously.

@@ -1,0 +1,525 @@
+2023-11-05 02:17:06.1315 Info Loading assembly name: NLog.Targets.ApplicationInsights
+2023-11-05 02:17:06.1789 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Error loading extensions: NLog.Targets.ApplicationInsights
+ ---> System.IO.FileNotFoundException: Could not load file or assembly 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'. El sistema no puede encontrar el archivo especificado.
+File name: 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'
+   at System.Reflection.RuntimeAssembly.InternalLoad(AssemblyName assemblyName, StackCrawlMark& stackMark, AssemblyLoadContext assemblyLoadContext, RuntimeAssembly requestingAssembly, Boolean throwOnFileNotFound)
+   at System.Reflection.Assembly.Load(String assemblyString)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(String assemblyName)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(ConfigurationItemFactory factory, String assemblyName, String itemNamePrefix)
+   at NLog.Config.LoggingConfigurationParser.ParseExtensionWithAssemblyName(String assemblyName, String prefix)
+   --- End of inner exception stack trace ---
+2023-11-05 02:17:06.2309 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to create Target with unknown type-alias: 'ApplicationInsightsTarget' - Verify type-alias and check extension is included.
+   at NLog.Config.FactoryExtensions.CreateInstance[TBaseType](IFactory`1 factory, String typeAlias)
+   at NLog.Config.LoggingConfigurationParser.FactoryCreateInstance[T](String typeName, IFactory`1 factory)
+2023-11-05 02:17:06.2309 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ai' not found for logging rule: *.
+2023-11-05 02:17:06.2573 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.5.2160. Product version: 5.2.5+7c014325443d65541200b698a50b9dd4ec30c7f0. GlobalAssemblyCache: False
+2023-11-05 02:17:06.3132 Info Validating config: Targets=0, ConfigItems=1, FilePath=D:\Universidad_Palermo\Tecnicas_Avanzadas_Programacion\Trabajo_Practico_Final\Tecnicas_Adv_Prog_Final\VTVApp.Api\bin\Debug\net7.0\NLog.config
+2023-11-05 02:17:06.3132 Info Configuration initialized.
+2023-11-05 02:17:06.3132 Info Loading NLog config from XML file: D:\Universidad_Palermo\Tecnicas_Avanzadas_Programacion\Trabajo_Practico_Final\Tecnicas_Adv_Prog_Final\VTVApp.Api\NLog.config
+2023-11-05 02:17:06.3132 Info Loading assembly name: NLog.Targets.ApplicationInsights
+2023-11-05 02:17:06.3132 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Error loading extensions: NLog.Targets.ApplicationInsights
+ ---> System.IO.FileNotFoundException: Could not load file or assembly 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'. El sistema no puede encontrar el archivo especificado.
+File name: 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'
+   at System.Reflection.RuntimeAssembly.InternalLoad(AssemblyName assemblyName, StackCrawlMark& stackMark, AssemblyLoadContext assemblyLoadContext, RuntimeAssembly requestingAssembly, Boolean throwOnFileNotFound)
+   at System.Reflection.Assembly.Load(String assemblyString)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(String assemblyName)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(ConfigurationItemFactory factory, String assemblyName, String itemNamePrefix)
+   at NLog.Config.LoggingConfigurationParser.ParseExtensionWithAssemblyName(String assemblyName, String prefix)
+   --- End of inner exception stack trace ---
+2023-11-05 02:17:06.3249 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to create Target with unknown type-alias: 'ApplicationInsightsTarget' - Verify type-alias and check extension is included.
+   at NLog.Config.FactoryExtensions.CreateInstance[TBaseType](IFactory`1 factory, String typeAlias)
+   at NLog.Config.LoggingConfigurationParser.FactoryCreateInstance[T](String typeName, IFactory`1 factory)
+2023-11-05 02:17:06.3249 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ai' not found for logging rule: *.
+2023-11-05 02:17:06.3249 Info Closing old configuration.
+2023-11-05 02:17:06.3432 Info Validating config: Targets=0, ConfigItems=1, FilePath=D:\Universidad_Palermo\Tecnicas_Avanzadas_Programacion\Trabajo_Practico_Final\Tecnicas_Adv_Prog_Final\VTVApp.Api\NLog.config
+2023-11-05 02:17:06.3432 Info Configuration initialized.
+2023-11-05 02:28:09.3400 Info Loading assembly name: NLog.Targets.ApplicationInsights
+2023-11-05 02:28:09.3790 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Error loading extensions: NLog.Targets.ApplicationInsights
+ ---> System.IO.FileNotFoundException: Could not load file or assembly 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'. El sistema no puede encontrar el archivo especificado.
+File name: 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'
+   at System.Reflection.RuntimeAssembly.InternalLoad(AssemblyName assemblyName, StackCrawlMark& stackMark, AssemblyLoadContext assemblyLoadContext, RuntimeAssembly requestingAssembly, Boolean throwOnFileNotFound)
+   at System.Reflection.Assembly.Load(String assemblyString)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(String assemblyName)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(ConfigurationItemFactory factory, String assemblyName, String itemNamePrefix)
+   at NLog.Config.LoggingConfigurationParser.ParseExtensionWithAssemblyName(String assemblyName, String prefix)
+   --- End of inner exception stack trace ---
+2023-11-05 02:28:09.6256 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to create Target with unknown type-alias: 'ApplicationInsightsTarget' - Verify type-alias and check extension is included.
+   at NLog.Config.FactoryExtensions.CreateInstance[TBaseType](IFactory`1 factory, String typeAlias)
+   at NLog.Config.LoggingConfigurationParser.FactoryCreateInstance[T](String typeName, IFactory`1 factory)
+2023-11-05 02:28:09.6673 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ai' not found for logging rule: *.
+2023-11-05 02:28:09.7055 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.5.2160. Product version: 5.2.5+7c014325443d65541200b698a50b9dd4ec30c7f0. GlobalAssemblyCache: False
+2023-11-05 02:28:09.7755 Info Validating config: Targets=0, ConfigItems=1, FilePath=D:\Universidad_Palermo\Tecnicas_Avanzadas_Programacion\Trabajo_Practico_Final\Tecnicas_Adv_Prog_Final\VTVApp.Api\bin\Debug\net7.0\NLog.config
+2023-11-05 02:28:09.8017 Info Configuration initialized.
+2023-11-05 02:28:09.8271 Info Loading NLog config from XML file: D:\Universidad_Palermo\Tecnicas_Avanzadas_Programacion\Trabajo_Practico_Final\Tecnicas_Adv_Prog_Final\VTVApp.Api\NLog.config
+2023-11-05 02:28:09.8271 Info Loading assembly name: NLog.Targets.ApplicationInsights
+2023-11-05 02:28:09.8271 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Error loading extensions: NLog.Targets.ApplicationInsights
+ ---> System.IO.FileNotFoundException: Could not load file or assembly 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'. El sistema no puede encontrar el archivo especificado.
+File name: 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'
+   at System.Reflection.RuntimeAssembly.InternalLoad(AssemblyName assemblyName, StackCrawlMark& stackMark, AssemblyLoadContext assemblyLoadContext, RuntimeAssembly requestingAssembly, Boolean throwOnFileNotFound)
+   at System.Reflection.Assembly.Load(String assemblyString)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(String assemblyName)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(ConfigurationItemFactory factory, String assemblyName, String itemNamePrefix)
+   at NLog.Config.LoggingConfigurationParser.ParseExtensionWithAssemblyName(String assemblyName, String prefix)
+   --- End of inner exception stack trace ---
+2023-11-05 02:28:09.8402 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to create Target with unknown type-alias: 'ApplicationInsightsTarget' - Verify type-alias and check extension is included.
+   at NLog.Config.FactoryExtensions.CreateInstance[TBaseType](IFactory`1 factory, String typeAlias)
+   at NLog.Config.LoggingConfigurationParser.FactoryCreateInstance[T](String typeName, IFactory`1 factory)
+2023-11-05 02:28:09.8402 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ai' not found for logging rule: *.
+2023-11-05 02:28:09.8402 Info Closing old configuration.
+2023-11-05 02:28:09.8738 Info Validating config: Targets=0, ConfigItems=1, FilePath=D:\Universidad_Palermo\Tecnicas_Avanzadas_Programacion\Trabajo_Practico_Final\Tecnicas_Adv_Prog_Final\VTVApp.Api\NLog.config
+2023-11-05 02:28:09.8738 Info Configuration initialized.
+2023-11-05 02:30:40.5240 Info Loading assembly name: NLog.Targets.ApplicationInsights
+2023-11-05 02:30:40.5721 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Error loading extensions: NLog.Targets.ApplicationInsights
+ ---> System.IO.FileNotFoundException: Could not load file or assembly 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'. El sistema no puede encontrar el archivo especificado.
+File name: 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'
+   at System.Reflection.RuntimeAssembly.InternalLoad(AssemblyName assemblyName, StackCrawlMark& stackMark, AssemblyLoadContext assemblyLoadContext, RuntimeAssembly requestingAssembly, Boolean throwOnFileNotFound)
+   at System.Reflection.Assembly.Load(String assemblyString)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(String assemblyName)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(ConfigurationItemFactory factory, String assemblyName, String itemNamePrefix)
+   at NLog.Config.LoggingConfigurationParser.ParseExtensionWithAssemblyName(String assemblyName, String prefix)
+   --- End of inner exception stack trace ---
+2023-11-05 02:30:40.6916 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to create Target with unknown type-alias: 'ApplicationInsightsTarget' - Verify type-alias and check extension is included.
+   at NLog.Config.FactoryExtensions.CreateInstance[TBaseType](IFactory`1 factory, String typeAlias)
+   at NLog.Config.LoggingConfigurationParser.FactoryCreateInstance[T](String typeName, IFactory`1 factory)
+2023-11-05 02:30:40.7208 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ai' not found for logging rule: *.
+2023-11-05 02:30:40.7700 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.5.2160. Product version: 5.2.5+7c014325443d65541200b698a50b9dd4ec30c7f0. GlobalAssemblyCache: False
+2023-11-05 02:30:40.8216 Info Validating config: Targets=0, ConfigItems=1, FilePath=D:\Universidad_Palermo\Tecnicas_Avanzadas_Programacion\Trabajo_Practico_Final\Tecnicas_Adv_Prog_Final\VTVApp.Api\bin\Debug\net7.0\NLog.config
+2023-11-05 02:30:40.8338 Info Configuration initialized.
+2023-11-05 02:30:40.8439 Info Loading NLog config from XML file: D:\Universidad_Palermo\Tecnicas_Avanzadas_Programacion\Trabajo_Practico_Final\Tecnicas_Adv_Prog_Final\VTVApp.Api\NLog.config
+2023-11-05 02:30:40.8439 Info Loading assembly name: NLog.Targets.ApplicationInsights
+2023-11-05 02:30:40.8439 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Error loading extensions: NLog.Targets.ApplicationInsights
+ ---> System.IO.FileNotFoundException: Could not load file or assembly 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'. El sistema no puede encontrar el archivo especificado.
+File name: 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'
+   at System.Reflection.RuntimeAssembly.InternalLoad(AssemblyName assemblyName, StackCrawlMark& stackMark, AssemblyLoadContext assemblyLoadContext, RuntimeAssembly requestingAssembly, Boolean throwOnFileNotFound)
+   at System.Reflection.Assembly.Load(String assemblyString)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(String assemblyName)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(ConfigurationItemFactory factory, String assemblyName, String itemNamePrefix)
+   at NLog.Config.LoggingConfigurationParser.ParseExtensionWithAssemblyName(String assemblyName, String prefix)
+   --- End of inner exception stack trace ---
+2023-11-05 02:30:40.8439 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to create Target with unknown type-alias: 'ApplicationInsightsTarget' - Verify type-alias and check extension is included.
+   at NLog.Config.FactoryExtensions.CreateInstance[TBaseType](IFactory`1 factory, String typeAlias)
+   at NLog.Config.LoggingConfigurationParser.FactoryCreateInstance[T](String typeName, IFactory`1 factory)
+2023-11-05 02:30:40.8439 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ai' not found for logging rule: *.
+2023-11-05 02:30:40.8562 Info Closing old configuration.
+2023-11-05 02:30:40.8769 Info Validating config: Targets=0, ConfigItems=1, FilePath=D:\Universidad_Palermo\Tecnicas_Avanzadas_Programacion\Trabajo_Practico_Final\Tecnicas_Adv_Prog_Final\VTVApp.Api\NLog.config
+2023-11-05 02:30:40.8769 Info Configuration initialized.
+2023-11-05 02:32:58.9666 Info Loading assembly name: NLog.Targets.ApplicationInsights
+2023-11-05 02:32:58.9970 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Error loading extensions: NLog.Targets.ApplicationInsights
+ ---> System.IO.FileNotFoundException: Could not load file or assembly 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'. El sistema no puede encontrar el archivo especificado.
+File name: 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'
+   at System.Reflection.RuntimeAssembly.InternalLoad(AssemblyName assemblyName, StackCrawlMark& stackMark, AssemblyLoadContext assemblyLoadContext, RuntimeAssembly requestingAssembly, Boolean throwOnFileNotFound)
+   at System.Reflection.Assembly.Load(String assemblyString)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(String assemblyName)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(ConfigurationItemFactory factory, String assemblyName, String itemNamePrefix)
+   at NLog.Config.LoggingConfigurationParser.ParseExtensionWithAssemblyName(String assemblyName, String prefix)
+   --- End of inner exception stack trace ---
+2023-11-05 02:32:59.0411 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to create Target with unknown type-alias: 'ApplicationInsightsTarget' - Verify type-alias and check extension is included.
+   at NLog.Config.FactoryExtensions.CreateInstance[TBaseType](IFactory`1 factory, String typeAlias)
+   at NLog.Config.LoggingConfigurationParser.FactoryCreateInstance[T](String typeName, IFactory`1 factory)
+2023-11-05 02:32:59.0510 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ai' not found for logging rule: *.
+2023-11-05 02:32:59.0747 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.5.2160. Product version: 5.2.5+7c014325443d65541200b698a50b9dd4ec30c7f0. GlobalAssemblyCache: False
+2023-11-05 02:32:59.1159 Info Validating config: Targets=0, ConfigItems=1, FilePath=D:\Universidad_Palermo\Tecnicas_Avanzadas_Programacion\Trabajo_Practico_Final\Tecnicas_Adv_Prog_Final\VTVApp.Api\bin\Debug\net7.0\NLog.config
+2023-11-05 02:32:59.1232 Info Configuration initialized.
+2023-11-05 02:32:59.1232 Info Loading NLog config from XML file: D:\Universidad_Palermo\Tecnicas_Avanzadas_Programacion\Trabajo_Practico_Final\Tecnicas_Adv_Prog_Final\VTVApp.Api\NLog.config
+2023-11-05 02:32:59.1232 Info Loading assembly name: NLog.Targets.ApplicationInsights
+2023-11-05 02:32:59.1232 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Error loading extensions: NLog.Targets.ApplicationInsights
+ ---> System.IO.FileNotFoundException: Could not load file or assembly 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'. El sistema no puede encontrar el archivo especificado.
+File name: 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'
+   at System.Reflection.RuntimeAssembly.InternalLoad(AssemblyName assemblyName, StackCrawlMark& stackMark, AssemblyLoadContext assemblyLoadContext, RuntimeAssembly requestingAssembly, Boolean throwOnFileNotFound)
+   at System.Reflection.Assembly.Load(String assemblyString)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(String assemblyName)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(ConfigurationItemFactory factory, String assemblyName, String itemNamePrefix)
+   at NLog.Config.LoggingConfigurationParser.ParseExtensionWithAssemblyName(String assemblyName, String prefix)
+   --- End of inner exception stack trace ---
+2023-11-05 02:32:59.1364 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to create Target with unknown type-alias: 'ApplicationInsightsTarget' - Verify type-alias and check extension is included.
+   at NLog.Config.FactoryExtensions.CreateInstance[TBaseType](IFactory`1 factory, String typeAlias)
+   at NLog.Config.LoggingConfigurationParser.FactoryCreateInstance[T](String typeName, IFactory`1 factory)
+2023-11-05 02:32:59.1364 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ai' not found for logging rule: *.
+2023-11-05 02:32:59.1364 Info Closing old configuration.
+2023-11-05 02:32:59.1364 Info Validating config: Targets=0, ConfigItems=1, FilePath=D:\Universidad_Palermo\Tecnicas_Avanzadas_Programacion\Trabajo_Practico_Final\Tecnicas_Adv_Prog_Final\VTVApp.Api\NLog.config
+2023-11-05 02:32:59.1364 Info Configuration initialized.
+2023-11-05 02:34:39.1887 Info Loading assembly name: NLog.Targets.ApplicationInsights
+2023-11-05 02:34:39.2877 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Error loading extensions: NLog.Targets.ApplicationInsights
+ ---> System.IO.FileNotFoundException: Could not load file or assembly 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'. El sistema no puede encontrar el archivo especificado.
+File name: 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'
+   at System.Reflection.RuntimeAssembly.InternalLoad(AssemblyName assemblyName, StackCrawlMark& stackMark, AssemblyLoadContext assemblyLoadContext, RuntimeAssembly requestingAssembly, Boolean throwOnFileNotFound)
+   at System.Reflection.Assembly.Load(String assemblyString)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(String assemblyName)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(ConfigurationItemFactory factory, String assemblyName, String itemNamePrefix)
+   at NLog.Config.LoggingConfigurationParser.ParseExtensionWithAssemblyName(String assemblyName, String prefix)
+   --- End of inner exception stack trace ---
+2023-11-05 02:34:39.3509 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to create Target with unknown type-alias: 'ApplicationInsightsTarget' - Verify type-alias and check extension is included.
+   at NLog.Config.FactoryExtensions.CreateInstance[TBaseType](IFactory`1 factory, String typeAlias)
+   at NLog.Config.LoggingConfigurationParser.FactoryCreateInstance[T](String typeName, IFactory`1 factory)
+2023-11-05 02:34:39.3724 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ai' not found for logging rule: *.
+2023-11-05 02:34:39.4170 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.5.2160. Product version: 5.2.5+7c014325443d65541200b698a50b9dd4ec30c7f0. GlobalAssemblyCache: False
+2023-11-05 02:34:39.4623 Info Validating config: Targets=0, ConfigItems=1, FilePath=D:\Universidad_Palermo\Tecnicas_Avanzadas_Programacion\Trabajo_Practico_Final\Tecnicas_Adv_Prog_Final\VTVApp.Api\bin\Debug\net7.0\NLog.config
+2023-11-05 02:34:39.4828 Info Configuration initialized.
+2023-11-05 02:34:39.4828 Info Loading NLog config from XML file: D:\Universidad_Palermo\Tecnicas_Avanzadas_Programacion\Trabajo_Practico_Final\Tecnicas_Adv_Prog_Final\VTVApp.Api\NLog.config
+2023-11-05 02:34:39.4828 Info Loading assembly name: NLog.Targets.ApplicationInsights
+2023-11-05 02:34:39.4993 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Error loading extensions: NLog.Targets.ApplicationInsights
+ ---> System.IO.FileNotFoundException: Could not load file or assembly 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'. El sistema no puede encontrar el archivo especificado.
+File name: 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'
+   at System.Reflection.RuntimeAssembly.InternalLoad(AssemblyName assemblyName, StackCrawlMark& stackMark, AssemblyLoadContext assemblyLoadContext, RuntimeAssembly requestingAssembly, Boolean throwOnFileNotFound)
+   at System.Reflection.Assembly.Load(String assemblyString)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(String assemblyName)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(ConfigurationItemFactory factory, String assemblyName, String itemNamePrefix)
+   at NLog.Config.LoggingConfigurationParser.ParseExtensionWithAssemblyName(String assemblyName, String prefix)
+   --- End of inner exception stack trace ---
+2023-11-05 02:34:39.4993 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to create Target with unknown type-alias: 'ApplicationInsightsTarget' - Verify type-alias and check extension is included.
+   at NLog.Config.FactoryExtensions.CreateInstance[TBaseType](IFactory`1 factory, String typeAlias)
+   at NLog.Config.LoggingConfigurationParser.FactoryCreateInstance[T](String typeName, IFactory`1 factory)
+2023-11-05 02:34:39.4993 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ai' not found for logging rule: *.
+2023-11-05 02:34:39.4993 Info Closing old configuration.
+2023-11-05 02:34:39.5164 Info Validating config: Targets=0, ConfigItems=1, FilePath=D:\Universidad_Palermo\Tecnicas_Avanzadas_Programacion\Trabajo_Practico_Final\Tecnicas_Adv_Prog_Final\VTVApp.Api\NLog.config
+2023-11-05 02:34:39.5164 Info Configuration initialized.
+2023-11-05 02:36:58.0007 Info Loading assembly name: NLog.Targets.ApplicationInsights
+2023-11-05 02:36:58.0398 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Error loading extensions: NLog.Targets.ApplicationInsights
+ ---> System.IO.FileNotFoundException: Could not load file or assembly 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'. El sistema no puede encontrar el archivo especificado.
+File name: 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'
+   at System.Reflection.RuntimeAssembly.InternalLoad(AssemblyName assemblyName, StackCrawlMark& stackMark, AssemblyLoadContext assemblyLoadContext, RuntimeAssembly requestingAssembly, Boolean throwOnFileNotFound)
+   at System.Reflection.Assembly.Load(String assemblyString)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(String assemblyName)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(ConfigurationItemFactory factory, String assemblyName, String itemNamePrefix)
+   at NLog.Config.LoggingConfigurationParser.ParseExtensionWithAssemblyName(String assemblyName, String prefix)
+   --- End of inner exception stack trace ---
+2023-11-05 02:36:58.0783 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to create Target with unknown type-alias: 'ApplicationInsightsTarget' - Verify type-alias and check extension is included.
+   at NLog.Config.FactoryExtensions.CreateInstance[TBaseType](IFactory`1 factory, String typeAlias)
+   at NLog.Config.LoggingConfigurationParser.FactoryCreateInstance[T](String typeName, IFactory`1 factory)
+2023-11-05 02:36:58.0783 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ai' not found for logging rule: *.
+2023-11-05 02:36:58.1080 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.5.2160. Product version: 5.2.5+7c014325443d65541200b698a50b9dd4ec30c7f0. GlobalAssemblyCache: False
+2023-11-05 02:36:58.1339 Info Validating config: Targets=0, ConfigItems=1, FilePath=D:\Universidad_Palermo\Tecnicas_Avanzadas_Programacion\Trabajo_Practico_Final\Tecnicas_Adv_Prog_Final\VTVApp.Api\bin\Debug\net7.0\NLog.config
+2023-11-05 02:36:58.1443 Info Configuration initialized.
+2023-11-05 02:36:58.1443 Info Loading NLog config from XML file: D:\Universidad_Palermo\Tecnicas_Avanzadas_Programacion\Trabajo_Practico_Final\Tecnicas_Adv_Prog_Final\VTVApp.Api\NLog.config
+2023-11-05 02:36:58.1443 Info Loading assembly name: NLog.Targets.ApplicationInsights
+2023-11-05 02:36:58.1546 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Error loading extensions: NLog.Targets.ApplicationInsights
+ ---> System.IO.FileNotFoundException: Could not load file or assembly 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'. El sistema no puede encontrar el archivo especificado.
+File name: 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'
+   at System.Reflection.RuntimeAssembly.InternalLoad(AssemblyName assemblyName, StackCrawlMark& stackMark, AssemblyLoadContext assemblyLoadContext, RuntimeAssembly requestingAssembly, Boolean throwOnFileNotFound)
+   at System.Reflection.Assembly.Load(String assemblyString)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(String assemblyName)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(ConfigurationItemFactory factory, String assemblyName, String itemNamePrefix)
+   at NLog.Config.LoggingConfigurationParser.ParseExtensionWithAssemblyName(String assemblyName, String prefix)
+   --- End of inner exception stack trace ---
+2023-11-05 02:36:58.1546 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to create Target with unknown type-alias: 'ApplicationInsightsTarget' - Verify type-alias and check extension is included.
+   at NLog.Config.FactoryExtensions.CreateInstance[TBaseType](IFactory`1 factory, String typeAlias)
+   at NLog.Config.LoggingConfigurationParser.FactoryCreateInstance[T](String typeName, IFactory`1 factory)
+2023-11-05 02:36:58.1546 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ai' not found for logging rule: *.
+2023-11-05 02:36:58.1546 Info Closing old configuration.
+2023-11-05 02:36:58.1690 Info Validating config: Targets=0, ConfigItems=1, FilePath=D:\Universidad_Palermo\Tecnicas_Avanzadas_Programacion\Trabajo_Practico_Final\Tecnicas_Adv_Prog_Final\VTVApp.Api\NLog.config
+2023-11-05 02:36:58.1690 Info Configuration initialized.
+2023-11-05 10:27:36.3454 Info Loading assembly name: NLog.Targets.ApplicationInsights
+2023-11-05 10:27:36.3904 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Error loading extensions: NLog.Targets.ApplicationInsights
+ ---> System.IO.FileNotFoundException: Could not load file or assembly 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'. El sistema no puede encontrar el archivo especificado.
+File name: 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'
+   at System.Reflection.RuntimeAssembly.InternalLoad(AssemblyName assemblyName, StackCrawlMark& stackMark, AssemblyLoadContext assemblyLoadContext, RuntimeAssembly requestingAssembly, Boolean throwOnFileNotFound)
+   at System.Reflection.Assembly.Load(String assemblyString)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(String assemblyName)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(ConfigurationItemFactory factory, String assemblyName, String itemNamePrefix)
+   at NLog.Config.LoggingConfigurationParser.ParseExtensionWithAssemblyName(String assemblyName, String prefix)
+   --- End of inner exception stack trace ---
+2023-11-05 10:27:36.4417 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to create Target with unknown type-alias: 'ApplicationInsightsTarget' - Verify type-alias and check extension is included.
+   at NLog.Config.FactoryExtensions.CreateInstance[TBaseType](IFactory`1 factory, String typeAlias)
+   at NLog.Config.LoggingConfigurationParser.FactoryCreateInstance[T](String typeName, IFactory`1 factory)
+2023-11-05 10:27:36.4576 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ai' not found for logging rule: *.
+2023-11-05 10:27:36.4825 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.5.2160. Product version: 5.2.5+7c014325443d65541200b698a50b9dd4ec30c7f0. GlobalAssemblyCache: False
+2023-11-05 10:27:36.5043 Info Validating config: Targets=0, ConfigItems=1, FilePath=D:\Universidad_Palermo\Tecnicas_Avanzadas_Programacion\Trabajo_Practico_Final\Tecnicas_Adv_Prog_Final\VTVApp.Api\bin\Debug\net7.0\NLog.config
+2023-11-05 10:27:36.5079 Info Configuration initialized.
+2023-11-05 10:27:36.5079 Info Loading NLog config from XML file: D:\Universidad_Palermo\Tecnicas_Avanzadas_Programacion\Trabajo_Practico_Final\Tecnicas_Adv_Prog_Final\VTVApp.Api\NLog.config
+2023-11-05 10:27:36.5079 Info Loading assembly name: NLog.Targets.ApplicationInsights
+2023-11-05 10:27:36.5079 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Error loading extensions: NLog.Targets.ApplicationInsights
+ ---> System.IO.FileNotFoundException: Could not load file or assembly 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'. El sistema no puede encontrar el archivo especificado.
+File name: 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'
+   at System.Reflection.RuntimeAssembly.InternalLoad(AssemblyName assemblyName, StackCrawlMark& stackMark, AssemblyLoadContext assemblyLoadContext, RuntimeAssembly requestingAssembly, Boolean throwOnFileNotFound)
+   at System.Reflection.Assembly.Load(String assemblyString)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(String assemblyName)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(ConfigurationItemFactory factory, String assemblyName, String itemNamePrefix)
+   at NLog.Config.LoggingConfigurationParser.ParseExtensionWithAssemblyName(String assemblyName, String prefix)
+   --- End of inner exception stack trace ---
+2023-11-05 10:27:36.5079 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to create Target with unknown type-alias: 'ApplicationInsightsTarget' - Verify type-alias and check extension is included.
+   at NLog.Config.FactoryExtensions.CreateInstance[TBaseType](IFactory`1 factory, String typeAlias)
+   at NLog.Config.LoggingConfigurationParser.FactoryCreateInstance[T](String typeName, IFactory`1 factory)
+2023-11-05 10:27:36.5079 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ai' not found for logging rule: *.
+2023-11-05 10:27:36.5198 Info Closing old configuration.
+2023-11-05 10:27:36.5198 Info Validating config: Targets=0, ConfigItems=1, FilePath=D:\Universidad_Palermo\Tecnicas_Avanzadas_Programacion\Trabajo_Practico_Final\Tecnicas_Adv_Prog_Final\VTVApp.Api\NLog.config
+2023-11-05 10:27:36.5198 Info Configuration initialized.
+2023-11-05 10:30:32.6318 Info Loading assembly name: NLog.Targets.ApplicationInsights
+2023-11-05 10:30:32.6803 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Error loading extensions: NLog.Targets.ApplicationInsights
+ ---> System.IO.FileNotFoundException: Could not load file or assembly 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'. El sistema no puede encontrar el archivo especificado.
+File name: 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'
+   at System.Reflection.RuntimeAssembly.InternalLoad(AssemblyName assemblyName, StackCrawlMark& stackMark, AssemblyLoadContext assemblyLoadContext, RuntimeAssembly requestingAssembly, Boolean throwOnFileNotFound)
+   at System.Reflection.Assembly.Load(String assemblyString)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(String assemblyName)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(ConfigurationItemFactory factory, String assemblyName, String itemNamePrefix)
+   at NLog.Config.LoggingConfigurationParser.ParseExtensionWithAssemblyName(String assemblyName, String prefix)
+   --- End of inner exception stack trace ---
+2023-11-05 10:30:32.7499 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to create Target with unknown type-alias: 'ApplicationInsightsTarget' - Verify type-alias and check extension is included.
+   at NLog.Config.FactoryExtensions.CreateInstance[TBaseType](IFactory`1 factory, String typeAlias)
+   at NLog.Config.LoggingConfigurationParser.FactoryCreateInstance[T](String typeName, IFactory`1 factory)
+2023-11-05 10:30:32.7750 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ai' not found for logging rule: *.
+2023-11-05 10:30:32.8195 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.5.2160. Product version: 5.2.5+7c014325443d65541200b698a50b9dd4ec30c7f0. GlobalAssemblyCache: False
+2023-11-05 10:30:32.9064 Info Validating config: Targets=0, ConfigItems=1, FilePath=D:\Universidad_Palermo\Tecnicas_Avanzadas_Programacion\Trabajo_Practico_Final\Tecnicas_Adv_Prog_Final\VTVApp.Api\bin\Debug\net7.0\NLog.config
+2023-11-05 10:30:32.9201 Info Configuration initialized.
+2023-11-05 10:30:32.9290 Info Loading NLog config from XML file: D:\Universidad_Palermo\Tecnicas_Avanzadas_Programacion\Trabajo_Practico_Final\Tecnicas_Adv_Prog_Final\VTVApp.Api\NLog.config
+2023-11-05 10:30:32.9290 Info Loading assembly name: NLog.Targets.ApplicationInsights
+2023-11-05 10:30:32.9290 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Error loading extensions: NLog.Targets.ApplicationInsights
+ ---> System.IO.FileNotFoundException: Could not load file or assembly 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'. El sistema no puede encontrar el archivo especificado.
+File name: 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'
+   at System.Reflection.RuntimeAssembly.InternalLoad(AssemblyName assemblyName, StackCrawlMark& stackMark, AssemblyLoadContext assemblyLoadContext, RuntimeAssembly requestingAssembly, Boolean throwOnFileNotFound)
+   at System.Reflection.Assembly.Load(String assemblyString)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(String assemblyName)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(ConfigurationItemFactory factory, String assemblyName, String itemNamePrefix)
+   at NLog.Config.LoggingConfigurationParser.ParseExtensionWithAssemblyName(String assemblyName, String prefix)
+   --- End of inner exception stack trace ---
+2023-11-05 10:30:32.9290 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to create Target with unknown type-alias: 'ApplicationInsightsTarget' - Verify type-alias and check extension is included.
+   at NLog.Config.FactoryExtensions.CreateInstance[TBaseType](IFactory`1 factory, String typeAlias)
+   at NLog.Config.LoggingConfigurationParser.FactoryCreateInstance[T](String typeName, IFactory`1 factory)
+2023-11-05 10:30:32.9290 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ai' not found for logging rule: *.
+2023-11-05 10:30:32.9290 Info Closing old configuration.
+2023-11-05 10:30:32.9503 Info Validating config: Targets=0, ConfigItems=1, FilePath=D:\Universidad_Palermo\Tecnicas_Avanzadas_Programacion\Trabajo_Practico_Final\Tecnicas_Adv_Prog_Final\VTVApp.Api\NLog.config
+2023-11-05 10:30:32.9503 Info Configuration initialized.
+2023-11-05 10:55:42.7384 Info Loading assembly name: NLog.Targets.ApplicationInsights
+2023-11-05 10:55:42.7672 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Error loading extensions: NLog.Targets.ApplicationInsights
+ ---> System.IO.FileNotFoundException: Could not load file or assembly 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'. El sistema no puede encontrar el archivo especificado.
+File name: 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'
+   at System.Reflection.RuntimeAssembly.InternalLoad(AssemblyName assemblyName, StackCrawlMark& stackMark, AssemblyLoadContext assemblyLoadContext, RuntimeAssembly requestingAssembly, Boolean throwOnFileNotFound)
+   at System.Reflection.Assembly.Load(String assemblyString)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(String assemblyName)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(ConfigurationItemFactory factory, String assemblyName, String itemNamePrefix)
+   at NLog.Config.LoggingConfigurationParser.ParseExtensionWithAssemblyName(String assemblyName, String prefix)
+   --- End of inner exception stack trace ---
+2023-11-05 10:55:42.8010 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to create Target with unknown type-alias: 'ApplicationInsightsTarget' - Verify type-alias and check extension is included.
+   at NLog.Config.FactoryExtensions.CreateInstance[TBaseType](IFactory`1 factory, String typeAlias)
+   at NLog.Config.LoggingConfigurationParser.FactoryCreateInstance[T](String typeName, IFactory`1 factory)
+2023-11-05 10:55:42.8010 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ai' not found for logging rule: *.
+2023-11-05 10:55:42.8303 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.5.2160. Product version: 5.2.5+7c014325443d65541200b698a50b9dd4ec30c7f0. GlobalAssemblyCache: False
+2023-11-05 10:55:42.8656 Info Validating config: Targets=0, ConfigItems=1, FilePath=D:\Universidad_Palermo\Tecnicas_Avanzadas_Programacion\Trabajo_Practico_Final\Tecnicas_Adv_Prog_Final\VTVApp.Api\bin\Debug\net7.0\NLog.config
+2023-11-05 10:55:42.8656 Info Configuration initialized.
+2023-11-05 10:55:42.8880 Info Loading NLog config from XML file: D:\Universidad_Palermo\Tecnicas_Avanzadas_Programacion\Trabajo_Practico_Final\Tecnicas_Adv_Prog_Final\VTVApp.Api\NLog.config
+2023-11-05 10:55:42.8880 Info Loading assembly name: NLog.Targets.ApplicationInsights
+2023-11-05 10:55:42.8880 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Error loading extensions: NLog.Targets.ApplicationInsights
+ ---> System.IO.FileNotFoundException: Could not load file or assembly 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'. El sistema no puede encontrar el archivo especificado.
+File name: 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'
+   at System.Reflection.RuntimeAssembly.InternalLoad(AssemblyName assemblyName, StackCrawlMark& stackMark, AssemblyLoadContext assemblyLoadContext, RuntimeAssembly requestingAssembly, Boolean throwOnFileNotFound)
+   at System.Reflection.Assembly.Load(String assemblyString)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(String assemblyName)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(ConfigurationItemFactory factory, String assemblyName, String itemNamePrefix)
+   at NLog.Config.LoggingConfigurationParser.ParseExtensionWithAssemblyName(String assemblyName, String prefix)
+   --- End of inner exception stack trace ---
+2023-11-05 10:55:42.8948 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to create Target with unknown type-alias: 'ApplicationInsightsTarget' - Verify type-alias and check extension is included.
+   at NLog.Config.FactoryExtensions.CreateInstance[TBaseType](IFactory`1 factory, String typeAlias)
+   at NLog.Config.LoggingConfigurationParser.FactoryCreateInstance[T](String typeName, IFactory`1 factory)
+2023-11-05 10:55:42.8948 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ai' not found for logging rule: *.
+2023-11-05 10:55:42.8948 Info Closing old configuration.
+2023-11-05 10:55:42.8948 Info Validating config: Targets=0, ConfigItems=1, FilePath=D:\Universidad_Palermo\Tecnicas_Avanzadas_Programacion\Trabajo_Practico_Final\Tecnicas_Adv_Prog_Final\VTVApp.Api\NLog.config
+2023-11-05 10:55:42.8948 Info Configuration initialized.
+2023-11-05 11:00:24.2213 Info Loading assembly name: NLog.Targets.ApplicationInsights
+2023-11-05 11:00:24.2652 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Error loading extensions: NLog.Targets.ApplicationInsights
+ ---> System.IO.FileNotFoundException: Could not load file or assembly 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'. El sistema no puede encontrar el archivo especificado.
+File name: 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'
+   at System.Reflection.RuntimeAssembly.InternalLoad(AssemblyName assemblyName, StackCrawlMark& stackMark, AssemblyLoadContext assemblyLoadContext, RuntimeAssembly requestingAssembly, Boolean throwOnFileNotFound)
+   at System.Reflection.Assembly.Load(String assemblyString)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(String assemblyName)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(ConfigurationItemFactory factory, String assemblyName, String itemNamePrefix)
+   at NLog.Config.LoggingConfigurationParser.ParseExtensionWithAssemblyName(String assemblyName, String prefix)
+   --- End of inner exception stack trace ---
+2023-11-05 11:00:24.3179 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to create Target with unknown type-alias: 'ApplicationInsightsTarget' - Verify type-alias and check extension is included.
+   at NLog.Config.FactoryExtensions.CreateInstance[TBaseType](IFactory`1 factory, String typeAlias)
+   at NLog.Config.LoggingConfigurationParser.FactoryCreateInstance[T](String typeName, IFactory`1 factory)
+2023-11-05 11:00:24.3179 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ai' not found for logging rule: *.
+2023-11-05 11:00:24.3554 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.5.2160. Product version: 5.2.5+7c014325443d65541200b698a50b9dd4ec30c7f0. GlobalAssemblyCache: False
+2023-11-05 11:00:24.3845 Info Validating config: Targets=0, ConfigItems=1, FilePath=D:\Universidad_Palermo\Tecnicas_Avanzadas_Programacion\Trabajo_Practico_Final\Tecnicas_Adv_Prog_Final\VTVApp.Api\bin\Debug\net7.0\NLog.config
+2023-11-05 11:00:24.3845 Info Configuration initialized.
+2023-11-05 11:00:24.4021 Info Loading NLog config from XML file: D:\Universidad_Palermo\Tecnicas_Avanzadas_Programacion\Trabajo_Practico_Final\Tecnicas_Adv_Prog_Final\VTVApp.Api\NLog.config
+2023-11-05 11:00:24.4021 Info Loading assembly name: NLog.Targets.ApplicationInsights
+2023-11-05 11:00:24.4021 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Error loading extensions: NLog.Targets.ApplicationInsights
+ ---> System.IO.FileNotFoundException: Could not load file or assembly 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'. El sistema no puede encontrar el archivo especificado.
+File name: 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'
+   at System.Reflection.RuntimeAssembly.InternalLoad(AssemblyName assemblyName, StackCrawlMark& stackMark, AssemblyLoadContext assemblyLoadContext, RuntimeAssembly requestingAssembly, Boolean throwOnFileNotFound)
+   at System.Reflection.Assembly.Load(String assemblyString)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(String assemblyName)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(ConfigurationItemFactory factory, String assemblyName, String itemNamePrefix)
+   at NLog.Config.LoggingConfigurationParser.ParseExtensionWithAssemblyName(String assemblyName, String prefix)
+   --- End of inner exception stack trace ---
+2023-11-05 11:00:24.4021 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to create Target with unknown type-alias: 'ApplicationInsightsTarget' - Verify type-alias and check extension is included.
+   at NLog.Config.FactoryExtensions.CreateInstance[TBaseType](IFactory`1 factory, String typeAlias)
+   at NLog.Config.LoggingConfigurationParser.FactoryCreateInstance[T](String typeName, IFactory`1 factory)
+2023-11-05 11:00:24.4107 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ai' not found for logging rule: *.
+2023-11-05 11:00:24.4107 Info Closing old configuration.
+2023-11-05 11:00:24.4264 Info Validating config: Targets=0, ConfigItems=1, FilePath=D:\Universidad_Palermo\Tecnicas_Avanzadas_Programacion\Trabajo_Practico_Final\Tecnicas_Adv_Prog_Final\VTVApp.Api\NLog.config
+2023-11-05 11:00:24.4264 Info Configuration initialized.
+2023-11-05 11:03:36.7277 Info Loading assembly name: NLog.Targets.ApplicationInsights
+2023-11-05 11:03:36.7571 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Error loading extensions: NLog.Targets.ApplicationInsights
+ ---> System.IO.FileNotFoundException: Could not load file or assembly 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'. El sistema no puede encontrar el archivo especificado.
+File name: 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'
+   at System.Reflection.RuntimeAssembly.InternalLoad(AssemblyName assemblyName, StackCrawlMark& stackMark, AssemblyLoadContext assemblyLoadContext, RuntimeAssembly requestingAssembly, Boolean throwOnFileNotFound)
+   at System.Reflection.Assembly.Load(String assemblyString)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(String assemblyName)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(ConfigurationItemFactory factory, String assemblyName, String itemNamePrefix)
+   at NLog.Config.LoggingConfigurationParser.ParseExtensionWithAssemblyName(String assemblyName, String prefix)
+   --- End of inner exception stack trace ---
+2023-11-05 11:03:36.7947 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to create Target with unknown type-alias: 'ApplicationInsightsTarget' - Verify type-alias and check extension is included.
+   at NLog.Config.FactoryExtensions.CreateInstance[TBaseType](IFactory`1 factory, String typeAlias)
+   at NLog.Config.LoggingConfigurationParser.FactoryCreateInstance[T](String typeName, IFactory`1 factory)
+2023-11-05 11:03:36.8064 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ai' not found for logging rule: *.
+2023-11-05 11:03:36.8244 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.5.2160. Product version: 5.2.5+7c014325443d65541200b698a50b9dd4ec30c7f0. GlobalAssemblyCache: False
+2023-11-05 11:03:36.8493 Info Validating config: Targets=0, ConfigItems=1, FilePath=D:\Universidad_Palermo\Tecnicas_Avanzadas_Programacion\Trabajo_Practico_Final\Tecnicas_Adv_Prog_Final\VTVApp.Api\bin\Debug\net7.0\NLog.config
+2023-11-05 11:03:36.8493 Info Configuration initialized.
+2023-11-05 11:03:36.8682 Info Loading NLog config from XML file: D:\Universidad_Palermo\Tecnicas_Avanzadas_Programacion\Trabajo_Practico_Final\Tecnicas_Adv_Prog_Final\VTVApp.Api\NLog.config
+2023-11-05 11:03:36.8682 Info Loading assembly name: NLog.Targets.ApplicationInsights
+2023-11-05 11:03:36.8682 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Error loading extensions: NLog.Targets.ApplicationInsights
+ ---> System.IO.FileNotFoundException: Could not load file or assembly 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'. El sistema no puede encontrar el archivo especificado.
+File name: 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'
+   at System.Reflection.RuntimeAssembly.InternalLoad(AssemblyName assemblyName, StackCrawlMark& stackMark, AssemblyLoadContext assemblyLoadContext, RuntimeAssembly requestingAssembly, Boolean throwOnFileNotFound)
+   at System.Reflection.Assembly.Load(String assemblyString)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(String assemblyName)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(ConfigurationItemFactory factory, String assemblyName, String itemNamePrefix)
+   at NLog.Config.LoggingConfigurationParser.ParseExtensionWithAssemblyName(String assemblyName, String prefix)
+   --- End of inner exception stack trace ---
+2023-11-05 11:03:36.8682 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to create Target with unknown type-alias: 'ApplicationInsightsTarget' - Verify type-alias and check extension is included.
+   at NLog.Config.FactoryExtensions.CreateInstance[TBaseType](IFactory`1 factory, String typeAlias)
+   at NLog.Config.LoggingConfigurationParser.FactoryCreateInstance[T](String typeName, IFactory`1 factory)
+2023-11-05 11:03:36.8682 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ai' not found for logging rule: *.
+2023-11-05 11:03:36.8682 Info Closing old configuration.
+2023-11-05 11:03:36.8924 Info Validating config: Targets=0, ConfigItems=1, FilePath=D:\Universidad_Palermo\Tecnicas_Avanzadas_Programacion\Trabajo_Practico_Final\Tecnicas_Adv_Prog_Final\VTVApp.Api\NLog.config
+2023-11-05 11:03:36.8924 Info Configuration initialized.
+2023-11-05 11:08:54.9792 Info Loading assembly name: NLog.Targets.ApplicationInsights
+2023-11-05 11:08:55.0183 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Error loading extensions: NLog.Targets.ApplicationInsights
+ ---> System.IO.FileNotFoundException: Could not load file or assembly 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'. El sistema no puede encontrar el archivo especificado.
+File name: 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'
+   at System.Reflection.RuntimeAssembly.InternalLoad(AssemblyName assemblyName, StackCrawlMark& stackMark, AssemblyLoadContext assemblyLoadContext, RuntimeAssembly requestingAssembly, Boolean throwOnFileNotFound)
+   at System.Reflection.Assembly.Load(String assemblyString)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(String assemblyName)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(ConfigurationItemFactory factory, String assemblyName, String itemNamePrefix)
+   at NLog.Config.LoggingConfigurationParser.ParseExtensionWithAssemblyName(String assemblyName, String prefix)
+   --- End of inner exception stack trace ---
+2023-11-05 11:08:55.0550 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to create Target with unknown type-alias: 'ApplicationInsightsTarget' - Verify type-alias and check extension is included.
+   at NLog.Config.FactoryExtensions.CreateInstance[TBaseType](IFactory`1 factory, String typeAlias)
+   at NLog.Config.LoggingConfigurationParser.FactoryCreateInstance[T](String typeName, IFactory`1 factory)
+2023-11-05 11:08:55.0665 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ai' not found for logging rule: *.
+2023-11-05 11:08:55.0852 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.5.2160. Product version: 5.2.5+7c014325443d65541200b698a50b9dd4ec30c7f0. GlobalAssemblyCache: False
+2023-11-05 11:08:55.1064 Info Validating config: Targets=0, ConfigItems=1, FilePath=D:\Universidad_Palermo\Tecnicas_Avanzadas_Programacion\Trabajo_Practico_Final\Tecnicas_Adv_Prog_Final\VTVApp.Api\bin\Debug\net7.0\NLog.config
+2023-11-05 11:08:55.1064 Info Configuration initialized.
+2023-11-05 11:08:55.1192 Info Loading NLog config from XML file: D:\Universidad_Palermo\Tecnicas_Avanzadas_Programacion\Trabajo_Practico_Final\Tecnicas_Adv_Prog_Final\VTVApp.Api\NLog.config
+2023-11-05 11:08:55.1192 Info Loading assembly name: NLog.Targets.ApplicationInsights
+2023-11-05 11:08:55.1192 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Error loading extensions: NLog.Targets.ApplicationInsights
+ ---> System.IO.FileNotFoundException: Could not load file or assembly 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'. El sistema no puede encontrar el archivo especificado.
+File name: 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'
+   at System.Reflection.RuntimeAssembly.InternalLoad(AssemblyName assemblyName, StackCrawlMark& stackMark, AssemblyLoadContext assemblyLoadContext, RuntimeAssembly requestingAssembly, Boolean throwOnFileNotFound)
+   at System.Reflection.Assembly.Load(String assemblyString)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(String assemblyName)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(ConfigurationItemFactory factory, String assemblyName, String itemNamePrefix)
+   at NLog.Config.LoggingConfigurationParser.ParseExtensionWithAssemblyName(String assemblyName, String prefix)
+   --- End of inner exception stack trace ---
+2023-11-05 11:08:55.1192 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to create Target with unknown type-alias: 'ApplicationInsightsTarget' - Verify type-alias and check extension is included.
+   at NLog.Config.FactoryExtensions.CreateInstance[TBaseType](IFactory`1 factory, String typeAlias)
+   at NLog.Config.LoggingConfigurationParser.FactoryCreateInstance[T](String typeName, IFactory`1 factory)
+2023-11-05 11:08:55.1192 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ai' not found for logging rule: *.
+2023-11-05 11:08:55.1192 Info Closing old configuration.
+2023-11-05 11:08:55.1328 Info Validating config: Targets=0, ConfigItems=1, FilePath=D:\Universidad_Palermo\Tecnicas_Avanzadas_Programacion\Trabajo_Practico_Final\Tecnicas_Adv_Prog_Final\VTVApp.Api\NLog.config
+2023-11-05 11:08:55.1328 Info Configuration initialized.
+2023-11-05 11:21:40.6682 Info Loading assembly name: NLog.Targets.ApplicationInsights
+2023-11-05 11:21:40.7100 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Error loading extensions: NLog.Targets.ApplicationInsights
+ ---> System.IO.FileNotFoundException: Could not load file or assembly 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'. El sistema no puede encontrar el archivo especificado.
+File name: 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'
+   at System.Reflection.RuntimeAssembly.InternalLoad(AssemblyName assemblyName, StackCrawlMark& stackMark, AssemblyLoadContext assemblyLoadContext, RuntimeAssembly requestingAssembly, Boolean throwOnFileNotFound)
+   at System.Reflection.Assembly.Load(String assemblyString)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(String assemblyName)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(ConfigurationItemFactory factory, String assemblyName, String itemNamePrefix)
+   at NLog.Config.LoggingConfigurationParser.ParseExtensionWithAssemblyName(String assemblyName, String prefix)
+   --- End of inner exception stack trace ---
+2023-11-05 11:21:40.7540 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to create Target with unknown type-alias: 'ApplicationInsightsTarget' - Verify type-alias and check extension is included.
+   at NLog.Config.FactoryExtensions.CreateInstance[TBaseType](IFactory`1 factory, String typeAlias)
+   at NLog.Config.LoggingConfigurationParser.FactoryCreateInstance[T](String typeName, IFactory`1 factory)
+2023-11-05 11:21:40.7684 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ai' not found for logging rule: *.
+2023-11-05 11:21:40.7914 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.5.2160. Product version: 5.2.5+7c014325443d65541200b698a50b9dd4ec30c7f0. GlobalAssemblyCache: False
+2023-11-05 11:21:40.8199 Info Validating config: Targets=0, ConfigItems=1, FilePath=D:\Universidad_Palermo\Tecnicas_Avanzadas_Programacion\Trabajo_Practico_Final\Tecnicas_Adv_Prog_Final\VTVApp.Api\bin\Debug\net7.0\NLog.config
+2023-11-05 11:21:40.8347 Info Configuration initialized.
+2023-11-05 11:21:40.8347 Info Loading NLog config from XML file: D:\Universidad_Palermo\Tecnicas_Avanzadas_Programacion\Trabajo_Practico_Final\Tecnicas_Adv_Prog_Final\VTVApp.Api\NLog.config
+2023-11-05 11:21:40.8347 Info Loading assembly name: NLog.Targets.ApplicationInsights
+2023-11-05 11:21:40.8485 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Error loading extensions: NLog.Targets.ApplicationInsights
+ ---> System.IO.FileNotFoundException: Could not load file or assembly 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'. El sistema no puede encontrar el archivo especificado.
+File name: 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'
+   at System.Reflection.RuntimeAssembly.InternalLoad(AssemblyName assemblyName, StackCrawlMark& stackMark, AssemblyLoadContext assemblyLoadContext, RuntimeAssembly requestingAssembly, Boolean throwOnFileNotFound)
+   at System.Reflection.Assembly.Load(String assemblyString)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(String assemblyName)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(ConfigurationItemFactory factory, String assemblyName, String itemNamePrefix)
+   at NLog.Config.LoggingConfigurationParser.ParseExtensionWithAssemblyName(String assemblyName, String prefix)
+   --- End of inner exception stack trace ---
+2023-11-05 11:21:40.8485 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to create Target with unknown type-alias: 'ApplicationInsightsTarget' - Verify type-alias and check extension is included.
+   at NLog.Config.FactoryExtensions.CreateInstance[TBaseType](IFactory`1 factory, String typeAlias)
+   at NLog.Config.LoggingConfigurationParser.FactoryCreateInstance[T](String typeName, IFactory`1 factory)
+2023-11-05 11:21:40.8485 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ai' not found for logging rule: *.
+2023-11-05 11:21:40.8485 Info Closing old configuration.
+2023-11-05 11:21:40.8485 Info Validating config: Targets=0, ConfigItems=1, FilePath=D:\Universidad_Palermo\Tecnicas_Avanzadas_Programacion\Trabajo_Practico_Final\Tecnicas_Adv_Prog_Final\VTVApp.Api\NLog.config
+2023-11-05 11:21:40.8485 Info Configuration initialized.
+2023-11-05 11:29:36.7941 Info Loading assembly name: NLog.Targets.ApplicationInsights
+2023-11-05 11:29:36.8332 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Error loading extensions: NLog.Targets.ApplicationInsights
+ ---> System.IO.FileNotFoundException: Could not load file or assembly 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'. El sistema no puede encontrar el archivo especificado.
+File name: 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'
+   at System.Reflection.RuntimeAssembly.InternalLoad(AssemblyName assemblyName, StackCrawlMark& stackMark, AssemblyLoadContext assemblyLoadContext, RuntimeAssembly requestingAssembly, Boolean throwOnFileNotFound)
+   at System.Reflection.Assembly.Load(String assemblyString)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(String assemblyName)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(ConfigurationItemFactory factory, String assemblyName, String itemNamePrefix)
+   at NLog.Config.LoggingConfigurationParser.ParseExtensionWithAssemblyName(String assemblyName, String prefix)
+   --- End of inner exception stack trace ---
+2023-11-05 11:29:36.8797 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to create Target with unknown type-alias: 'ApplicationInsightsTarget' - Verify type-alias and check extension is included.
+   at NLog.Config.FactoryExtensions.CreateInstance[TBaseType](IFactory`1 factory, String typeAlias)
+   at NLog.Config.LoggingConfigurationParser.FactoryCreateInstance[T](String typeName, IFactory`1 factory)
+2023-11-05 11:29:36.8797 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ai' not found for logging rule: *.
+2023-11-05 11:29:36.9090 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.5.2160. Product version: 5.2.5+7c014325443d65541200b698a50b9dd4ec30c7f0. GlobalAssemblyCache: False
+2023-11-05 11:29:36.9399 Info Validating config: Targets=0, ConfigItems=1, FilePath=D:\Universidad_Palermo\Tecnicas_Avanzadas_Programacion\Trabajo_Practico_Final\Tecnicas_Adv_Prog_Final\VTVApp.Api\bin\Debug\net7.0\NLog.config
+2023-11-05 11:29:36.9499 Info Configuration initialized.
+2023-11-05 11:29:36.9499 Info Loading NLog config from XML file: D:\Universidad_Palermo\Tecnicas_Avanzadas_Programacion\Trabajo_Practico_Final\Tecnicas_Adv_Prog_Final\VTVApp.Api\NLog.config
+2023-11-05 11:29:36.9575 Info Loading assembly name: NLog.Targets.ApplicationInsights
+2023-11-05 11:29:36.9575 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Error loading extensions: NLog.Targets.ApplicationInsights
+ ---> System.IO.FileNotFoundException: Could not load file or assembly 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'. El sistema no puede encontrar el archivo especificado.
+File name: 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'
+   at System.Reflection.RuntimeAssembly.InternalLoad(AssemblyName assemblyName, StackCrawlMark& stackMark, AssemblyLoadContext assemblyLoadContext, RuntimeAssembly requestingAssembly, Boolean throwOnFileNotFound)
+   at System.Reflection.Assembly.Load(String assemblyString)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(String assemblyName)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(ConfigurationItemFactory factory, String assemblyName, String itemNamePrefix)
+   at NLog.Config.LoggingConfigurationParser.ParseExtensionWithAssemblyName(String assemblyName, String prefix)
+   --- End of inner exception stack trace ---
+2023-11-05 11:29:36.9575 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to create Target with unknown type-alias: 'ApplicationInsightsTarget' - Verify type-alias and check extension is included.
+   at NLog.Config.FactoryExtensions.CreateInstance[TBaseType](IFactory`1 factory, String typeAlias)
+   at NLog.Config.LoggingConfigurationParser.FactoryCreateInstance[T](String typeName, IFactory`1 factory)
+2023-11-05 11:29:36.9575 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ai' not found for logging rule: *.
+2023-11-05 11:29:36.9575 Info Closing old configuration.
+2023-11-05 11:29:36.9575 Info Validating config: Targets=0, ConfigItems=1, FilePath=D:\Universidad_Palermo\Tecnicas_Avanzadas_Programacion\Trabajo_Practico_Final\Tecnicas_Adv_Prog_Final\VTVApp.Api\NLog.config
+2023-11-05 11:29:36.9575 Info Configuration initialized.
+2023-11-05 11:44:50.4103 Info Loading assembly name: NLog.Targets.ApplicationInsights
+2023-11-05 11:44:50.4417 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Error loading extensions: NLog.Targets.ApplicationInsights
+ ---> System.IO.FileNotFoundException: Could not load file or assembly 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'. El sistema no puede encontrar el archivo especificado.
+File name: 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'
+   at System.Reflection.RuntimeAssembly.InternalLoad(AssemblyName assemblyName, StackCrawlMark& stackMark, AssemblyLoadContext assemblyLoadContext, RuntimeAssembly requestingAssembly, Boolean throwOnFileNotFound)
+   at System.Reflection.Assembly.Load(String assemblyString)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(String assemblyName)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(ConfigurationItemFactory factory, String assemblyName, String itemNamePrefix)
+   at NLog.Config.LoggingConfigurationParser.ParseExtensionWithAssemblyName(String assemblyName, String prefix)
+   --- End of inner exception stack trace ---
+2023-11-05 11:44:50.4775 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to create Target with unknown type-alias: 'ApplicationInsightsTarget' - Verify type-alias and check extension is included.
+   at NLog.Config.FactoryExtensions.CreateInstance[TBaseType](IFactory`1 factory, String typeAlias)
+   at NLog.Config.LoggingConfigurationParser.FactoryCreateInstance[T](String typeName, IFactory`1 factory)
+2023-11-05 11:44:50.4775 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ai' not found for logging rule: *.
+2023-11-05 11:44:50.5042 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.5.2160. Product version: 5.2.5+7c014325443d65541200b698a50b9dd4ec30c7f0. GlobalAssemblyCache: False
+2023-11-05 11:44:50.5274 Info Validating config: Targets=0, ConfigItems=1, FilePath=D:\Universidad_Palermo\Tecnicas_Avanzadas_Programacion\Trabajo_Practico_Final\Tecnicas_Adv_Prog_Final\VTVApp.Api\bin\Debug\net7.0\NLog.config
+2023-11-05 11:44:50.5274 Info Configuration initialized.
+2023-11-05 11:44:50.5399 Info Loading NLog config from XML file: D:\Universidad_Palermo\Tecnicas_Avanzadas_Programacion\Trabajo_Practico_Final\Tecnicas_Adv_Prog_Final\VTVApp.Api\NLog.config
+2023-11-05 11:44:50.5399 Info Loading assembly name: NLog.Targets.ApplicationInsights
+2023-11-05 11:44:50.5399 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Error loading extensions: NLog.Targets.ApplicationInsights
+ ---> System.IO.FileNotFoundException: Could not load file or assembly 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'. El sistema no puede encontrar el archivo especificado.
+File name: 'NLog.Targets.ApplicationInsights, Culture=neutral, PublicKeyToken=null'
+   at System.Reflection.RuntimeAssembly.InternalLoad(AssemblyName assemblyName, StackCrawlMark& stackMark, AssemblyLoadContext assemblyLoadContext, RuntimeAssembly requestingAssembly, Boolean throwOnFileNotFound)
+   at System.Reflection.Assembly.Load(String assemblyString)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(String assemblyName)
+   at NLog.Config.AssemblyExtensionLoader.LoadAssemblyFromName(ConfigurationItemFactory factory, String assemblyName, String itemNamePrefix)
+   at NLog.Config.LoggingConfigurationParser.ParseExtensionWithAssemblyName(String assemblyName, String prefix)
+   --- End of inner exception stack trace ---
+2023-11-05 11:44:50.5399 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Failed to create Target with unknown type-alias: 'ApplicationInsightsTarget' - Verify type-alias and check extension is included.
+   at NLog.Config.FactoryExtensions.CreateInstance[TBaseType](IFactory`1 factory, String typeAlias)
+   at NLog.Config.LoggingConfigurationParser.FactoryCreateInstance[T](String typeName, IFactory`1 factory)
+2023-11-05 11:44:50.5399 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'ai' not found for logging rule: *.
+2023-11-05 11:44:50.5399 Info Closing old configuration.
+2023-11-05 11:44:50.5535 Info Validating config: Targets=0, ConfigItems=1, FilePath=D:\Universidad_Palermo\Tecnicas_Avanzadas_Programacion\Trabajo_Practico_Final\Tecnicas_Adv_Prog_Final\VTVApp.Api\NLog.config
+2023-11-05 11:44:50.5535 Info Configuration initialized.

@@ -60,6 +60,14 @@ namespace VTVApp.Api.Repositories.Interfaces
         /// <param name="cancellationToken">A token to cancel the operation if necessary.</param>
         /// <returns>A Task containing an IEnumerable of VehicleDto that match the filter criteria.</returns>
         Task<IEnumerable<VehicleDto>> FindVehiclesAsync(VehicleFilterDto vehicleFilterDto, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Retrieves a vehicle marked as favorite for a specified user.
+        /// </summary>
+        /// <param name="userId">The ID of the User to fetch his/her favorite vehicle</param>
+        /// <param name="cancellationToken">A token to cancel the operation if necessary.</param>
+        /// <returns>A Task containing the VehicleDto.</returns>
+        Task<VehicleDto?> GetFavoriteVehicleByUserIdAsync(Guid userId, CancellationToken cancellationToken);
     }
 
 }

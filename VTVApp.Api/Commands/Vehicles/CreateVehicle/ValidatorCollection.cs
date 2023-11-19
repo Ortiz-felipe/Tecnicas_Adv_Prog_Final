@@ -22,7 +22,7 @@ namespace VTVApp.Api.Commands.Vehicles.CreateVehicle
             RuleFor(v => v.LicensePlate)
                 .NotEmpty().WithMessage("License plate is required.");
 
-            RuleFor(v => v.Make)
+            RuleFor(v => v.Brand)
                 .NotEmpty().WithMessage("Make is required.")
                 .MaximumLength(50).WithMessage("Make must not exceed 50 characters.");
 

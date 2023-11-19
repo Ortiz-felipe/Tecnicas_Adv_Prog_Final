@@ -34,6 +34,10 @@
         public static ApiError GetRecheckRequiredInspectionsError =>
             new(MajorErrorCodes.Inspections, 8, "Error occurred while retrieving inspections requiring recheck.");
 
+        // Error when failing to start an inspection.
+        public static ApiError StartInspectionError =>
+            new(MajorErrorCodes.Inspections, 9, "Error occurred while starting the inspection.");
+
         // Error for any unexpected issue during inspection operations
         public static ApiError InspectionUnexpectedError =>
             new(MajorErrorCodes.Inspections, 99, "An unexpected error occurred in inspection operations.");

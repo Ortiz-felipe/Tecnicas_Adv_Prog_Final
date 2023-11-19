@@ -31,6 +31,9 @@ namespace VTVApp.Api.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.Property<TimeSpan>("Time")
                         .HasColumnType("time");
 
@@ -121,6 +124,9 @@ namespace VTVApp.Api.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.Property<int>("TotalScore")
                         .HasColumnType("int");
 
@@ -201,10 +207,18 @@ namespace VTVApp.Api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Brand")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<string>("Color")
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
+
+                    b.Property<bool>("IsFavorite")
+                        .HasColumnType("bit");
 
                     b.Property<string>("LicensePlate")
                         .IsRequired()
@@ -212,11 +226,6 @@ namespace VTVApp.Api.Migrations
                         .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("Model")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");

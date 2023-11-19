@@ -5,8 +5,10 @@ namespace VTVApp.Api.Repositories.Interfaces
 {
     public interface IAppointmentsRepository
     {
+        Task<IEnumerable<AppointmentListDto>> GetAppointmentsAsync(CancellationToken cancellationToken);
         Task<AppointmentDetailsDto?> GetAppointmentByIdAsync(Guid appointmentId, CancellationToken cancellationToken);
         Task<IEnumerable<AppointmentListDto>> GetAppointmentsByUserIdAsync(Guid userId, CancellationToken cancellationToken);
+        Task<AppointmentDetailsDto?> GetLatestAppointmentByUserIdAsync(Guid userId, CancellationToken cancellationToken);
         Task<AppointmentOperationResultDto> CreateAppointmentAsync(CreateAppointmentDto appointmentCreateDto, CancellationToken cancellationToken);
         Task<AppointmentOperationResultDto> UpdateAppointmentAsync(UpdateAppointmentDto appointmentUpdateDto, CancellationToken cancellationToken);
         Task<AppointmentOperationResultDto> DeleteAppointmentAsync(Guid appointmentId, CancellationToken cancellationToken);

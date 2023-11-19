@@ -24,6 +24,19 @@ namespace VTVApp.Api.Repositories
             var inspections = await _context.Inspections
                 .Include(i => i.Appointment)
                 .Include(i => i.Checkpoints)
+                .Where(i => i.Appointment.Status == AppointmentStatus.Pending)
+                .ToListAsync(cancellationToken);
+
+            return _mapper.Map<IEnumerable<InspectionListDto>>(inspections);
+        }
+
+        public async Task<IEnumerable<InspectionListDto>> GetInspectionsByUserIdAsync(Guid userId, CancellationToken cancellationToken)
+        {
+            var inspections = await _context.Inspections
+                .Include(i => i.Appointment)
+                .ThenInclude(a => a.Vehicle)
+                .Include(i => i.Checkpoints)
+                .Where(i => i.Appointment.Vehicle.UserId == userId)
                 .ToListAsync(cancellationToken);
 
             return _mapper.Map<IEnumerable<InspectionListDto>>(inspections);
@@ -35,6 +48,18 @@ namespace VTVApp.Api.Repositories
                 .Include(i => i.Appointment)
                 .Include(i => i.Checkpoints)
                 .FirstOrDefaultAsync(i => i.Id == inspectionId, cancellationToken);
+
+            return _mapper.Map<InspectionDetailsDto>(inspection);
+        }
+
+        public async Task<InspectionDetailsDto?> GetLatestInspectionByVehicleIdAsync(Guid vehicleId, CancellationToken cancellationToken)
+        {
+            var inspection = await _context.Inspections
+                .Include(i => i.Appointment)
+                .Include(i => i.Checkpoints)
+                .Where(i => i.Appointment.VehicleId == vehicleId)
+                .OrderByDescending(i => i.Appointment.Date)
+                .FirstOrDefaultAsync(cancellationToken);
 
             return _mapper.Map<InspectionDetailsDto>(inspection);
         }
@@ -61,9 +86,10 @@ namespace VTVApp.Api.Repositories
             return _mapper.Map<IEnumerable<InspectionListDto>>(inspections);
         }
 
-        public async Task<InspectionOperationResultDto> AddInspectionAsync(CreateInspectionDto inspection, CancellationToken cancellationToken)
+        public async Task<InspectionOperationResultDto?> AddInspectionAsync(CreateInspectionDto inspection, CancellationToken cancellationToken)
         {
             var newInspection = _mapper.Map<Inspection>(inspection);
+            newInspection.Status = InspectionStatus.InProgress;
 
             await _context.Inspections.AddAsync(newInspection, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
@@ -91,29 +117,80 @@ namespace VTVApp.Api.Repositories
             inspectionToUpdate.Result = inspection.Result;
             inspectionToUpdate.TotalScore = inspection.TotalScore;
 
-            // Update each checkpoint
-            foreach (var updatedCheckpoint in inspection.UpdatedCheckpoints)
+            if (!inspectionToUpdate.Checkpoints.Any())
             {
-                var checkpoint = inspectionToUpdate.Checkpoints.FirstOrDefault(cp => cp.Id == updatedCheckpoint.Id);
-                if (checkpoint != null)
+                var newCheckpoints = inspection.UpdatedCheckpoints.Select(ucp => new Checkpoint()
                 {
-                    checkpoint.Score = updatedCheckpoint.Score;
-                    checkpoint.Comment = updatedCheckpoint.Comment;
+                    Name = ucp.Name,
+                    Score = ucp.Score,
+                    Comment = ucp.Comment,
+                    InspectionId = inspectionToUpdate.Id
+                }).ToList();
+
+                newCheckpoints.ForEach(c => inspectionToUpdate.Checkpoints.Add(c));
+                await _context.Checkpoints.AddRangeAsync(newCheckpoints, cancellationToken);
+            }
+            else
+            {
+                // Update checkpoints
+                foreach (var updatedCheckpointDto in inspection.UpdatedCheckpoints)
+                {
+                    var checkpoint = inspectionToUpdate.Checkpoints
+                        .SingleOrDefault(cp => cp.Id == updatedCheckpointDto.Id);
+
+                    if (checkpoint != null)
+                    {
+                        // Update existing checkpoint
+                        checkpoint.Name = updatedCheckpointDto.Name;
+                        checkpoint.Score = updatedCheckpointDto.Score;
+                        checkpoint.Comment = updatedCheckpointDto.Comment;
+                    }
                 }
             }
 
-            // Save changes to the database
-            await _context.SaveChangesAsync(cancellationToken);
+            if (inspectionToUpdate.Checkpoints.Any(c => c.Score <= 5))
+            {
+                inspectionToUpdate.Status = InspectionStatus.CompletedFailed; 
+            }
 
-            // Map the updated inspection to InspectionDetailsDto
-            var inspectionDetailsDto = _mapper.Map<InspectionDetailsDto>(inspection);
+            switch (inspectionToUpdate.TotalScore)
+            {
+                case < 40:
+                    inspectionToUpdate.Status = InspectionStatus.CompletedFailed; 
+                    break;
+                case >= 80:
+                    inspectionToUpdate.Status = InspectionStatus.CompletedApproved; 
+                    break;
+                default:
+                    inspectionToUpdate.Status = InspectionStatus.InReview; 
+                    break;
+            }
 
-            // Return the operation result
+            // Update appointment status to completed
+            var appointment = await _context.Appointments
+                .FirstOrDefaultAsync(a => a.Id == inspectionToUpdate.AppointmentId, cancellationToken);
+            if (appointment != null)
+            {
+                appointment.Status = AppointmentStatus.Completed;
+            }
+
+            // Save changes
+            try
+            {
+                await _context.SaveChangesAsync(cancellationToken);
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                // Handle the concurrency exception
+                // Log the exception details and/or rethrow as a business exception
+                throw;
+            }
+
             return new InspectionOperationResultDto
             {
                 Success = true,
                 Message = "Inspection updated successfully.",
-                InspectionDetails = inspectionDetailsDto
+                InspectionDetails = _mapper.Map<InspectionDetailsDto>(inspectionToUpdate)
             };
         }
 

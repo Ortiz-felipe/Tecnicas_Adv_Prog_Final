@@ -8,6 +8,7 @@ using VTVApp.Api.Models.DTOs;
 using VTVApp.Api.Models.DTOs.Inspections;
 using VTVApp.Api.Models.DTOs.Vehicle;
 using VTVApp.Api.Queries.Vehicles.GetByVehicleId;
+using VTVApp.Api.Queries.Vehicles.GetFavoriteVehicleByUserId;
 using VTVApp.Api.Queries.Vehicles.GetInspectionsForVehicle;
 using VTVApp.Api.Queries.Vehicles.GetVehiclesByUserId;
 
@@ -26,7 +27,7 @@ namespace VTVApp.Api.Controllers
 
         // Register a new vehicle for a user
         [HttpPost(Name = "CreateVehicleAsync")]
-        [ProducesResponseType(typeof(VehicleDto), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(VehicleOperationResultDto), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ExtendedProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ExtendedProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> CreateVehicleAsync([FromBody] CreateVehicleCommand command)
@@ -35,17 +36,17 @@ namespace VTVApp.Api.Controllers
         }
 
         // Get a vehicle by its ID
-        [HttpGet("{vehicleId}", Name = "GetVehicleByIdAsync")]
+        [HttpGet("{VehicleId}", Name = "GetVehicleByIdAsync")]
         [ProducesResponseType(typeof(VehicleDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ExtendedProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetVehicleByIdAsync(GetByVehicleIdQuery queryRequest)
+        public async Task<IActionResult> GetVehicleByIdAsync([FromRoute] GetByVehicleIdQuery queryRequest)
         {
             return await _mediator.Send(queryRequest);
         }
 
         // Update a vehicle's details
-        [HttpPut("{vehicleId}", Name = "UpdateVehicleAsync")]
+        [HttpPut("{VehicleId}", Name = "UpdateVehicleAsync")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ExtendedProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ExtendedProblemDetails), StatusCodes.Status500InternalServerError)]
@@ -55,7 +56,7 @@ namespace VTVApp.Api.Controllers
         }
 
         // Delete a vehicle
-        [HttpDelete("{vehicleId}", Name = "DeleteVehicleAsync")]
+        [HttpDelete("{VehicleId}", Name = "DeleteVehicleAsync")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(ExtendedProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ExtendedProblemDetails), StatusCodes.Status500InternalServerError)]
@@ -65,20 +66,31 @@ namespace VTVApp.Api.Controllers
         }
 
         // Get all vehicles for a user
-        [HttpGet("user/{userId}", Name = "GetVehiclesByUserIdAsync")]
+        [HttpGet("user/{UserId}", Name = "GetVehiclesByUserIdAsync")]
         [ProducesResponseType(typeof(IEnumerable<VehicleDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ExtendedProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetVehiclesByUserIdAsync(GetVehiclesByUserIdQuery queryRequest)
+        public async Task<IActionResult> GetVehiclesByUserIdAsync([FromRoute] GetVehiclesByUserIdQuery queryRequest)
         {
             return await _mediator.Send(queryRequest);
         }
 
         // Get the inspection history for a vehicle
-        [HttpGet("{vehicleId}/inspections", Name = "GetInspectionsForVehicleAsync")]
+        [HttpGet("{VehicleId}/inspections", Name = "GetInspectionsForVehicleAsync")]
         [ProducesResponseType(typeof(IEnumerable<InspectionDetailsDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ExtendedProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetInspectionsForVehicleAsync(GetInspectionsForVehicleIdQuery queryRequest)
+        public async Task<IActionResult> GetInspectionsForVehicleAsync([FromRoute] GetInspectionsForVehicleIdQuery queryRequest)
+        {
+            return await _mediator.Send(queryRequest);
+        }
+
+        // Get the vehicle marked as favorite for a user
+        [HttpGet("user/{UserId}/favorite", Name = "GetFavoriteVehicleForUserAsync")]
+        [ProducesResponseType(typeof(VehicleDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ExtendedProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetFavoriteVehicleForUserAsync(
+            [FromRoute] GetFavoriteVehicleForUserIdQuery queryRequest)
         {
             return await _mediator.Send(queryRequest);
         }

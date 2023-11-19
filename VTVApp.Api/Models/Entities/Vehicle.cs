@@ -15,7 +15,7 @@ namespace VTVApp.Api.Models.Entities
 
         [Required]
         [StringLength(50)]
-        public string Name { get; set; }
+        public string Brand { get; set; }
 
         [Required]
         [StringLength(50)]
@@ -27,6 +27,8 @@ namespace VTVApp.Api.Models.Entities
         [Required]
         [StringLength(30)]
         public string Color { get; set; }
+
+        public bool IsFavorite { get; set; }
 
         // Foreign Key
         [Required]

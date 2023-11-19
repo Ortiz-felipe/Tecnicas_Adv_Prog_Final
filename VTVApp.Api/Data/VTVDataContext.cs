@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using VTVApp.Api.Models;
 using VTVApp.Api.Models.Entities;
 
 
 namespace VTVApp.Api.Data
 {
-    public class VTVDataContext : DbContext
+    public class VTVDataContext : DbContext, IVtvDataContext
     {
         public VTVDataContext(DbContextOptions<VTVDataContext> options) : base(options)
         {
@@ -18,6 +19,26 @@ namespace VTVApp.Api.Data
         public DbSet<Checkpoint> Checkpoints { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<Province> Provinces { get; set; }
+
+        public new async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            return await base.SaveChangesAsync(cancellationToken);
+        }
+
+        public new async ValueTask<EntityEntry<TEntity>> AddAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default) where TEntity : class
+        {
+            return await base.AddAsync(entity, cancellationToken);
+        }
+
+        public new async Task AddRangeAsync(IEnumerable<object> entities, CancellationToken cancellationToken = default)
+        {
+            await base.AddRangeAsync(entities, cancellationToken);
+        }
+
+        public new EntityEntry<TEntity> Update<TEntity>(TEntity entity) where TEntity : class
+        {
+            return base.Update(entity);
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
