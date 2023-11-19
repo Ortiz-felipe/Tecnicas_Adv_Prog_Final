@@ -10,7 +10,7 @@ env:
   API_PROJECT_PATH: VTVApp.Api/VTVApp.Api.csproj
   UNIT_TEST_PATH: VTVApp.UnitTests/VTVApp.UnitTests.csproj
   SPEC_TEST_PATH: VTVApp.SpecflowTests/VTVApp.SpecflowTests.csproj
-  IMAGE_NAME: felwitcher/vtvapp-api
+  IMAGE_NAME: felwitcher/vtv-app-adv-tecs-prog
 
 jobs:
   build:
