@@ -1,0 +1,28 @@
+name: VTVApp.Web (React) CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  IMAGE_NAME_WEB: felwitcher/vtv-app-web
+
+jobs:
+  docker-web:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Docker Login
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and Push Web Docker Image
+        run: |
+          cd VTVApp.Web
+          docker build -t ${{ env.IMAGE_NAME_WEB }} -f Dockerfile .
+          docker push ${{ env.IMAGE_NAME_WEB }}
