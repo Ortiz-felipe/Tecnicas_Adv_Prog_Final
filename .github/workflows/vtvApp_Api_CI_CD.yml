@@ -78,5 +78,5 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          docker build -t ${{ env.IMAGE_NAME }} .
+          docker build -t ${{ env.IMAGE_NAME }} -f VTVApp.Api/Dockerfile .
           docker push ${{ env.IMAGE_NAME }}
