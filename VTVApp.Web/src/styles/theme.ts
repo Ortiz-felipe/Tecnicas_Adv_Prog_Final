@@ -2,6 +2,7 @@ import { createTheme } from '@mui/material/styles';
 
 // Create a minimalistic theme instance.
 const theme = createTheme({
+  spacing: 8,
   palette: {
     primary: {
       light: '#63a4fff',

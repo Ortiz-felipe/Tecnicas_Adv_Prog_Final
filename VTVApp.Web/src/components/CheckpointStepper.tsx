@@ -8,23 +8,29 @@ import {
   styled,
   Paper,
 } from "@mui/material";
+import { ButtonProps } from "@mui/material/Button";
 
 import CheckpointForm from "./CheckpointForm";
 import { INSPECTION_CHECKPOINTS } from "../types/constants/InspectionCheckpoints";
 import { UpdateInspectionDto } from "../types/dtos/Inspections/UpdateInspectionDto";
 import { InspectionCheckpointDetailDto } from "../types/dtos/Inspections/InspectionCheckpointDetailDto";
 import { CheckpointListDto } from "../types/dtos/Checkpoints/CheckpointListDto";
+import { Theme } from '@mui/material/styles';
 
 // Styling for the Stepper container
-const StepperContainer = styled(Paper)(({ theme }) => ({
+const StepperContainer = styled(Paper)(({ theme }: { theme: Theme }) => ({
   padding: theme.spacing(2),
   backgroundColor: "#fafafa",
   boxShadow: "none",
   marginBottom: theme.spacing(4),
 }));
 
-// Styling for the Step button, particularly for when it's active or completed
-const StepButton = styled(Button)(({ theme, active, completed }) => ({
+interface StepButtonProps extends ButtonProps {
+  active?: boolean;
+  completed?: boolean;
+}
+
+const StepButton = styled(Button)<StepButtonProps>(({ theme, active, completed }) => ({
   fontWeight: active || completed ? "bold" : "normal",
   margin: theme.spacing(1),
 }));
@@ -119,7 +125,7 @@ const CheckpointStepper: React.FC<CheckpointStepperProps> = ({
   return (
     <StepperContainer>
       <CustomStepper activeStep={activeStep} alternativeLabel>
-        {steps.map((label, index) => (
+        {steps.map((label) => (
           <Step key={label}>
             <StepLabel>{label}</StepLabel>
           </Step>

@@ -8,6 +8,7 @@ import {
   Autocomplete,
   Stack,
   Button,
+  Theme,
 } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import styled from "@emotion/styled";
@@ -26,7 +27,6 @@ import {
   selectProvinces,
   startLoading,
 } from "../features/provinces/provinceSlice";
-import { ProvinceDto } from "../types/dtos/Provinces/ProvinceDto";
 import getProvinces from "../api/provinceAPI";
 import { autocompleteFormatter } from "../helpers/autoCompleteFormatter";
 import {
@@ -36,21 +36,21 @@ import {
   startCityLoading,
 } from "../features/cities/citySlice";
 import { getCitiesByProvince } from "../api/cityAPI";
-import { CityDetailsDto } from "../types/dtos/Cities/CityDetailsDto";
 import { UserRole } from "../types/dtos/Users/UserRole";
+import { UserRegistartionDto } from "../types/dtos/Users/UserRegistrationDto";
 
-const LoginPageContainer = styled(Grid)(({ theme }) => ({
+const LoginPageContainer = styled(Grid)<{ theme?: Theme }>(({ theme }) => ({
   height: "100vh",
   padding: theme.spacing(3),
 }));
 
-const ImageColumn = styled(Grid)(({ theme }) => ({
+const ImageColumn = styled(Grid)(() => ({
   backgroundImage: "url(src/assets/images/login.png)",
   backgroundSize: "cover",
   backgroundPosition: "center",
 }));
 
-const FormColumn = styled(Grid)(({ theme }) => ({
+const FormColumn = styled(Grid)<{ theme?: Theme }>(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
@@ -58,7 +58,7 @@ const FormColumn = styled(Grid)(({ theme }) => ({
   padding: theme.spacing(4),
 }));
 
-const StyledPaper = styled(Paper)(({ theme }) => ({
+const StyledPaper = styled(Paper)<{ theme?: Theme }>(({ theme }) => ({
   padding: theme.spacing(4), // Assuming theme.spacing is set with 'rem' units
   margin: `${theme.spacing(2)} auto`, // Centering the paper component
   width: "100%", // Use 100% width for mobile-first approach
@@ -68,7 +68,7 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
   gap: theme.spacing(2),
 }));
 
-const StyledStack = styled(Stack)(({ theme }) => ({
+const StyledStack = styled(Stack)<{ theme?: Theme }>(({ theme }) => ({
   width: "100%", // Use 100% width for smaller screens
   maxWidth: "37.5rem", // Adjust maximum width as needed, equivalent to 600px if 1rem = 16px
   gap: theme.spacing(2),
@@ -86,10 +86,13 @@ const LoginPage: React.FC = () => {
   const navigate = useNavigate();
   const provinces = useAppSelector(selectProvinces);
   const cities = useAppSelector(selectCities);
-  const [selectedProvince, setSelectedProvince] = useState<string | null>(null);
-  const [selectedCity, setSelectedCity] = useState<string | null>(null);
-  const [filteredProvinces, setFilteredProvinces] = useState<ProvinceDto[]>([]);
-  const [filteredCities, setFilteredCities] = useState<CityDetailsDto[]>([]);
+  const [selectedProvince, setSelectedProvince] =
+    useState<AutocompleteOption | null>(null);
+  const [selectedCity, setSelectedCity] = useState<AutocompleteOption | null>(
+    null
+  );
+  const [filteredProvinces, setFilteredProvinces] = useState<AutocompleteOption[]>([]);
+  const [filteredCities, setFilteredCities] = useState<AutocompleteOption[]>([]);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -123,7 +126,11 @@ const LoginPage: React.FC = () => {
     const fetchCities = async () => {
       dispatch(startCityLoading());
       try {
-        const citiesData = await getCitiesByProvince(selectedProvince?.id);
+        let provinceId =
+          selectedProvince && typeof selectedProvince.id === "number"
+            ? selectedProvince.id
+            : 0;
+        const citiesData = await getCitiesByProvince(provinceId);
         dispatch(citiesReceived(citiesData));
       } catch (error: any) {
         dispatch(citiesFetchFailed(error.message));
@@ -135,14 +142,14 @@ const LoginPage: React.FC = () => {
   }, [selectedProvince]);
 
   useEffect(() => {
-    let timerId;
-  
+    let timerId: number | undefined;
+
     if (alert.type) {
       timerId = setTimeout(() => {
         setAlert({ type: null, message: "" });
       }, 15000); // 15 seconds
     }
-  
+
     // Clear the timeout if the alert is closed manually or the component is unmounted
     return () => clearTimeout(timerId);
   }, [alert, setAlert]);
@@ -156,38 +163,52 @@ const LoginPage: React.FC = () => {
     !phoneNumber;
 
   // Handlers for the dropdowns
-  const handleProvinceChange = (event: any, newValue: string | null) => {
-    setSelectedProvince(newValue);
-    if (!newValue) {
-      setFilteredProvinces(autocompleteFormatter(provinces)); // Reset to the full list when input is cleared
-      setSelectedCity(null); // Clear selected city when province is cleared
-      setFilteredCities([]); // Clear city options
+  const handleProvinceChange = (
+    _event: React.SyntheticEvent,
+    newValue: string | AutocompleteOption | null
+  ) => {
+    if (typeof newValue === "string") {
+      // Handle free solo input string
+    } else {
+      setSelectedProvince(newValue); // newValue is AutocompleteOption or null
+      if (!newValue) {
+        // Reset cities and selected city if no province is selected
+        setFilteredCities([]);
+        setSelectedCity(null);
+      }
     }
   };
 
-  const handleProvinceInputChange = (event: any, newInputValue: string) => {
-    setFilteredProvinces(() => {
-      const filteredProvinces = provinces.filter((province) =>
-        province.name.toLowerCase().includes(newInputValue.toLowerCase())
-      );
-      return autocompleteFormatter(filteredProvinces);
-    });
+  const handleProvinceInputChange = (
+    _event: React.SyntheticEvent,
+    newInputValue: string
+  ) => {
+    const filteredProvinces = provinces.filter((province) =>
+      province.name.toLowerCase().includes(newInputValue.toLowerCase())
+    );
+    setFilteredProvinces(autocompleteFormatter(filteredProvinces, "province"));
   };
 
-  const handleCityChange = (event: any, newValue: string | null) => {
-    setSelectedCity(newValue);
-    if (!newValue) {
-      setFilteredCities(autocompleteFormatter(cities)); // Reset to the full list when input is cleared
+  const handleCityChange = (
+    _event: React.SyntheticEvent,
+    newValue: string | AutocompleteOption | null
+  ) => {
+    if (typeof newValue === "string") {
+      // Handle free solo input string
+    } else {
+      setSelectedCity(newValue); // newValue is AutocompleteOption or null
     }
   };
 
-  const handleCityInputChange = (event: any, newInputValue: string) => {
-    setFilteredCities(() => {
-      const filteredCities = cities.filter((city) =>
-        city.name.toLowerCase().includes(newInputValue.toLowerCase())
-      );
-      return autocompleteFormatter(filteredCities);
-    });
+  const handleCityInputChange = (
+    _event: React.SyntheticEvent,
+    newInputValue: string
+  ) => {
+    // Filter cities based on input value
+    const filteredCities = cities.filter((city) =>
+      city.name.toLowerCase().includes(newInputValue.toLowerCase())
+    );
+    setFilteredCities(autocompleteFormatter(filteredCities, "city"));
   };
 
   const handleLogin = async () => {
@@ -198,9 +219,9 @@ const LoginPage: React.FC = () => {
         dispatch(setUser(userData.user));
         dispatch(setToken(userData.token));
         if (userData.user.userRole == UserRole.Inspector) {
-          navigate("/inspectorAppointments"); // Redirect to home page after successful login  
+          navigate("/inspectorAppointments"); // Redirect to home page after successful login
         } else {
-          navigate("/home")
+          navigate("/home");
         }
       } else {
         dispatch(setAuthenticationError(userData.errorMessage));
@@ -210,7 +231,7 @@ const LoginPage: React.FC = () => {
             "Sus credenciales no son correctas, por favor intente nuevamente.",
         });
       }
-    } catch (error) {
+    } catch (error: any) {
       dispatch(setAuthenticationError(error.message));
       setAlert({
         type: "error",
@@ -230,10 +251,18 @@ const LoginPage: React.FC = () => {
       setRegisterLoading(true); // Start the loading indicator
       setIsRegistering(true);
       // Assuming selectedProvince and selectedCity hold the entire object, not just the name
-      const provinceId = selectedProvince ? selectedProvince.id : 0; // Replace with appropriate default/fallback value
-      const cityId = selectedCity ? selectedCity.id : "";
+      let provinceId = 0;
+      let cityId = "";
 
-      const registrationData = {
+      if (selectedProvince && typeof selectedProvince.id === "number") {
+        provinceId = selectedProvince.id;
+      }
+
+      if (selectedCity && typeof selectedCity.id === "string") {
+        cityId = selectedCity.id;
+      }
+
+      const registrationData: UserRegistartionDto = {
         name: fullName, // Assuming the name is derived from the email, adjust as necessary
         email,
         password,
@@ -261,7 +290,7 @@ const LoginPage: React.FC = () => {
             "No se pudo completar el registro. Por favor, intente nuevamente.",
         });
       }
-    } catch (error) {
+    } catch (error: any) {
       // Handle any errors that occur during the API call
       setAlert({
         type: "error",
@@ -285,130 +314,147 @@ const LoginPage: React.FC = () => {
   return (
     <LoginPageContainer container>
       <ImageColumn item xs={false} sm={4} md={7} />
-      <FormColumn item xs={12} sm={8} md={5} component={StyledPaper}>
-        <Typography variant="h5" gutterBottom>
-          {isRegistering ? "Registrarse en el portal" : "Ingresar al portal"}
-        </Typography>
-        {isRegistering ? (
-          // Registration form
-          <StyledStack>
-            <TextField
-              label="Correo electrónico"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <TextField
-              label="Contraseña"
-              type="password"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <TextField
-              label="Nombre completo"
-              variant="outlined"
-              fullWidth
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-            />
-            <Autocomplete
-              options={
-                filteredProvinces.length > 0
-                  ? filteredProvinces
-                  : autocompleteFormatter(provinces)
-              }
-              getOptionLabel={(option) => option.label}
-              value={selectedProvince}
-              onChange={handleProvinceChange}
-              onInputChange={handleProvinceInputChange}
-              renderInput={(params) => (
-                <TextField {...params} label="Provincia" />
-              )}
-              freeSolo
-            />
-            <Autocomplete
-              options={
-                filteredCities.length > 0
-                  ? filteredCities
-                  : autocompleteFormatter(cities)
-              }
-              renderInput={(params) => <TextField {...params} label="Ciudad" />}
-              value={selectedCity}
-              getOptionLabel={(option) => (option ? option.label : "")}
-              onChange={handleCityChange}
-              onInputChange={handleCityInputChange}
-              disabled={!selectedProvince}
-              freeSolo
-            />
-            <TextField
-              label="Número de teléfono"
-              variant="outlined"
-              fullWidth
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-            />
-            <LoadingButton
-              loading={registerLoading}
-              variant="contained"
-              fullWidth
-              onClick={handleRegister}
-              disabled={isRegisterButtonDisabled || registerLoading}
-            >
-              Registrarse
-            </LoadingButton>
-            <Button variant="text" fullWidth onClick={toggleFormState}>
-              ¿Ya tienes cuenta? Ingresar
-            </Button>
-          </StyledStack>
-        ) : (
-          <StyledStack>
-            <TextField
-              label="Correo electrónico"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <TextField
-              label="Contraseña"
-              type="password"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <Grid container spacing={2} marginTop="1rem">
-              <Grid item xs={12} sm={6}>
-                <LoadingButton
-                  loading={isLoadingLogin}
-                  variant="contained"
-                  fullWidth
-                  onClick={handleLogin}
-                  disabled={isLoadingRegister}
-                >
-                  Ingresar
-                </LoadingButton>
+      <FormColumn item xs={12} sm={8} md={5}>
+        <StyledPaper>
+          <Typography variant="h5" gutterBottom>
+            {isRegistering ? "Registrarse en el portal" : "Ingresar al portal"}
+          </Typography>
+          {isRegistering ? (
+            // Registration form
+            <StyledStack>
+              <TextField
+                label="Correo electrónico"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <TextField
+                label="Contraseña"
+                type="password"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <TextField
+                label="Nombre completo"
+                variant="outlined"
+                fullWidth
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+              />
+              <Autocomplete
+                options={
+                  filteredProvinces.length > 0
+                    ? filteredProvinces
+                    : autocompleteFormatter(provinces, "province")
+                }
+                getOptionLabel={(option) => {
+                  if (typeof option === "string") {
+                    return option;
+                  }
+                  // Otherwise, handle the case where the option is an AutocompleteOption
+                  return option.label;
+                }}
+                value={selectedProvince}
+                onChange={handleProvinceChange}
+                onInputChange={handleProvinceInputChange}
+                renderInput={(params) => (
+                  <TextField {...params} label="Provincia" />
+                )}
+                freeSolo
+              />
+              <Autocomplete
+                options={
+                  filteredCities.length > 0
+                    ? filteredCities
+                    : autocompleteFormatter(cities, "city")
+                }
+                renderInput={(params) => (
+                  <TextField {...params} label="Ciudad" />
+                )}
+                value={selectedCity}
+                getOptionLabel={(option) => {
+                  // Handle the case where the option is a string (for free solo mode)
+                  if (typeof option === "string") {
+                    return option;
+                  }
+                  // Otherwise, handle the case where the option is an AutocompleteOption
+                  return option.label;
+                }}
+                onChange={handleCityChange}
+                onInputChange={handleCityInputChange}
+                disabled={!selectedProvince}
+                freeSolo
+              />
+              <TextField
+                label="Número de teléfono"
+                variant="outlined"
+                fullWidth
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+              />
+              <LoadingButton
+                loading={registerLoading}
+                variant="contained"
+                fullWidth
+                onClick={handleRegister}
+                disabled={isRegisterButtonDisabled || registerLoading}
+              >
+                Registrarse
+              </LoadingButton>
+              <Button variant="text" fullWidth onClick={toggleFormState}>
+                ¿Ya tienes cuenta? Ingresar
+              </Button>
+            </StyledStack>
+          ) : (
+            <StyledStack>
+              <TextField
+                label="Correo electrónico"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <TextField
+                label="Contraseña"
+                type="password"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <Grid container spacing={2} marginTop="1rem">
+                <Grid item xs={12} sm={6}>
+                  <LoadingButton
+                    loading={isLoadingLogin}
+                    variant="contained"
+                    fullWidth
+                    onClick={handleLogin}
+                    disabled={isLoadingRegister}
+                  >
+                    Ingresar
+                  </LoadingButton>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Button variant="text" fullWidth onClick={toggleFormState}>
+                    ¿No tienes cuenta? Registrarse
+                  </Button>
+                </Grid>
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <Button variant="text" fullWidth onClick={toggleFormState}>
-                  ¿No tienes cuenta? Registrarse
-                </Button>
-              </Grid>
-            </Grid>
-          </StyledStack>
-        )}
-        {alert.type && (
-          <Alert severity={alert.type} style={{ marginTop: "1rem" }}>
-            {alert.message}
-          </Alert>
-        )}
+            </StyledStack>
+          )}
+          {alert.type && (
+            <Alert severity={alert.type} style={{ marginTop: "1rem" }}>
+              {alert.message}
+            </Alert>
+          )}
+        </StyledPaper>
       </FormColumn>
     </LoginPageContainer>
   );

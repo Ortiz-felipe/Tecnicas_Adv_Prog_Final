@@ -4,7 +4,6 @@ import AddIcon from "@mui/icons-material/Add";
 import SearchIcon from "@mui/icons-material/Search";
 import styled from "@emotion/styled";
 import TableComponent from "../components/Table";
-import { AppointmentListDto } from "../types/dtos/Appointments/AppointmentListDto";
 import { formatDate } from "../helpers/dateHelpers";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { selectUser } from "../features/user/userSlice";
@@ -41,6 +40,7 @@ const NoContentMessage = styled(Typography)`
   margin-top: 2rem
 `;
 
+
 const columns = [
   { id: "appointmentDate", label: "Fecha de la Cita", minWidth: 170, format: formatDate },
   { id: "userFullName", label: "Nombre del Propietario", minWidth: 100 },
@@ -52,8 +52,9 @@ const actions = [
   {
     icon: <SearchIcon />,
     tooltip: "Ver detalles",
-    onClick: (item: AppointmentListDto) => {
+    onClick: () => {
       // Logic to open the modal with appointment details
+      return;
     },
   },
   // Add other actions here as needed
@@ -87,9 +88,9 @@ const AppointmentsPage: React.FC = () => {
     navigate('newAppointment');
   };
 
-  const handleViewDetails = (appointment: AppointmentListDto) => {
-    // Logic to open the modal with appointment details
-  };
+  // const handleViewDetails = (appointment: AppointmentListDto) => {
+  //   // Logic to open the modal with appointment details
+  // };
 
   return (
     <AppointmentsPageContainer

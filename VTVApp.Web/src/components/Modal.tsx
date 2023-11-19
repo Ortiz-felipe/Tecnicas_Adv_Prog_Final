@@ -7,6 +7,7 @@ import {
   styled,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import { Theme } from '@mui/material/styles';
 
 interface ModalProps {
   open: boolean;
@@ -24,7 +25,7 @@ const StyledDialog = styled(Dialog)({
   },
 });
 
-const StyledDialogTitle = styled(DialogTitle)(({ theme }) => ({
+const StyledDialogTitle = styled(DialogTitle)(({ theme }: { theme: Theme }) => ({
   backgroundColor: theme.palette.background.paper,
   padding: "1rem",
   "& .MuiTypography-root": {
@@ -37,7 +38,7 @@ const StyledDialogTitle = styled(DialogTitle)(({ theme }) => ({
   },
 }));
 
-const StyledDialogContent = styled(DialogContent)(({ theme }) => ({
+const StyledDialogContent = styled(DialogContent)(({ theme }: { theme: Theme }) => ({
   display: "flex", // Enable flex container
   flexDirection: "column", // Stack children vertically
   justifyContent: "center", // Center vertically
@@ -45,7 +46,7 @@ const StyledDialogContent = styled(DialogContent)(({ theme }) => ({
   padding: theme.spacing(3), // Adjust padding as needed
 }));
 
-const StyledCloseButton = styled(IconButton)(({ theme }) => ({
+const StyledCloseButton = styled(IconButton)(({ theme }: { theme: Theme }) => ({
   position: "absolute",
   right: theme.spacing(1),
   top: theme.spacing(1),

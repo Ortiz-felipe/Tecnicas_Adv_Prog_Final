@@ -7,17 +7,17 @@ import {
 import HomeIcon from "@mui/icons-material/Home";
 import EventIcon from "@mui/icons-material/Event";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
-import InspectionIcon from "@mui/icons-material/Assessment";
 import LogoutIcon from "@mui/icons-material/Logout";
 import WorkIcon from "@mui/icons-material/Work";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { UserRole } from "../../types/dtos/Users/UserRole";
-import { useAppSelector } from "../../app/hooks";
-import { selectUser } from "../../features/user/userSlice";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { logoutUser, selectUser } from "../../features/user/userSlice";
 
 const SidePanel: React.FC = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser);
 
   const handleNavigation = (path: string) => {
@@ -27,7 +27,7 @@ const SidePanel: React.FC = () => {
   const handleLogout = () => {
     // Implement your logout logic here
     console.log("Logging out...");
-
+    dispatch(logoutUser);
     // After logout, redirect to login page or landing page
     navigate("/login");
   };

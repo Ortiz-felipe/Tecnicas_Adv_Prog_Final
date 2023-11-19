@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Typography, IconButton } from '@mui/material';
+import React, { useEffect } from 'react';
+import { Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import styled from '@emotion/styled';
 import TableComponent from '../components/Table';
-import { InspectionListDto } from '../types/dtos/Inspections/InspectionListDto'; // Adjust the import based on your file structure
 import { formatDate } from '../helpers/dateHelpers';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { selectUser } from '../features/user/userSlice';
@@ -26,20 +25,20 @@ const columns = [
     id: 'licencePlate',
     label: 'Patente #',
     minWidth: 170,
-    align: 'left',
+    align: 'left' as const,
   },
   {
     id: 'inspectionDate',
     label: 'Fecha de Inspeccion',
     minWidth: 170,
-    align: 'left',
+    align: 'left' as const,
     format: formatDate
   },
   {
     id: 'status',
     label: 'Estado',
     minWidth: 100,
-    align: 'left',
+    align: 'left' as const,
   },
 ];
 
@@ -63,10 +62,11 @@ const InspectionsPage: React.FC = () => {
     };
 
     fetchInspections();
-  }, [dispatch, userDetails.id]);
+  }, [dispatch, userDetails!.id]);
 
-  const handleMoreInfo = (inspection: InspectionListDto) => {
+  const handleMoreInfo = () => {
     // Logic to handle showing more information about the inspection
+    return;
   };
 
   const actions = [
@@ -81,7 +81,7 @@ const InspectionsPage: React.FC = () => {
   return (
     <InspectionsPageContainer>
       <HeaderSection>
-        <Typography variant="h4">Your Inspections</Typography>
+        <Typography variant="h4">Tus Inspecciones</Typography>
       </HeaderSection>
       {isLoading ? (
         // Render a loading indicator or return null if you do not wish to render anything while loading

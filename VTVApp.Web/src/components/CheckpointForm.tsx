@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { TextField, Typography, styled } from "@mui/material";
+import React from "react";
+import { TextField, Theme, Typography, styled } from "@mui/material";
 import { InspectionCheckpointDetailDto } from "../types/dtos/Inspections/InspectionCheckpointDetailDto";
 
 interface CheckpointFormProps {
@@ -18,7 +18,7 @@ const FormContainer = styled('div')({
     marginBottom: '0.5rem',
   });
   
-  const StyledTextField = styled(TextField)(({ theme }) => ({
+  const StyledTextField = styled(TextField)<{ theme?: Theme }>(({ theme }) => ({
     margin: theme.spacing(1, 0),
     '& .MuiInputBase-root': {
       backgroundColor: 'white', // Ensures the input stands out from any background
@@ -29,18 +29,6 @@ const CheckpointForm: React.FC<CheckpointFormProps> = ({
   checkpoint,
   onChange,
 }) => {
-  const { checkpointName, score, comments } = checkpoint;
-
-  const handleScoreChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newScore = parseInt(event.target.value, 10);
-    onChange(newScore, comments);
-  };
-
-  const handleCommentsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newComments = event.target.value;
-    onChange(score, newComments);
-  };
-
   return (
     <FormContainer>
       <StyledTypography>{checkpoint.checkpointName}</StyledTypography>

@@ -23,9 +23,11 @@ import {
   getInspectionDetails,
   getLatestVehicleInspection,
 } from "../api/inspectionAPI";
-import { TableVirtuoso, TableComponents } from "react-virtuoso";
+import { TableVirtuoso } from "react-virtuoso";
 import { getInspectionStatusDescription } from "../helpers/inspectionStatusHelper";
 import { formatDate } from "../helpers/dateHelpers";
+import { Theme } from '@mui/material/styles';
+import { InspectionCheckpointDetailDto } from "../types/dtos/Inspections/InspectionCheckpointDetailDto";
 
 interface VehicleDetailsModalProps {
   open: boolean;
@@ -33,15 +35,15 @@ interface VehicleDetailsModalProps {
   vehicle: VehicleDto | null;
 }
 
-interface Column {
-  id: string;
-  label: string;
-  minWidth?: number;
-  align?: "right" | "left" | "center";
-  format?: (value: any) => string;
-}
+// interface Column {
+//   id: string;
+//   label: string;
+//   minWidth?: number;
+//   align?: "right" | "left" | "center";
+//   format?: (value: any) => string;
+// }
 
-const StyledDialog = styled(Dialog)(({ theme }) => ({
+const StyledDialog = styled(Dialog)(({ theme }: { theme: Theme }) => ({
   "& .MuiDialog-paper": {
     width: "60%", // A narrower width for a more focused view
     maxWidth: "none",
@@ -54,7 +56,7 @@ const StyledDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-const StyledDialogContent = styled(DialogContent)(({ theme }) => ({
+const StyledDialogContent = styled(DialogContent)(({ theme }: { theme: Theme }) => ({
   overflowY: "unset", // Remove the scroll bar from the DialogContent
   "&:first-child": {
     paddingTop: theme.spacing(2),
@@ -65,9 +67,9 @@ const StyledDialogContent = styled(DialogContent)(({ theme }) => ({
   padding: theme.spacing(3), // Uniform padding
 }));
 
-const SectionContainer = styled("div")({
-  marginBottom: "24px", // Add some spacing at the bottom of each section
-});
+// const SectionContainer = styled("div")({
+//   marginBottom: "24px", // Add some spacing at the bottom of each section
+// });
 
 const SectionTitle = styled(Typography)({
   fontSize: "1.25rem", // Larger font size for section titles
@@ -94,11 +96,11 @@ const VehicleInfo = styled("div")(InfoContainerStyles);
 
 const InspectionInfo = styled("div")(InfoContainerStyles);
 
-const Divider = styled("hr")({
-  margin: "24px 0", // Add vertical space around the divider
-  border: "none",
-  borderTop: "1px solid #e0e0e0", // Light grey color for the divider line
-});
+// const Divider = styled("hr")({
+//   margin: "24px 0", // Add vertical space around the divider
+//   border: "none",
+//   borderTop: "1px solid #e0e0e0", // Light grey color for the divider line
+// });
 
 const StyledTableContainer = styled(TableContainer)({
   minHeight: "200px", // Set a minimum height
@@ -170,25 +172,23 @@ const VehicleDetailsModal: React.FC<VehicleDetailsModalProps> = ({
   ];
 
   const VirtuosoTableComponents = {
-    Scroller: React.forwardRef<HTMLDivElement>((props, ref) => (
-      <TableContainer component={Paper} {...props} ref={ref} />
+    Scroller: React.forwardRef<HTMLDivElement, { children?: React.ReactNode }>((props, ref) => (
+        <TableContainer component={Paper} ref={ref} {...props} />
     )),
-    Table: React.forwardRef((props, ref) => (
-      <Table
-        {...props}
-        ref={ref}
-        sx={{ borderCollapse: "separate", tableLayout: "fixed" }}
-      />
+    Table: React.forwardRef<HTMLTableElement, { children?: React.ReactNode }>((props, ref) => (
+        <Table ref={ref} sx={{ borderCollapse: "separate", tableLayout: "fixed" }} {...props} />
     )),
-    TableHead,
-    TableRow: React.forwardRef((props, ref) => (
-      <TableRow {...props} ref={ref} />
+    TableHead: React.forwardRef<HTMLTableSectionElement, { children?: React.ReactNode }>((props, ref) => (
+        <TableHead ref={ref} {...props} />
     )),
-    TableBody: React.forwardRef((props, ref) => (
-      <TableBody {...props} ref={ref} />
+    TableRow: React.forwardRef<HTMLTableRowElement, { children?: React.ReactNode }>((props, ref) => (
+        <TableRow ref={ref} {...props} />
+    )),
+    TableBody: React.forwardRef<HTMLTableSectionElement, { children?: React.ReactNode }>((props, ref) => (
+        <TableBody ref={ref} {...props} />
     )),
     // Add other component overrides as necessary
-  };
+};
 
   const FixedHeaderContent = () => (
     <TableRow>
@@ -204,14 +204,14 @@ const VehicleDetailsModal: React.FC<VehicleDetailsModalProps> = ({
     </TableRow>
   );
 
-  const RowContent = (index, checkpoint) => (
+  const RowContent = (_index: number, checkpoint: InspectionCheckpointDetailDto) => (
     <React.Fragment>
       {checkpointColumns.map((column) => (
         <TableCell
           key={column.dataKey}
           align={column.numeric ? "right" : "left"}
         >
-          {checkpoint[column.dataKey]}
+          {checkpoint[column.dataKey as keyof InspectionCheckpointDetailDto]}
         </TableCell>
       ))}
     </React.Fragment>

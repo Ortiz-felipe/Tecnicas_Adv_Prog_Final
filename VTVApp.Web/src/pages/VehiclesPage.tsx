@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import {
   Button,
   Typography,
-  IconButton,
   CircularProgress,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
@@ -18,7 +17,6 @@ import {
   selectVehicles,
   selectVehiclesLoading,
   setError,
-  setFavoriteVehicle,
   setVehicles,
   startLoading,
 } from "../features/vehicles/vehicleSlice";
@@ -78,6 +76,14 @@ const columns = [
   },
 ];
 
+interface VehicleData {
+  licensePlate: string;
+  brand: string;
+  model: string;
+  year: number;
+  color: string;
+}
+
 const VehiclesPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const userDetails = useAppSelector(selectUser);
@@ -107,7 +113,7 @@ const VehiclesPage: React.FC = () => {
     fetchUserVehicles();
   }, [dispatch, vehicles]);
 
-  const handleRegisterVehicle = async (createVehicleData: CreateVehicleDto) => {
+  const handleRegisterVehicle = async (createVehicleData: VehicleData) => {
     try {
       setSubmitting(true); // Start the progress indicator
       const vehicleData: CreateVehicleDto = {

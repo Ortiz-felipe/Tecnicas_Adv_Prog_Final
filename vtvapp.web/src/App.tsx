@@ -18,7 +18,7 @@ import { store } from "./app/store.ts";
 import ProtectedRoute from "./components/routing/ProtectedRoute.tsx";
 import BookAppointmentPage from "./pages/BookingAppointmentPage.tsx";
 import InspectorAppointmentsPage from "./pages/InspectorAppointmentsPage.tsx";
-import VehicleInspectionPage from "./pages/VehicleInspectionPage.tsx";
+// import VehicleInspectionPage from "./pages/VehicleInspectionPage.tsx";
 
 // Define the container for the entire app
 const AppContainer = styled.div`
@@ -79,10 +79,10 @@ const App: React.FC = () => {
                             path="inspectorAppointments"
                             element={<InspectorAppointmentsPage />}
                           />
-                          <Route
+                          {/* <Route
                             path="/inspections/:appointmentId"
                             element={<VehicleInspectionPage />}
-                          />
+                          /> */}
                           {/* Add more protected routes as needed */}
                         </Route>
                       </Routes>

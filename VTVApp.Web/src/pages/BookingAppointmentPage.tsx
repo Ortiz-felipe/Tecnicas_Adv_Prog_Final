@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
-  Box,
   Button,
   Container,
-  Grid,
-  TextField,
   Typography,
   MenuItem,
   FormControl,
@@ -14,6 +11,7 @@ import {
   Backdrop,
   CircularProgress,
   Alert,
+  SelectChangeEvent,
 } from "@mui/material";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import { LocalizationProvider, DesktopDatePicker } from "@mui/x-date-pickers";
@@ -30,13 +28,14 @@ import {
 } from "../api/appointmentAPI";
 import { VehicleDto } from "../types/dtos/Vehicles/VehicleDto";
 import { CreateAppointmentDto } from "../types/dtos/Appointments/CreateAppointmentDto";
+import { Theme } from "@mui/material/styles";
 
-const StyledContainer = styled(Container)(({ theme }) => ({
+const StyledContainer = styled(Container)<{ theme?: Theme }>(({ theme }) => ({
   paddingTop: theme.spacing(6),
   paddingBottom: theme.spacing(6),
 }));
 
-const StyledPaper = styled(Paper)(({ theme }) => ({
+const StyledPaper = styled(Paper)<{ theme?: Theme }>(({ theme }) => ({
   padding: theme.spacing(4),
   display: "flex",
   flexDirection: "column",
@@ -71,16 +70,16 @@ const ButtonSection = styled("div")({
   width: "100%", // Take the full width of the parent
 });
 
-const StyledButton = styled(Button)(({ theme }) => ({
+const StyledButton = styled(Button)<{ theme?: Theme }>(({ theme }) => ({
   marginTop: theme.spacing(2), // Add margin above the buttons
 }));
 
 // Use this component to render the DatePicker and Select components side by side
-const FormRow = styled(Grid)(({ theme }) => ({
-  [theme.breakpoints.down("sm")]: {
-    flexDirection: "column",
-  },
-}));
+// const FormRow = styled(Grid)(({ theme }: { theme: Theme }) => ({
+//   [theme.breakpoints.down("sm")]: {
+//     flexDirection: "column",
+//   },
+// }));
 
 const BookAppointmentPage: React.FC = () => {
   const navigate = useNavigate();
@@ -135,17 +134,17 @@ const BookAppointmentPage: React.FC = () => {
   };
 
   const handleVehicleChange = (
-    event: React.ChangeEvent<{ value: unknown }>
+    event: SelectChangeEvent<string>
   ) => {
-    const newVehicleId = event.target.value as string; // Ensure the value is treated as a string
+    const newVehicleId = event.target.value as string;
     setSelectedVehicleId(newVehicleId);
-
-    // Find the vehicle in the vehicles array and update the selectedVehicle state
+  
     const vehicleDetails = vehicles.find(
       (vehicle) => vehicle.id === newVehicleId
     );
     setSelectedVehicle(vehicleDetails || null);
   };
+  
 
   const confirmAppointment = async () => {
     // Reset the alert state
@@ -173,7 +172,7 @@ const BookAppointmentPage: React.FC = () => {
       // Prepare the appointment data
       const appointmentData: CreateAppointmentDto = {
         appointmentDate: appointmentDateTime,
-        userId: userDetails.id, // Assuming you have the user's ID in userDetails
+        userId: userDetails!.id, // Assuming you have the user's ID in userDetails
         vehicleId: selectedVehicle.id,
       };
 
@@ -213,10 +212,11 @@ const BookAppointmentPage: React.FC = () => {
             <DatePickerWrapper>
               <DesktopDatePicker
                 label="Fecha de la Cita"
-                inputFormat="DD/MM/yyyy"
+                format="DD/MM/yyyy"
                 value={selectedDate}
                 onChange={handleDateChange}
-                renderInput={(params) => <TextField {...params} fullWidth />}
+                disablePast
+                // renderInput={(params: TextFieldProps) => <TextField {...params} fullWidth />}
               />
             </DatePickerWrapper>
             <VehicleSelectWrapper>
@@ -231,7 +231,7 @@ const BookAppointmentPage: React.FC = () => {
                   label="Hora de la Cita"
                   onChange={(e) => setSelectedTime(e.target.value as string)}
                 >
-                  {availableTimeSlots?.length > 0 ? (
+                  {availableTimeSlots && availableTimeSlots?.length > 0 ? (
                     availableTimeSlots?.map((timeSlot) => (
                       <MenuItem key={timeSlot} value={timeSlot}>
                         {moment(timeSlot).format("LT")}

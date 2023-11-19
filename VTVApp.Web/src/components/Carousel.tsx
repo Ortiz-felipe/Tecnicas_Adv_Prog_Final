@@ -1,11 +1,10 @@
-import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Theme, Typography, useTheme } from "@mui/material";
 import styled from "@emotion/styled";
 
-const ImageTextBox = styled(Box)(({ theme }) => ({
+const ImageTextBox = styled(Box)<{ theme?: Theme }>(() => ({
   maxHeight: "500px",
   position: "relative",
   color: "white",

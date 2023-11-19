@@ -24,36 +24,38 @@ import {
 } from "../features/inspections/inspectionSlice";
 import { AppointmentDetailsDto } from "../types/dtos/Appointments/AppointmentDetailsDto";
 import { InspectionDetailsDto } from "../types/dtos/Inspections/InspectionDetailsDto";
-import moment from "moment";
 import { formatDate } from "../helpers/dateHelpers";
 import { getInspectionStatusDescription } from "../helpers/inspectionStatusHelper";
+import { Theme } from "@mui/material/styles";
 
 // Define styled components for layout
-const StyledGrid = styled(Grid)(({ theme }) => ({
+const StyledGrid = styled(Grid)<{ theme?: Theme }>(({ theme }) => ({
   padding: theme.spacing(3), // Increased padding for more space around the grid
-  alignItems: 'center', // Center align items
+  alignItems: "center", // Center align items
 }));
 
-const ContentTypography = styled(Typography)(({ theme }) => ({
-  fontSize: '1rem', // Ensure consistent font-size
-  color: theme.palette.text.primary, // Use primary text color for better contrast
-  lineHeight: '1.5', // Increase line-height for readability
-}));
+const ContentTypography = styled(Typography)<{ theme?: Theme }>(
+  ({ theme }) => ({
+    fontSize: "1rem", // Ensure consistent font-size
+    color: theme.palette.text.primary, // Use primary text color for better contrast
+    lineHeight: "1.5", // Increase line-height for readability
+  })
+);
 
 // Adjust cardStyle for a minimalistic design
 const cardStyle = {
-  boxShadow: '0 0.25rem 0.75rem rgba(0,0,0,0.05)', // Softer shadow
-  borderRadius: '0.5rem', // Rounded corners in REMs
-  padding: '1.5rem', // Padding in REMs
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center', // Center content vertically
-  alignItems: 'center', // Center content horizontally
-  height: '15rem', // Fixed height in REMs
-  width: '100%', // Full width
-  backgroundColor: '#fff', // White background
-  marginBottom: '2rem', // Margin bottom in REMs
-  '&:last-child': {
+  boxShadow: "0 0.25rem 0.75rem rgba(0,0,0,0.05)", // Softer shadow
+  borderRadius: "0.5rem", // Rounded corners in REMs
+  padding: "1.5rem", // Padding in REMs
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center", // Center content vertically
+  alignItems: "center", // Center content horizontally
+  height: "15rem", // Fixed height in REMs
+  width: "100%", // Full width
+  backgroundColor: "#fff", // White background
+  marginBottom: "2rem", // Margin bottom in REMs
+  "&:last-child": {
     marginBottom: 0,
   },
 };
@@ -83,8 +85,11 @@ const HomePage: React.FC = () => {
               getFavoriteVehicleForUserId(userDetails.id),
               getLatestAppointment(userDetails.id),
             ]);
-          dispatch(setFavoriteVehicle(favoriteVehicleData));
-          dispatch(setAppointmentDetails(latestAppointmentData));
+
+          if (favoriteVehicleData && latestAppointmentData) {
+            dispatch(setFavoriteVehicle(favoriteVehicleData));
+            dispatch(setAppointmentDetails(latestAppointmentData));
+          }
         } catch (error) {
           console.error(error);
         } finally {
@@ -120,27 +125,40 @@ const HomePage: React.FC = () => {
   return (
     <StyledGrid container spacing={2}>
       <StyledGrid item xs={12} md={6}>
-        <CardComponent
-          title="Informacion personal"
-          content={userDetails}
-          style={cardStyle}
-          renderContent={(userContent: UserDto) => (
-            <>
-              <ContentTypography variant="body1">
-                Nombre: {userContent.fullName}
-              </ContentTypography>
-              <ContentTypography variant="body1">
-                Email: {userContent.email}
-              </ContentTypography>
-              <ContentTypography variant="body1">
-                Ciudad: {userContent.cityName}
-              </ContentTypography>
-              <ContentTypography variant="body1">
-                Provincia: {userContent.provinceName}
-              </ContentTypography>
-            </>
-          )}
-        />
+        {isDataLoading ? (
+          <Skeleton
+            variant="rectangular"
+            height={118}
+            animation="wave"
+            sx={skeletonStyle}
+          />
+        ) : userDetails ? (
+          <CardComponent
+            title="Informacion personal"
+            content={userDetails}
+            // style={cardStyle}
+            renderContent={(userContent: UserDto) => (
+              <>
+                <ContentTypography variant="body1">
+                  Nombre: {userContent.fullName}
+                </ContentTypography>
+                <ContentTypography variant="body1">
+                  Email: {userContent.email}
+                </ContentTypography>
+                <ContentTypography variant="body1">
+                  Ciudad: {userContent.cityName}
+                </ContentTypography>
+                <ContentTypography variant="body1">
+                  Provincia: {userContent.provinceName}
+                </ContentTypography>
+              </>
+            )}
+          />
+        ) : (
+          <Typography variant="subtitle1" sx={cardStyle}>
+            La información del usuario no está disponible.
+          </Typography>
+        )}
         {isDataLoading ? (
           <Skeleton
             variant="rectangular"
@@ -152,7 +170,7 @@ const HomePage: React.FC = () => {
           <CardComponent
             title="Próxima Cita"
             content={latestAppointment}
-            style={cardStyle}
+            // style={cardStyle}
             renderContent={(appointmentContent: AppointmentDetailsDto) => (
               <>
                 <ContentTypography variant="body1">
@@ -166,7 +184,7 @@ const HomePage: React.FC = () => {
             )}
           />
         ) : (
-          <Typography variant="subtitle1" style={cardStyle}>
+          <Typography variant="subtitle1" sx={cardStyle}>
             No tiene citas próximas.
           </Typography>
         )}
@@ -183,7 +201,7 @@ const HomePage: React.FC = () => {
           <CardComponent
             title="Vehículo Favorito"
             content={favoriteVehicle}
-            style={cardStyle}
+            // style={cardStyle}
             renderContent={(vehicleContent: VehicleDto) => (
               <>
                 <ContentTypography variant="body1">
@@ -202,7 +220,7 @@ const HomePage: React.FC = () => {
             )}
           />
         ) : (
-          <Typography variant="subtitle1" style={cardStyle}>
+          <Typography variant="subtitle1" sx={cardStyle}>
             No tiene un vehículo favorito seleccionado.
           </Typography>
         )}
@@ -223,13 +241,14 @@ const HomePage: React.FC = () => {
                   Fecha: {formatDate(inspectionContent.inspectionDate)}
                 </ContentTypography>
                 <ContentTypography variant="body1">
-                  Estado: {getInspectionStatusDescription(inspectionContent.status)}
+                  Estado:{" "}
+                  {getInspectionStatusDescription(inspectionContent.status)}
                 </ContentTypography>
               </>
             )}
           />
         ) : (
-          <Typography variant="subtitle1" style={cardStyle}>
+          <Typography variant="subtitle1" sx={cardStyle}>
             No tiene inspecciones recientes.
           </Typography>
         )}

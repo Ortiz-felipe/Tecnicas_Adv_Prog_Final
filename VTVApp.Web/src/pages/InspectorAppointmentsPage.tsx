@@ -3,7 +3,6 @@ import {
   Typography,
   IconButton,
   CircularProgress,
-  Button,
   styled,
 } from "@mui/material";
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
@@ -12,15 +11,12 @@ import { useAppDispatch, useAppSelector } from "../app/hooks";
 import {
   selectAppointmentDetails,
   selectAppointmentList,
-  selectAppointmentsError,
   setAppointmentDetails,
   setAppointmentList,
   setError,
-  startLoading,
 } from "../features/appointments/appointmentSlice";
 import { getAllAppointments, getAppointmentById } from "../api/appointmentAPI";
 import { formatDate } from "../helpers/dateHelpers";
-import { useNavigate } from "react-router-dom";
 import { CreateInspectionDto } from "../types/dtos/Inspections/CreateInspectionDto";
 import moment from "moment";
 import { INSPECTION_CHECKPOINTS } from "../types/constants/InspectionCheckpoints";
@@ -35,20 +31,22 @@ import AppointmentDetails from "../components/AppointmentDetails";
 import CheckpointStepper from "../components/CheckpointStepper";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import { getAppointmentStatusDescription } from "../helpers/appointmentStatusHelper";
+import { Theme } from '@mui/material/styles';
+import { CheckpointListDto } from "../types/dtos/Checkpoints/CheckpointListDto";
 
-const SpinnerContainer = styled("div")(({ theme }) => ({
+const SpinnerContainer = styled("div")(() => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   height: "100vh",
 }));
 
-const CurrentDayContainer = styled(Typography)(({ theme }) => ({
-  textAlign: "center",
-  margin: theme.spacing(2, 0),
-}));
+// const CurrentDayContainer = styled(Typography)(({ theme }: { theme: Theme }) => ({
+//   textAlign: "center",
+//   margin: theme.spacing(2, 0),
+// }));
 
-const CenteredMessage = styled(Typography)(({ theme }) => ({
+const CenteredMessage = styled(Typography)(({ theme }: { theme: Theme }) => ({
   marginTop: theme.spacing(10),
   textAlign: "center",
 }));
@@ -59,9 +57,6 @@ const InspectorAppointmentsPage: React.FC = () => {
   const appointmentDetails = useAppSelector(selectAppointmentDetails);
   const inspectionDetails = useAppSelector(selectInspectionDetails);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentAppointmentId, setCurrentAppointmentId] = useState<
-    string | null
-  >(null);
   const [loading, setLoading] = useState(false);
   const [isLoadingDetails, setIsLoadingDetails] = useState(false);
   const userLocale = navigator.language;
@@ -78,7 +73,6 @@ const InspectorAppointmentsPage: React.FC = () => {
   }, [dispatch]);
 
   const handleStartAppointment = (appointmentId: string) => {
-    setCurrentAppointmentId(appointmentId);
     setIsModalOpen(true);
     fetchAppointmentDetails(appointmentId);
   };
@@ -112,7 +106,7 @@ const InspectorAppointmentsPage: React.FC = () => {
             name: checkpoint.checkpointName,
             score: 0,
             comment: "",
-          })),
+          })) as CheckpointListDto[],
         };
         return createInspection(inspectionData, appointmentId);
       })
@@ -160,7 +154,6 @@ const InspectorAppointmentsPage: React.FC = () => {
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    setCurrentAppointmentId(null);
   };
 
   const columns = [
@@ -234,9 +227,9 @@ const InspectorAppointmentsPage: React.FC = () => {
           ) : (
             <>
               <AppointmentDetails
-                user={appointmentDetails.user}
-                vehicle={appointmentDetails.vehicle}
-                appointmentDate={appointmentDetails.appointmentDate}
+                user={appointmentDetails!.user}
+                vehicle={appointmentDetails!.vehicle}
+                appointmentDate={appointmentDetails!.appointmentDate}
               />
               <CheckpointStepper
                 onComplete={handleCompleteInspection}

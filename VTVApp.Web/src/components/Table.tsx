@@ -6,17 +6,17 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
   IconButton,
 } from "@mui/material";
 import styled from "@emotion/styled";
+import { Theme } from '@mui/material/styles';
 
-const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
+const StyledTableContainer = styled(TableContainer)<{ theme?: Theme }>(({ theme }) => ({
   margin: theme.spacing(3, 0),
   boxShadow: "none",
 }));
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
+const StyledTableCell = styled(TableCell)<{ theme?: Theme }>(({ theme }) => ({
   borderBottom: "none",
   padding: theme.spacing(2),
   "&:last-child": {
@@ -24,10 +24,14 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
-const StyledTableHeadCell = styled(StyledTableCell)(({ theme }) => ({
+const StyledTableHeadCell = styled(StyledTableCell)<{ theme?: Theme }>(({ theme }) => ({
   color: theme.palette.text.secondary,
   fontWeight: "normal",
 }));
+
+interface TableItem {
+  id?: string | number;
+}
 
 interface Column {
   id: string;
@@ -43,21 +47,22 @@ interface Action<T> {
   onClick: (item: T) => void;
 }
 
-interface TableComponentProps<T> {
+// Extend generic type T with TableItem
+interface TableComponentProps<T extends TableItem> {
   columns: Column[];
   data: T[];
   actions?: Action<T>[];
   renderFavoriteIcon?: (item: T) => React.ReactNode;
 }
 
-function TableComponent<T>({
+function TableComponent<T extends TableItem>({
   columns,
   data,
   actions,
   renderFavoriteIcon,
 }: TableComponentProps<T>): JSX.Element {
   return (
-    <StyledTableContainer component={Paper}>
+    <StyledTableContainer>
       <Table stickyHeader aria-label="sticky table">
         <TableHead>
           <TableRow>
@@ -88,7 +93,11 @@ function TableComponent<T>({
                 <TableCell>{renderFavoriteIcon(item)}</TableCell>
               )}
               {columns.map((column) => {
-                const value = item[column.id];
+                const rawValue = item[column.id as keyof T];
+                // Check if value is renderable or needs to be converted
+                const value = (typeof rawValue === 'string' || typeof rawValue === 'number')
+                  ? rawValue
+                  : JSON.stringify(rawValue); // Convert non-renderable types to string
                 return (
                   <TableCell key={column.id} align={column.align}>
                     {column.format ? column.format(value) : value}

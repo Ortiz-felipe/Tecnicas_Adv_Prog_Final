@@ -1,36 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import {
   selectAppointmentDetails,
-  startLoading as startAppointmentLoading,
-  setError as setAppointmentError,
-  setAppointmentDetails,
 } from "../features/appointments/appointmentSlice";
-import {
-  startLoading as startInspectionLoading,
-  setInspectionDetails,
-  setError as setInspectionError,
-  selectInspectionDetails,
-} from "../features/inspections/inspectionSlice";
 import AppointmentDetails from "../components/AppointmentDetails";
-import CheckpointStepper from "../components/CheckpointStepper";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { getAppointmentById } from "../api/appointmentAPI";
+import { useAppSelector } from "../app/hooks";
 import { CircularProgress } from "@mui/material";
-import { useNavigate, useParams } from "react-router-dom";
-import { createInspection, saveInspectionResults } from "../api/inspectionAPI";
-import { CreateInspectionDto } from "../types/dtos/Inspections/CreateInspectionDto";
-import moment from "moment";
-import { UpdateInspectionDto } from "../types/dtos/Inspections/UpdateInspectionDto";
-import { INSPECTION_CHECKPOINTS } from "../types/constants/InspectionCheckpoints";
-import { CheckpointListDto } from "../types/dtos/Checkpoints/CheckpointListDto";
+import { useParams } from "react-router-dom";
 
 const VehicleInspectionPage: React.FC = () => {
-  const { appointmentId } = useParams<{ appointmentId: string }>();
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
+  useParams<{ appointmentId: string; }>();
   const appointmentDetails = useAppSelector(selectAppointmentDetails);
-  const inspectionDetails = useAppSelector(selectInspectionDetails);
-  const [isLoading, setIsLoading] = useState(true);
+  const isLoading = true;
 
   //   useEffect(() => {
   //     const fetchAppointmentDetails = async () => {
@@ -86,33 +66,33 @@ const VehicleInspectionPage: React.FC = () => {
     console.log("mount");
   }, []);
 
-  const handleCompleteInspection = async (
-    updateInspectionData: UpdateInspectionDto
-  ) => {
-    setIsLoading(true);
-    try {
-      // Assuming `updateInspectionData` already contains the necessary information
-      const inspectionData: UpdateInspectionDto = {
-        ...updateInspectionData,
-        appointmentId: appointmentId,
-        id: inspectionDetails.id,
-      };
-      const saveResultsResponse = await saveInspectionResults(
-        inspectionData,
-        inspectionData.id
-      );
-      if (saveResultsResponse.success) {
-        dispatch(setInspectionDetails(saveResultsResponse.inspectionDetails));
-        navigate("/inspections");
-      } else {
-        throw new Error(saveResultsResponse.message);
-      }
-    } catch (error: any) {
-      dispatch(setInspectionError(error.message));
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  // const handleCompleteInspection = async (
+  //   updateInspectionData: UpdateInspectionDto
+  // ) => {
+  //   setIsLoading(true);
+  //   try {
+  //     // Assuming `updateInspectionData` already contains the necessary information
+  //     const inspectionData: UpdateInspectionDto = {
+  //       ...updateInspectionData,
+  //       appointmentId: appointmentId,
+  //       id: inspectionDetails!.id,
+  //     };
+  //     const saveResultsResponse = await saveInspectionResults(
+  //       inspectionData,
+  //       inspectionData.id
+  //     );
+  //     if (saveResultsResponse.success) {
+  //       dispatch(setInspectionDetails(saveResultsResponse.inspectionDetails));
+  //       navigate("/inspections");
+  //     } else {
+  //       throw new Error(saveResultsResponse.message);
+  //     }
+  //   } catch (error: any) {
+  //     dispatch(setInspectionError(error.message));
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   return (
     <>
@@ -136,7 +116,7 @@ const VehicleInspectionPage: React.FC = () => {
             vehicle={appointmentDetails.vehicle}
             appointmentDate={appointmentDetails.appointmentDate}
           />
-          <CheckpointStepper onComplete={handleCompleteInspection} />
+          {/* <CheckpointStepper onComplete={handleCompleteInspection} /> */}
         </>
       )}
     </>

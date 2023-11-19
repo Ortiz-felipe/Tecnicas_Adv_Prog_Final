@@ -1,36 +1,42 @@
 import React, { useState } from "react";
 import { TextField, Button, FormControl, styled } from "@mui/material";
+import { Theme } from "@mui/material/styles";
+
+interface VehicleData {
+  licensePlate: string;
+  brand: string;
+  model: string;
+  year: number;
+  color: string;
+}
 
 interface VehicleRegistrationFormProps {
-  onSubmit: (vehicleData: {
-    licensePlate: string;
-    brand: string;
-    model: string;
-    year: number;
-  }) => void;
+  onSubmit: (vehicleData : VehicleData) => void;
   onCancel: () => void;
 }
 
-const StyledFormControl = styled(FormControl)(({ theme }) => ({
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  justifyContent: "center",
-  padding: theme.spacing(3),
-  borderRadius: theme.shape.borderRadius,
-  border: `1px solid ${theme.palette.divider}`,
-  margin: theme.spacing(2),
-  "& .MuiTextField-root": {
-    margin: theme.spacing(1),
-    width: "100%", // Use the full width of the form control
-  },
-  "& .MuiButton-root": {
-    margin: theme.spacing(1),
-    width: "calc(50% - 8px)", // Half the width minus the default spacing
-  },
-}));
+const StyledFormControl = styled(FormControl)(
+  ({ theme }: { theme: Theme }) => ({
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: theme.spacing(3),
+    borderRadius: theme.shape.borderRadius,
+    border: `1px solid ${theme.palette.divider}`,
+    margin: theme.spacing(2),
+    "& .MuiTextField-root": {
+      margin: theme.spacing(1),
+      width: "100%", // Use the full width of the form control
+    },
+    "& .MuiButton-root": {
+      margin: theme.spacing(1),
+      width: "calc(50% - 8px)", // Half the width minus the default spacing
+    },
+  })
+);
 
-const StyledTextField = styled(TextField)(({ theme }) => ({
+const StyledTextField = styled(TextField)(({ theme }: { theme: Theme }) => ({
   "& label.Mui-focused": {
     color: theme.palette.primary.main,
   },
@@ -50,13 +56,13 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
   },
 }));
 
-const StyledRegisterButton = styled(Button)(({ theme }) => ({
+const StyledRegisterButton = styled(Button)(({ theme }: { theme: Theme }) => ({
   fontWeight: 600,
   padding: theme.spacing(1.5),
   boxShadow: "none",
 }));
 
-const StyledCancelButton = styled(Button)(({ theme }) => ({
+const StyledCancelButton = styled(Button)(({ theme }: { theme: Theme }) => ({
   fontWeight: 600,
   padding: theme.spacing(1.5),
   boxShadow: "none",
@@ -94,7 +100,7 @@ const VehicleRegistrationForm: React.FC<VehicleRegistrationFormProps> = ({
   };
 
   return (
-    <StyledFormControl fullWidth component="fieldset" margin="normal">
+    <StyledFormControl fullWidth margin="normal">
       <StyledTextField
         label="Patente numero"
         name="licensePlate"
@@ -135,7 +141,7 @@ const VehicleRegistrationForm: React.FC<VehicleRegistrationFormProps> = ({
         margin="normal"
         fullWidth
       />
-      <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+      <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
         <StyledRegisterButton
           variant="contained"
           color="primary"

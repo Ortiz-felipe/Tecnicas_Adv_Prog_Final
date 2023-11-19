@@ -3,8 +3,9 @@ import { Typography, Paper, styled } from '@mui/material';
 import { UserDto } from '../types/dtos/Users/UserDto';
 import { VehicleDto } from '../types/dtos/Vehicles/VehicleDto';
 import { formatDate } from '../helpers/dateHelpers';
+import { Theme } from '@mui/material/styles';
 
-const DetailPaper = styled(Paper)(({ theme }) => ({
+const DetailPaper = styled(Paper)(({ theme }: { theme: Theme }) => ({
   padding: theme.spacing(2),
   marginBottom: theme.spacing(3),
   backgroundColor: '#f5f5f5', // A light grey background for minimalism
