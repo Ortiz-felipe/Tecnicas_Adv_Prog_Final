@@ -7,13 +7,14 @@ on:
 
 env:
   DOTNET_VERSION: 7.0.x
-  PROJECT_PATH: VTVApp.Api/VTVApp.Api.csproj
+  API_PROJECT_PATH: VTVApp.Api/VTVApp.Api.csproj
+  UNIT_TEST_PATH: VTVApp.UnitTests/VTVApp.UnitTests.csproj
+  SPEC_TEST_PATH: VTVApp.SpecflowTests/VTVApp.SpecflowTests.csproj
   IMAGE_NAME: felwitcher/vtvapp-api
 
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
@@ -24,24 +25,58 @@ jobs:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
       - name: Restore Dependencies
-        run: dotnet restore ${{ env.PROJECT_PATH }}
+        run: |
+          dotnet restore ${{ env.API_PROJECT_PATH }}
+          dotnet restore ${{ env.UNIT_TEST_PATH }}
+          dotnet restore ${{ env.SPEC_TEST_PATH }}
 
       - name: Build
-        run: dotnet build ${{ env.PROJECT_PATH }} --no-restore
+        run: dotnet build ${{ env.API_PROJECT_PATH }} --no-restore
 
-      - name: Test
-        run: dotnet test ${{ env.PROJECT_PATH }} --no-restore
+  unit-test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Run Unit Tests
+        run: dotnet test ${{ env.UNIT_TEST_PATH }}
+
+  integration-test:
+    runs-on: ubuntu-latest
+    needs: unit-test
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Run Integration Tests
+        run: dotnet test ${{ env.SPEC_TEST_PATH }}
+
+  docker:
+    runs-on: ubuntu-latest
+    needs: integration-test
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
 
       - name: Docker Login
-        if: success()
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and Push Docker Image
-        if: success()
         run: |
           docker build -t ${{ env.IMAGE_NAME }} .
           docker push ${{ env.IMAGE_NAME }}
-
