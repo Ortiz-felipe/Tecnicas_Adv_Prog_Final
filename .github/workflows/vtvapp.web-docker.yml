@@ -15,6 +15,12 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      - name: List contents of the repository
+        run: ls -la
+
+      - name: List contents of VTVApp.Web directory
+        run: ls -la VTVApp.Web
+
       - name: Docker Login
         uses: docker/login-action@v1
         with:
