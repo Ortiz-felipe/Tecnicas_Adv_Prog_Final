@@ -37,6 +37,7 @@ namespace VTVApp.Api.Repositories
             var cities = await _dbContext.Cities
                 .Include(x => x.Province)
                 .Where(c => c.ProvinceId == provinceId)
+                .OrderBy(c => c.Name)
                 .ToListAsync(cancellationToken);
 
             return _mapper.Map<IEnumerable<CityDetailsDto>>(cities);

@@ -21,7 +21,7 @@ namespace VTVApp.Api.Repositories
 
         public async Task<IEnumerable<ProvinceDto>> GetAllProvincesAsync(CancellationToken cancellationToken)
         {
-            var provinces = await _dbContext.Provinces.ToListAsync(cancellationToken);
+            var provinces = await _dbContext.Provinces.OrderBy(p => p.Name).ToListAsync(cancellationToken);
 
             return _mapper.Map<IEnumerable<ProvinceDto>>(provinces);
         }
