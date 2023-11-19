@@ -1,0 +1,8 @@
+{
+  "stepAssemblies": [
+    { "assembly": "VTVApp.Api" }
+  ],
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=localhost,1543;Database=VTVApp.Tests;Trusted_Connection=false;TrustServerCertificate=true;User ID=sa;Password=Pass1234"
+  }
+}
