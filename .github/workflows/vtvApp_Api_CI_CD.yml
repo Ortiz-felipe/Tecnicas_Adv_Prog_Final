@@ -1,4 +1,4 @@
-name: .NET Core CI/CD
+name: VTVApp (.NET 7 & React) CI/CD
 
 on:
   push:
@@ -10,11 +10,14 @@ env:
   API_PROJECT_PATH: VTVApp.Api/VTVApp.Api.csproj
   UNIT_TEST_PATH: VTVApp.UnitTests/VTVApp.UnitTests.csproj
   SPEC_TEST_PATH: VTVApp.SpecflowTests/VTVApp.SpecflowTests.csproj
-  IMAGE_NAME: felwitcher/vtv-app-adv-tecs-prog
+  IMAGE_NAME_API: felwitcher/vtv-app-api
+  IMAGE_NAME_WEB: felwitcher/vtv-app-web
 
 jobs:
-  build:
+  setup:
     runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
@@ -30,6 +33,10 @@ jobs:
           dotnet restore ${{ env.UNIT_TEST_PATH }}
           dotnet restore ${{ env.SPEC_TEST_PATH }}
 
+  build:
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
       - name: Build
         run: dotnet build ${{ env.API_PROJECT_PATH }} --no-restore
 
@@ -37,14 +44,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-
-      - name: Setup .NET Core
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: ${{ env.DOTNET_VERSION }}
-
       - name: Run Unit Tests
         run: dotnet test ${{ env.UNIT_TEST_PATH }}
 
@@ -52,31 +51,29 @@ jobs:
     runs-on: ubuntu-latest
     needs: unit-test
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-
-      - name: Setup .NET Core
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: ${{ env.DOTNET_VERSION }}
-
       - name: Run Integration Tests
         run: dotnet test ${{ env.SPEC_TEST_PATH }}
 
-  docker:
+  docker-api:
     runs-on: ubuntu-latest
     needs: integration-test
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-
       - name: Docker Login
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and Push Docker Image
+      - name: Build and Push API Docker Image
         run: |
-          docker build -t ${{ env.IMAGE_NAME }} -f VTVApp.Api/Dockerfile .
-          docker push ${{ env.IMAGE_NAME }}
+          docker build -t ${{ env.IMAGE_NAME_API }} -f VTVApp.Api/Dockerfile .
+          docker push ${{ env.IMAGE_NAME_API }}
+
+  docker-web:
+    runs-on: ubuntu-latest
+    needs: integration-test
+    steps:
+      - name: Build and Push Web Docker Image
+        run: |
+          docker build -t ${{ env.IMAGE_NAME_WEB }} -f VTVApp.Web/Dockerfile .
+          docker push ${{ env.IMAGE_NAME_WEB }}
