@@ -16,7 +16,7 @@ env:
   AZURE_WEBAPP_NAME_WEB: vtvapp-web
 
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -36,15 +36,29 @@ jobs:
       - name: Build API
         run: dotnet build ${{ env.API_PROJECT_PATH }} --no-restore
 
+  unit-test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
       - name: Run Unit Tests
         run: dotnet test ${{ env.UNIT_TEST_PATH }}
+
+  integration-test:
+    runs-on: ubuntu-latest
+    needs: unit-test
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
       - name: Run Integration Tests
         run: dotnet test ${{ env.SPEC_TEST_PATH }}
 
   docker-images:
     runs-on: ubuntu-latest
-    needs: build-and-test
+    needs: integration-test
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -55,28 +69,40 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and Push Docker Images
+      - name: Build and Push API Docker Image
         run: |
           docker build -t ${{ env.IMAGE_NAME_API }} -f VTVApp.Api/Dockerfile .
           docker push ${{ env.IMAGE_NAME_API }}
+
+      - name: Build and Push Web Docker Image
+        run: |
           docker build -t ${{ env.IMAGE_NAME_WEB }} -f VTVApp.Web/Dockerfile .
           docker push ${{ env.IMAGE_NAME_WEB }}
 
   deploy-api:
     runs-on: ubuntu-latest
-    needs: docker-images
+    needs: integration-test
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+      - name: Restore API Dependencies
+        run: dotnet restore ${{ env.API_PROJECT_PATH }}
+      - name: Build and Publish API
+        run: |
+          dotnet publish ${{ env.API_PROJECT_PATH }} -c Release -o ./publish
       - name: Azure Login
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-
       - name: Deploy to Azure App Service (API)
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME_API }}
-          package: docker:${{ env.IMAGE_NAME_API }}
-
+          package: ./publish
       - name: Set Connection String
         uses: Azure/cli@v1
         with:
@@ -84,21 +110,49 @@ jobs:
           inlineScript: |
             az webapp config connection-string set --name ${{ env.AZURE_WEBAPP_NAME_API }} --resource-group VTVApp_RG --connection-string-type SQLAzure --settings DefaultConnection='${{ secrets.AZURE_SQL_CONNECTION_STRING }}'
 
+  build-web:
+    runs-on: ubuntu-latest
+    needs: integration-test
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install Dependencies
+        run: npm install
+        working-directory: ./VTVApp.Web
+
+      - name: Compress Source Code
+        run: zip -r vtvapp-web-source.zip ./VTVApp.Web
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: vtvapp-web-source
+          path: vtvapp-web-source.zip
+  
   deploy-web:
     runs-on: ubuntu-latest
-    needs: docker-images
+    needs: build-web
     steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: vtvapp-web-build
+          path: deployment
       - name: Azure Login
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-
       - name: Deploy to Azure App Service (Web)
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME_WEB }}
-          package: docker:${{ env.IMAGE_NAME_WEB }}
-
+          package: deployment/vtvapp-web-build.zip
       - name: Update Environment Variables
         uses: Azure/cli@v1
         with:
