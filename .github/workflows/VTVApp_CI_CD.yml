@@ -1,4 +1,4 @@
-name: VTVApp.Api (.NET 7) CI/CD
+name: VTVApp (.NET 7 & React) CI/CD
 
 on:
   push:
