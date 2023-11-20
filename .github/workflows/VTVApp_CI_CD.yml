@@ -77,23 +77,28 @@ jobs:
     needs: docker-images
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
+  
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
         with:
           node-version: '20'
-      - run: npm install
+  
+      - name: Install Dependencies
+        run: npm install
         working-directory: ./VTVApp.Web
-      - run: zip -r vtvapp-web-source.zip ./VTVApp.Web
-      - uses: actions/upload-artifact@v3
+
+      - name: Setup Environment Variables
+        run: echo "VITE_API_URL=${{ secrets.API_URL }}" > ./VTVApp.Web/.env
+  
+      - name: Build Web App
+        run: npm run build
+        working-directory: ./VTVApp.Web
+  
+      - name: Deploy to Azure Static Web App
+        uses: Azure/static-web-apps-deploy@v1
         with:
-          name: vtvapp-web-source
-          path: vtvapp-web-source.zip
-      - uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-      - uses: azure/webapps-deploy@v2
-        with:
-          app-name: ${{ env.AZURE_WEBAPP_NAME_WEB }}
-          package: vtvapp-web-source.zip
-      - uses: Azure/cli@v1
-        with:
-          inlineScript: az webapp config appsettings set --name ${{ env.AZURE_WEBAPP_NAME_WEB }} --resource-group VTVApp_RG --settings VITE_API_URL=${{ secrets.API_URL }}
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          action: "upload"
+          app_location: "VTVApp.Web" # The location of your frontend code
+          output_location: "dist" # The output location after build
