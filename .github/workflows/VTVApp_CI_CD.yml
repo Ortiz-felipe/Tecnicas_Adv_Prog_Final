@@ -46,6 +46,7 @@ jobs:
         docker push ${{ env.IMAGE_NAME_API }}
     - name: Build and Push Web Docker Image
       run: |
+        cd VTVApp.Web
         docker build -t ${{ env.IMAGE_NAME_WEB }} -f VTVApp.Web/Dockerfile .
         docker push ${{ env.IMAGE_NAME_WEB }}
 
