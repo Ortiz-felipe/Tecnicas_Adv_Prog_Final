@@ -12,6 +12,8 @@ env:
   SPEC_TEST_PATH: VTVApp.SpecflowTests/VTVApp.SpecflowTests.csproj
   IMAGE_NAME_API: felwitcher/vtv-app-api
   IMAGE_NAME_WEB: felwitcher/vtv-app-web
+  AZURE_WEBAPP_NAME_API: vtvapp-api
+  AZURE_WEBAPP_NAME_WEB: vtvapp-web
 
 jobs:
   build:
@@ -89,3 +91,83 @@ jobs:
           cd VTVApp.Web
           docker build -t ${{ env.IMAGE_NAME_WEB }} -f Dockerfile .
           docker push ${{ env.IMAGE_NAME_WEB }}
+
+  deploy-api:
+    runs-on: ubuntu-latest
+    needs: integration-test
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+      - name: Restore API Dependencies
+        run: dotnet restore ${{ env.API_PROJECT_PATH }}
+      - name: Build and Publish API
+        run: |
+          dotnet publish ${{ env.API_PROJECT_PATH }} -c Release -o ./publish
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Deploy to Azure App Service (API)
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME_API }}
+          package: ./publish
+      - name: Set Connection String
+        uses: Azure/cli@v1
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az webapp config connection-string set --name ${{ env.AZURE_WEBAPP_NAME_API }} --connection-string-type SQLAzure --settings DefaultConnection='${{ secrets.AZURE_SQL_CONNECTION_STRING }}'
+
+  build-web:
+    runs-on: ubuntu-latest
+    needs: integration-test
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+      - name: Install Dependencies
+        run: npm install
+        working-directory: ./VTVApp.Web
+      - name: Build Web App
+        run: npm run build
+        working-directory: ./VTVApp.Web
+      - name: Compress Build Output
+        run: zip -r vtvapp-web-build.zip ./VTVApp.Web/dist
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: vtvapp-web-build
+          path: vtvapp-web-build.zip
+  
+  deploy-web:
+    runs-on: ubuntu-latest
+    needs: build-web
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: vtvapp-web-build
+          path: deployment
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Deploy to Azure App Service (Web)
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME_WEB }}
+          package: deployment/vtvapp-web-build.zip
+      - name: Update Environment Variables
+        uses: Azure/cli@v1
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az webapp config appsettings set --name ${{ env.AZURE_WEBAPP_NAME_WEB }} --settings VITE_API_URL=${{ secrets.API_URL }}
