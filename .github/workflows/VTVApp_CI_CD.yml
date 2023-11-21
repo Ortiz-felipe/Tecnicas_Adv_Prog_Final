@@ -32,24 +32,24 @@ jobs:
     runs-on: ubuntu-latest
     needs: build-and-test
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v4
-      
-    - name: Docker Login
-      uses: docker/login-action@v1
-      with:
-           username: ${{ secrets.DOCKERHUB_USERNAME }}
-           password: ${{ secrets.DOCKERHUB_TOKEN }}
-    - name: Build and Push API Docker Image
-      run: |
-        docker build -t ${{ env.IMAGE_NAME_API }} -f VTVApp.Api/Dockerfile .
-        docker push ${{ env.IMAGE_NAME_API }}
-    - name: Build and Push Web Docker Image
-      working-directory: ./VTVApp.Web
-      run: |
-        ls -la
-        docker build -t ${{ env.IMAGE_NAME_WEB }} -f Dockerfile .
-        docker push ${{ env.IMAGE_NAME_WEB }}
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Docker Login
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build and Push API Docker Image
+        run: |
+          docker build -t ${{ env.IMAGE_NAME_API }} -f VTVApp.Api/Dockerfile .
+          docker push ${{ env.IMAGE_NAME_API }}
+      - name: Build and Push Web Docker Image
+        working-directory: ./VTVApp.Web
+        run: |
+          ls -la
+          docker build -t ${{ env.IMAGE_NAME_WEB }} -f Dockerfile .
+          docker push ${{ env.IMAGE_NAME_WEB }}
 
   deploy-api:
     runs-on: ubuntu-latest
@@ -73,30 +73,57 @@ jobs:
           inlineScript: az webapp config connection-string set --name ${{ env.AZURE_WEBAPP_NAME_API }} --resource-group VTVApp_RG --connection-string-type SQLAzure --settings DefaultConnection='${{ secrets.AZURE_SQL_CONNECTION_STRING }}'
 
   build-and-deploy-web:
-      runs-on: ubuntu-latest
-      needs: docker-images
-      steps:
-        - uses: actions/checkout@v4
-  
-        - name: Setup Node.js environment
-          uses: actions/setup-node@v3
-          with:
-            node-version: '20'
-    
-        - name: Install Dependencies
-          run: npm install
-          working-directory: ./VTVApp.Web
-  
-        - name: Setup Environment Variables
-          run: echo "VITE_API_URL=${{ secrets.API_URL }}" > ./VTVApp.Web/.env
-  
-        - name: Build Web App
-          run: npm run build
-          working-directory: ./VTVApp.Web
-  
-        - name: Deploy to Azure App Service
-          uses: azure/webapps-deploy@v2
-          with:
-            app-name: ${{ env.AZURE_WEBAPP_NAME_WEB }}
-            publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-            package: ./VTVApp.Web/dist
+    runs-on: ubuntu-latest
+    needs: docker-images
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+
+      - name: Install Dependencies
+        run: npm install
+        working-directory: ./VTVApp.Web
+
+      - name: Setup Environment Variables
+        run: echo "VITE_API_URL=${{ secrets.API_URL }}" > ./VTVApp.Web/.env
+
+      - name: Build Web App
+        run: npm run build
+        working-directory: ./VTVApp.Web
+
+      - name: Deploy to Azure App Service
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME_WEB }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: ./VTVApp.Web/dist
+  deploy-to-aci:
+    runs-on: ubuntu-latest
+    needs: docker-images
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy to Azure Container Instance
+        run: |
+          az container create --resource-group <Resource-Group> --file docker-compose.yml --name <Container-Group-Name>
+
+      - name: Fetch Public IP of the Web App
+        run: |
+          IP=$(az container show --resource-group <Resource-Group> --name <Container-Group-Name> --query ipAddress.fqdn -o tsv)
+          echo "WEB_APP_IP=$IP" >> $GITHUB_ENV
+          
+      - name: Update API Environment Variables
+        run: |
+          # Update CORS allowed origins
+          az container exec --resource-group <Resource-Group> --name <Container-Group-Name> --container-name vtv-app-api --exec-command "bash" --exec-command-arg "-c" --exec-command-arg "echo 'Cors__AllowedOrigins__0=http://${{ env.WEB_APP_IP }}' >> /app/appsettings.json"
+          # Update SQL connection string
+          az container exec --resource-group <Resource-Group> --name <Container-Group-Name> --container-name vtv-app-api --exec-command "bash" --exec-command-arg "-c" --exec-command-arg "echo 'ConnectionStrings__DefaultConnection=${{ secrets.AZURE_SQL_CONNECTION_STRING }}' >> /app/appsettings.json"
