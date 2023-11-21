@@ -1,13 +1,13 @@
-version: '3.8'
+version: "3.8"
 services:
   vtv-app-web:
-    image: felwitcher/vtv-app-web:latest  # Replace with your actual Docker Hub image for React app
+    image: felwitcher/vtv-app-web:latest
     ports:
-      - "5173:80"  # Expose the React app on port 5173
+      - "5173:80"
     depends_on:
       - vtv-app-api
 
   vtv-app-api:
-    image: felwitcher/vtv-app-api:latest  # Replace with your actual Docker Hub image for ASP.NET API
+    image: felwitcher/vtv-app-api:latest
     ports:
-      - "5233:80"  # Expose the ASP.NET API on port 5233
+      - "5233:80"
