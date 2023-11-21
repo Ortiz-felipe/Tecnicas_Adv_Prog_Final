@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+  vtv-app-web:
+    build:
+      context: ./VTVApp.Web
+      dockerfile: Dockerfile
+    ports:
+      - "5173:80"
+    depends_on:
+      - vtv-app-api
+
+  vtv-app-api:
+    build:
+      context: .
+      dockerfile: VTVApp.Api/Dockerfile  
+    ports:
+      - "5233:80"
+    environment:
+      - "Cors__AllowedOrigins__0=http://localhost:5173"
+      - ConnectionStrings__DefaultConnection=Server=tcp:vtvapp-db.database.windows.net,1433;Initial Catalog=VTVApp;Persist Security Info=False;User ID=sqlAdmin;Password=vtvApp123@;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
