@@ -100,7 +100,7 @@ jobs:
           app-name: ${{ env.AZURE_WEBAPP_NAME_WEB }}
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: ./VTVApp.Web/dist
-  deploy-to-aci:
+  deploy-to-container-apps:
     runs-on: ubuntu-latest
     needs: docker-images
     steps:
@@ -112,18 +112,38 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Deploy to Azure Container Instance
+      - name: Deploy API to Azure Container App
         run: |
-          az container create --resource-group VTVApp_RG --file docker-compose.yml --name vtvapp-container-group
+          az containerapp create \
+            --name ${{ env.AZURE_WEBAPP_NAME_API }} \
+            --resource-group VTVApp_RG \
+            --image ${{ env.IMAGE_NAME_API }} \
+            --environment VTVApp-Container-Env \
+            --target-port 80 \
+            --ingress 'external' \
+            --query configuration.ingress.fqdn
 
-      - name: Fetch Public IP of the Web App
+      - name: Deploy Web to Azure Container App
         run: |
-          IP=$(az container show --resource-group VTVApp_RG --name vtvapp-container-group --query ipAddress.fqdn -o tsv)
-          echo "WEB_APP_IP=$IP" >> $GITHUB_ENV
+          az containerapp create \
+            --name ${{ env.AZURE_WEBAPP_NAME_WEB }} \
+            --resource-group VTVApp_RG \
+            --image ${{ env.IMAGE_NAME_WEB }} \
+            --environment VTVApp-Container-Env \
+            --target-port 80 \
+            --ingress 'external' \
+            --query configuration.ingress.fqdn
 
-      - name: Update API Environment Variables
+      - name: Set Environment Variables for API
         run: |
-          # Update CORS allowed origins
-          az container exec --resource-group VTVApp_RG --name vtvapp-container-group --container-name vtv-app-api --exec-command "bash" --exec-command-arg "-c" --exec-command-arg "echo 'Cors__AllowedOrigins__0=http://${{ env.WEB_APP_IP }}' >> /app/appsettings.json"
-          # Update SQL connection string
-          az container exec --resource-group VTVApp_RG --name vtvapp-container-group --container-name vtv-app-api --exec-command "bash" --exec-command-arg "-c" --exec-command-arg "echo 'ConnectionStrings__DefaultConnection=${{ secrets.AZURE_SQL_CONNECTION_STRING }}' >> /app/appsettings.json"
+          # Set CORS environment variable
+          az containerapp update \
+            --name ${{ env.AZURE_WEBAPP_NAME_API }} \
+            --resource-group VTVApp_RG \
+            --set-environment-variables Cors__AllowedOrigins__0=http://${{ steps.deploy-web.outputs.fqdn }}
+
+          # Set SQL connection string
+          az containerapp update \
+            --name ${{ env.AZURE_WEBAPP_NAME_API }} \
+            --resource-group VTVApp_RG \
+            --set-environment-variables ConnectionStrings__DefaultConnection=${{ secrets.AZURE_SQL_CONNECTION_STRING }}
