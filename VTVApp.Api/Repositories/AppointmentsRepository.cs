@@ -72,7 +72,7 @@ namespace VTVApp.Api.Repositories
                 .Include(a => a.Vehicle)
                 .Include(a => a.User)
                 .Include(a => a.Inspection)
-                .Where(a => a.UserId == userId && a.Date >= DateTime.UtcNow) // Assuming dates are stored in UTC
+                .Where(a => a.UserId == userId) // Assuming dates are stored in UTC
                 .OrderByDescending(a => a.Date)
                 .FirstOrDefaultAsync(cancellationToken);
 
