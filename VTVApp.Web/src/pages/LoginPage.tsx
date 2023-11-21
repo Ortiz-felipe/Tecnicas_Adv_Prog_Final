@@ -38,6 +38,7 @@ import {
 import { getCitiesByProvince } from "../api/cityAPI";
 import { UserRole } from "../types/dtos/Users/UserRole";
 import { UserRegistartionDto } from "../types/dtos/Users/UserRegistrationDto";
+import backgroundImage from '../assets/images/login.png';
 
 const LoginPageContainer = styled(Grid)<{ theme?: Theme }>(({ theme }) => ({
   height: "100vh",
@@ -45,7 +46,7 @@ const LoginPageContainer = styled(Grid)<{ theme?: Theme }>(({ theme }) => ({
 }));
 
 const ImageColumn = styled(Grid)(() => ({
-  backgroundImage: "url(src/assets/images/login.png)",
+  backgroundImage: `url(${backgroundImage})`,
   backgroundSize: "cover",
   backgroundPosition: "center",
 }));

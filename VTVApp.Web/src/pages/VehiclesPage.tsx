@@ -99,7 +99,7 @@ const VehiclesPage: React.FC = () => {
 
   useEffect(() => {
     const fetchUserVehicles = async () => {
-      if (vehicles.length === 0 && userDetails) {
+      if (userDetails) {
         try {
           dispatch(startLoading());
           const vehicles = await getAllVehiclesForUserId(userDetails.id);
@@ -111,7 +111,7 @@ const VehiclesPage: React.FC = () => {
     };
 
     fetchUserVehicles();
-  }, [dispatch, vehicles]);
+  }, [dispatch, userDetails]);
 
   const handleRegisterVehicle = async (createVehicleData: VehicleData) => {
     try {
@@ -215,7 +215,7 @@ const VehiclesPage: React.FC = () => {
   return (
     <VehiclesPageContainer>
       <HeaderSection>
-        <Typography variant="h4">Your Vehicles</Typography>
+        <Typography variant="h4">Tus Vehículos</Typography>
         <Button
           variant="contained"
           startIcon={<AddIcon />}

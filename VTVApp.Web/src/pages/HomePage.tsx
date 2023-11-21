@@ -86,8 +86,11 @@ const HomePage: React.FC = () => {
               getLatestAppointment(userDetails.id),
             ]);
 
-          if (favoriteVehicleData && latestAppointmentData) {
+          if (favoriteVehicleData) {
             dispatch(setFavoriteVehicle(favoriteVehicleData));
+          }
+
+          if (latestAppointmentData) {
             dispatch(setAppointmentDetails(latestAppointmentData));
           }
         } catch (error) {

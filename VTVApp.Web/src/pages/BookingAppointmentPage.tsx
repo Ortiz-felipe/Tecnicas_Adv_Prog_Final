@@ -212,7 +212,7 @@ const BookAppointmentPage: React.FC = () => {
             <DatePickerWrapper>
               <DesktopDatePicker
                 label="Fecha de la Cita"
-                format="DD/MM/yyyy"
+                format="DD/MM/YYYY"
                 value={selectedDate}
                 onChange={handleDateChange}
                 disablePast

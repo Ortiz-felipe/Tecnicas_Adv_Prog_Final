@@ -3,6 +3,10 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Box, Theme, Typography, useTheme } from "@mui/material";
 import styled from "@emotion/styled";
+import vehicleInspectionImage from '../assets/images/vehicle_inspection.png';
+import vehicleDiagnosticImage from '../assets/images/vehicle_diagnostic.png';
+import vehicleEngingeInspectionImage from '../assets/images/vehicle_engine_inspection.png';
+import customerSatisfactionImage from '../assets/images/customer_satisfaction.png';
 
 const ImageTextBox = styled(Box)<{ theme?: Theme }>(() => ({
   maxHeight: "500px",
@@ -60,7 +64,7 @@ const CarouselComponent = () => {
       <Slider {...settings}>
         <ImageTextBox theme={theme}>
           <img
-            src="src\assets\images\vehicle_inspection.png"
+            src={vehicleInspectionImage}
             alt="Inspección Vehicular"
           />
           <div>
@@ -75,7 +79,7 @@ const CarouselComponent = () => {
         </ImageTextBox>
         <ImageTextBox theme={theme}>
           <img
-            src="src\assets\images\vehicle_diagnostic.png"
+            src={vehicleDiagnosticImage}
             alt="Diagnóstico Preciso"
           />
           <div>
@@ -90,7 +94,7 @@ const CarouselComponent = () => {
         </ImageTextBox>
         <ImageTextBox>
           <img
-            src="src\assets\images\vehicle_engine_inspection.png"
+            src={vehicleEngingeInspectionImage}
             alt="Inspección de Motor"
           />
           <div>
@@ -105,7 +109,7 @@ const CarouselComponent = () => {
         </ImageTextBox>
         <ImageTextBox>
           <img
-            src="src\assets\images\customer_satisfaction.png"
+            src={customerSatisfactionImage}
             alt="Servicio al Cliente Excepcional"
           />
           <div>
