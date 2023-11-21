@@ -114,16 +114,16 @@ jobs:
 
       - name: Deploy to Azure Container Instance
         run: |
-          az container create --resource-group <Resource-Group> --file docker-compose.yml --name <Container-Group-Name>
+          az container create --resource-group VTVApp_RG --file docker-compose.yml --name vtvapp-container-group
 
       - name: Fetch Public IP of the Web App
         run: |
-          IP=$(az container show --resource-group <Resource-Group> --name <Container-Group-Name> --query ipAddress.fqdn -o tsv)
+          IP=$(az container show --resource-group VTVApp_RG --name vtvapp-container-group --query ipAddress.fqdn -o tsv)
           echo "WEB_APP_IP=$IP" >> $GITHUB_ENV
-          
+
       - name: Update API Environment Variables
         run: |
           # Update CORS allowed origins
-          az container exec --resource-group <Resource-Group> --name <Container-Group-Name> --container-name vtv-app-api --exec-command "bash" --exec-command-arg "-c" --exec-command-arg "echo 'Cors__AllowedOrigins__0=http://${{ env.WEB_APP_IP }}' >> /app/appsettings.json"
+          az container exec --resource-group VTVApp_RG --name vtvapp-container-group --container-name vtv-app-api --exec-command "bash" --exec-command-arg "-c" --exec-command-arg "echo 'Cors__AllowedOrigins__0=http://${{ env.WEB_APP_IP }}' >> /app/appsettings.json"
           # Update SQL connection string
-          az container exec --resource-group <Resource-Group> --name <Container-Group-Name> --container-name vtv-app-api --exec-command "bash" --exec-command-arg "-c" --exec-command-arg "echo 'ConnectionStrings__DefaultConnection=${{ secrets.AZURE_SQL_CONNECTION_STRING }}' >> /app/appsettings.json"
+          az container exec --resource-group VTVApp_RG --name vtvapp-container-group --container-name vtv-app-api --exec-command "bash" --exec-command-arg "-c" --exec-command-arg "echo 'ConnectionStrings__DefaultConnection=${{ secrets.AZURE_SQL_CONNECTION_STRING }}' >> /app/appsettings.json"
