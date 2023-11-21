@@ -58,10 +58,12 @@ namespace VTVApp.Api
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
 
+            var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>();
+
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowSpecificOrigin",
-                    builder => builder.WithOrigins("http://localhost:5173") // Replace with the port your React app is running on
+                    builder => builder.WithOrigins(allowedOrigins) // Replace with the port your React app is running on
                         .AllowAnyHeader()
                         .AllowAnyMethod()
                         .AllowCredentials()); // Use this if your frontend sends credentials like cookies or basic auth
