@@ -83,9 +83,12 @@ namespace VTVApp.Api
                     };
                 });
 
+            // Register Application Insights
+            builder.Services.AddApplicationInsightsTelemetry(builder.Configuration["ApplicationInsights:InstrumentationKey"]);
+
             //// Configure NLog
-            //builder.Logging.ClearProviders();
-            //builder.Host.UseNLog();  // This will apply NLog configuration
+            builder.Logging.ClearProviders();
+            builder.Host.UseNLog();  // This will apply NLog configuration
 
             // Register Scoped dependencies
             builder.Services.AddScoped<IVtvDataContext, VTVDataContext>();
