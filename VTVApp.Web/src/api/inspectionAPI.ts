@@ -3,6 +3,7 @@ import { InspectionDetailsDto } from "../types/dtos/Inspections/InspectionDetail
 import { InspectionListDto } from "../types/dtos/Inspections/InspectionListDto";
 import { InspectionOperationResultDto } from "../types/dtos/Inspections/InspectionOperationResultDto";
 import { UpdateInspectionDto } from "../types/dtos/Inspections/UpdateInspectionDto";
+import appInsights from "../utils/appInsights";
 
 const baseURL = import.meta.env.VITE_API_URL;
 
@@ -19,6 +20,7 @@ export const getLatestVehicleInspection = async (vehicleId : string) : Promise<I
         const data : InspectionDetailsDto = await response.json();
         return data;
       } catch (error : any) {
+        appInsights.trackException({ exception: error });
         throw new Error(error.message);
       }
 }
@@ -36,6 +38,7 @@ export const getAllInspections = async (userId : string) : Promise<InspectionLis
     const data : InspectionListDto[] = await response.json();
     return data;
   } catch (error : any) {
+    appInsights.trackException({ exception: error });
     throw new Error(error.message);
   }
 }
@@ -53,6 +56,7 @@ export const getInspectionDetails = async (inspectionId : string) : Promise<Insp
     const data : InspectionDetailsDto = await response.json();
     return data;
   } catch (error : any) {
+    appInsights.trackException({ exception: error });
     throw new Error(error.message);
   }
 }
@@ -81,6 +85,7 @@ export const createInspection = async (newInspection: CreateInspectionDto, appoi
     const data : InspectionOperationResultDto = await response.json();
     return data;
   } catch (error : any) {
+    appInsights.trackException({ exception: error });
     throw new Error(error.message);
   }
 }
@@ -109,6 +114,7 @@ export const saveInspectionResults = async (inspectionData: UpdateInspectionDto,
     const data : InspectionOperationResultDto = await response.json();
     return data;
   } catch (error : any) {
+    appInsights.trackException({ exception: error });
     throw new Error(error.message);
   }
 }

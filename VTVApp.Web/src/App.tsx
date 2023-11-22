@@ -18,6 +18,8 @@ import { store } from "./app/store.ts";
 import ProtectedRoute from "./components/routing/ProtectedRoute.tsx";
 import BookAppointmentPage from "./pages/BookingAppointmentPage.tsx";
 import InspectorAppointmentsPage from "./pages/InspectorAppointmentsPage.tsx";
+// @ts-ignore
+import appInsights from "./utils/appInsights.ts";
 // import VehicleInspectionPage from "./pages/VehicleInspectionPage.tsx";
 
 // Define the container for the entire app
@@ -40,6 +42,7 @@ const SideBar = styled.div`
 `;
 
 const App: React.FC = () => {
+  
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>

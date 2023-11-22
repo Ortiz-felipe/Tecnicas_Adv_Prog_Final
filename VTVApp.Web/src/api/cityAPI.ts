@@ -1,4 +1,5 @@
 import { CityDetailsDto } from "../types/dtos/Cities/CityDetailsDto";
+import appInsights from "../utils/appInsights";
 
 export const getCitiesByProvince = async (
   provinceId: number
@@ -8,6 +9,7 @@ export const getCitiesByProvince = async (
 
   if (!response.ok) {
     const error = await response.json();
+    appInsights.trackException({ exception: error });
     throw new Error(error.detail || "Failed to fetch cities");
   }
 

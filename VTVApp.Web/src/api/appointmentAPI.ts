@@ -3,6 +3,7 @@ import { AppointmentDetailsDto } from "../types/dtos/Appointments/AppointmentDet
 import { AppointmentListDto } from "../types/dtos/Appointments/AppointmentListDto";
 import { AvailableAppointmentSlotsDto } from "../types/dtos/Appointments/AvailableAppointmentSlotDto";
 import { CreateAppointmentDto } from "../types/dtos/Appointments/CreateAppointmentDto";
+import appInsights from "../utils/appInsights";
 
 const baseURL = import.meta.env.VITE_API_URL;
 
@@ -19,6 +20,7 @@ export const getAllAppointments = async (): Promise<AppointmentListDto[]> => {
     const data: AppointmentListDto[] = await response.json();
     return data;
   } catch (error: any) {
+    appInsights.trackException({ exception: error });
     throw new Error(error.message);
   }
 };
@@ -38,6 +40,7 @@ export const getAppointmentById = async (
     const data: AppointmentDetailsDto = await response.json();
     return data;
   } catch (error: any) {
+    appInsights.trackException({ exception: error });
     throw new Error(error.message);
   }
 };
@@ -61,6 +64,7 @@ export const getLatestAppointment = async (
     const data: AppointmentDetailsDto = await response.json();
     return data;
   } catch (error: any) {
+    appInsights.trackException({ exception: error });
     throw new Error(error.message);
   }
 };
@@ -90,7 +94,8 @@ export const getAllAppointmentsForUser = async (
         // Handle any other unexpected status codes
         throw new Error(`Unexpected response status: ${response.status}`);
     }
-  } catch (error) {
+  } catch (error : any) {
+    appInsights.trackException({ exception: error });
     // Log the error or handle it as needed
     console.error("Error fetching appointments:", error);
     throw error; // Re-throw the error to let the caller handle it
@@ -112,6 +117,7 @@ export const getAvailableTimeSlotsForSelectedDate = async (
     const data: AvailableAppointmentSlotsDto = await response.json();
     return data;
   } catch (error: any) {
+    appInsights.trackException({ exception: error });
     throw new Error(error.message);
   }
 };
@@ -141,6 +147,7 @@ export const createNewAppointment = async (
     const data: AppointmentDetailsDto = await response.json();
     return data;
   } catch (error: any) {
+    appInsights.trackException({ exception: error });
     // Rethrow any caught errors as a new error to be handled by the caller
     throw new Error(error.message || "An unexpected error occurred");
   }

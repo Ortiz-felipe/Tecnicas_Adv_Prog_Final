@@ -2,6 +2,7 @@
 import { UserAuthenticationResultDto } from '../types/dtos/Users/UserAuthenticationResultDto';
 import { UserOperationResultDto } from '../types/dtos/Users/UserOperationResultDto';
 import { UserRegistartionDto } from '../types/dtos/Users/UserRegistrationDto';
+import appInsights from '../utils/appInsights';
 const baseURL = import.meta.env.VITE_API_URL
 
 interface LoginCredentials {
@@ -33,6 +34,7 @@ export const loginUser = async (credentials: LoginCredentials): Promise<UserAuth
     const data: UserAuthenticationResultDto = await response.json();
     return data;
   } catch (error: any) {
+    appInsights.trackException({ exception: error });
     // Rethrow any caught errors as a new error to be handled by the caller
     throw new Error(error.message || 'An unexpected error occurred');
   }
@@ -60,6 +62,7 @@ export const registerUser = async (credentials: UserRegistartionDto): Promise<Us
     const data: UserOperationResultDto = await response.json();
     return data;
   } catch (error: any) {
+    appInsights.trackException({ exception: error });
     throw new Error(error.message || 'An unexpected error occurred during registration');
   }
 };

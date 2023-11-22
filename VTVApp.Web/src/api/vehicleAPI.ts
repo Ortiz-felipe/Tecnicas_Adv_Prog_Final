@@ -2,6 +2,7 @@ import { CreateVehicleDto } from "../types/dtos/Vehicles/CreateVehicleDto";
 import { UpdateVehicleDto } from "../types/dtos/Vehicles/UpdateVehicleDto";
 import { VehicleDto } from "../types/dtos/Vehicles/VehicleDto";
 import { VehicleOperationResultDto } from "../types/dtos/Vehicles/VehicleOperationResultDto";
+import appInsights from "../utils/appInsights";
 
 const baseURL = import.meta.env.VITE_API_URL;
 
@@ -24,6 +25,7 @@ export const getFavoriteVehicleForUserId = async (
 
     return null;
   } catch (error: any) {
+    appInsights.trackException({ exception: error });
     throw new Error(error.message);
   }
 };
@@ -43,6 +45,7 @@ export const getAllVehiclesForUserId = async (
     const data: VehicleDto[] = await response.json();
     return data;
   } catch (error: any) {
+    appInsights.trackException({ exception: error });
     throw new Error(error.message);
   }
 };
@@ -75,6 +78,7 @@ export const markVehicleAsFavorite = async (
     const data: VehicleOperationResultDto = await response.json();
     return data;
   } catch (error: any) {
+    appInsights.trackException({ exception: error });
     throw new Error(error.message);
   }
 };
@@ -102,6 +106,7 @@ export const createNewVehicle = async (vehicleData : CreateVehicleDto) : Promise
     const data: VehicleOperationResultDto = await response.json();
     return data;
   } catch (error : any) {
+    appInsights.trackException({ exception: error });
     throw new Error(error.message)
   }
 }
