@@ -93,7 +93,7 @@ jobs:
         - name: Setup Environment Variables
           run:  |
             cat ./VTVApp.Web/.env
-            sed -i '/^VITE_API_URL=/c\VITE_API_URL="https://vtvapp-api.azurewebsites.net"' .env
+            sed -i '/^VITE_API_URL=/c\VITE_API_URL="https://vtvapp-api.azurewebsites.net"' ./VTVApp.Web/.env
             cat ./VTVApp.Web/.env
   
         - name: Build Web App
