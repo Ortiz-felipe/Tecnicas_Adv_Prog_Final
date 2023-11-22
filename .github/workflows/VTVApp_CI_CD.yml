@@ -91,10 +91,14 @@ jobs:
           working-directory: ./VTVApp.Web
   
         - name: Setup Environment Variables
-          run:  |
-            cat ./VTVApp.Web/.env
-            sed -i 's|^VITE_API_URL=.*|VITE_API_URL="https://vtvapp-api.azurewebsites.net"|' .env
-            cat ./VTVApp.Web/.env
+          run: |
+            echo "Current .env contents:"
+            cat ./VTVApp.Web/.env.production
+            echo "Updating .env.production file..."
+            sed -i 's|^VITE_API_URL=.*|VITE_API_URL="https://vtvapp-api.azurewebsites.net"|' ./VTVApp.Web/.env.production
+            echo "Updated .env.production contents:"
+            cat ./VTVApp.Web/.env.production
+          working-directory: ./
   
         - name: Build Web App
           run: npm run build
