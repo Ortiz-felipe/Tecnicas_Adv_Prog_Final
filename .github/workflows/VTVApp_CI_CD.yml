@@ -92,8 +92,10 @@ jobs:
   
         - name: Setup Environment Variables
           run:  |
+            cat ./VTVApp.Web/.env
             echo "VITE_API_URL=${{ secrets.API_URL }}" > ./VTVApp.Web/.env
             echo "VITE_API_URL=${{ secrets.API_URL }}"
+            cat ./VTVApp.Web/.env
   
         - name: Build Web App
           run: npm run build
