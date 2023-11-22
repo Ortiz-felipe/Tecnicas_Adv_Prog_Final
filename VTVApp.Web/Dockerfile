@@ -12,9 +12,6 @@ RUN npm install
 # Copy the rest of the app
 COPY . . 
 
-# Modify the .env file
-RUN echo "VITE_API_URL=http://vtvapp-aci.cahfcmhcbfb2hphd.brazilsouth.azurecontainer.io/" > .env
-
 # Build the app
 RUN npm run build
 
