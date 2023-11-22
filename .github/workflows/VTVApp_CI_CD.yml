@@ -93,8 +93,7 @@ jobs:
         - name: Setup Environment Variables
           run:  |
             cat ./VTVApp.Web/.env
-            echo "VITE_API_URL=${{ secrets.API_URL }}" > ./VTVApp.Web/.env
-            echo "VITE_API_URL=${{ secrets.API_URL }}"
+            echo "VITE_API_URL="https://vtvapp-api.azurewebsites.net"" > ./VTVApp.Web/.env
             cat ./VTVApp.Web/.env
   
         - name: Build Web App
